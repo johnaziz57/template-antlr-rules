@@ -1,4 +1,3 @@
-
 /** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
 
 // Derived from http://json.org
@@ -23,15 +22,29 @@ arr
    ;
 
 value
-   : STRING
+   : TEXPRESSION
+   | STRING
    | NUMBER
    | obj
    | arr
    | 'true'
    | 'false'
-   | 'null'
+	| 'null'
    ;
 
+LT2OPERATOR
+   : '{{'
+   ;
+
+RT2OPERATOR
+   : '}}'
+   ;
+
+// TODO define operators with 3 curly braces `{{{`
+
+TEXPRESSION
+   :	LT2OPERATOR [WS]* (SAFECODEPOINT)+ [WS]* RT2OPERATOR
+   ;
 
 STRING
    : '"' (ESC | SAFECODEPOINT)* '"'
@@ -59,7 +72,7 @@ fragment SAFECODEPOINT
 
 
 NUMBER
-   : '-'? INT ('.' [0-9] +)? EXP?
+   : '-'? INT ('.' [0-9]+)? EXP?
    ;
 
 
