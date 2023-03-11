@@ -1,3 +1,4 @@
+
 /** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
 
 // Derived from http://json.org
@@ -21,34 +22,48 @@ arr
    | '[' ']'
    ;
 
+templateOperatorExpression
+    : START_BLOCK value END_BLOCK
+    ;
+
 value
-   : TEXPRESSION
+   : templateOperatorExpression
+   | T_EXPRESSION
    | STRING
    | NUMBER
    | obj
    | arr
    | 'true'
    | 'false'
-	| 'null'
+   | 'null'
    ;
 
-LT2OPERATOR
-   : '{{'
-   ;
+START_BLOCK
+    : L_OPERATOR_2 '#' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+    ;
 
-RT2OPERATOR
-   : '}}'
-   ;
+END_BLOCK
+    : L_OPERATOR_2 '/' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+    ;
+
+L_OPERATOR_2
+    : '{{'
+    ;
+
+R_OPERATOR_2
+    : '}}'
+    ;
 
 // TODO define operators with 3 curly braces `{{{`
 
-TEXPRESSION
-   :	LT2OPERATOR [WS]* (SAFECODEPOINT)+ [WS]* RT2OPERATOR
-   ;
+T_EXPRESSION
+    : L_OPERATOR_2 [WS]* (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+    ;
 
 STRING
    : '"' (ESC | SAFECODEPOINT)* '"'
    ;
+
 
 
 fragment ESC
@@ -72,7 +87,7 @@ fragment SAFECODEPOINT
 
 
 NUMBER
-   : '-'? INT ('.' [0-9]+)? EXP?
+   : '-'? INT ('.' [0-9] +)? EXP?
    ;
 
 
