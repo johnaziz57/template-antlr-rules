@@ -1,2 +1,5 @@
-.antlr/*.class
+.antlr/*
 .vscode/
+.idea/
+gen/
+antlr.iml
