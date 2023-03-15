@@ -11,34 +11,41 @@ json
 obj
    : '{' pair (',' pair)* '}'
    | '{' '}'
-   | '{' objExtended '}'
-   | '{' pair (',' objExtended)* '}'
+//   | '{' objPair '}'
+//   | '{' pair (',' objPair)* '}'
    ;
 
 
-objExtended
+objPair
     : pair
-    | templateOperatorExpression
+    | templateOperatorPair
     ;
 
 pair
-   : STRING ':' value
+   : STRING ':' pairValue
    ;
+
+templateOperatorPair
+    : START_BLOCK_2 pair END_BLOCK_2
+    ;
+
+pairValue
+    : templateOperatorValue
+    | value
+    ;
 
 arr
    : '[' value (',' value)* ']'
    | '[' ']'
    ;
 
-templateOperatorExpression
-    : START_BLOCK_2 value END_BLOCK_2
-    | START_BLOCK_2 pair END_BLOCK_2
+templateOperatorValue
+    : START_BLOCK_2 value ELSE_BLOCK_2 value END_BLOCK_2
+    | START_BLOCK_2 value END_BLOCK_2
     ;
 
 value
-   : templateOperatorExpression
-   | T_EXPRESSION
-   | STRING
+   : STRING
    | NUMBER
    | obj
    | arr
@@ -49,6 +56,10 @@ value
 
 START_BLOCK_2
     : L_OPERATOR_2 '#' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+    ;
+
+ELSE_BLOCK_2
+    : L_OPERATOR_2 'else' R_OPERATOR_2
     ;
 
 END_BLOCK_2
