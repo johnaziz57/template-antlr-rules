@@ -1,5 +1,6 @@
-.antlr/*
+.antlr/
 .vscode/
 .idea/
 gen/
 antlr.iml
+.prettierignore
