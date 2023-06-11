@@ -11,7 +11,7 @@ json
 obj
    : '{' pair (',' pair)* '}'
    | '{' '}'
-//   | '{' objPair '}'
+   | '{' objPair (',' objPair)* '}'
 //   | '{' pair (',' objPair)* '}'
    ;
 
@@ -26,7 +26,12 @@ pair
    ;
 
 templateOperatorPair
-    : START_BLOCK_2 pair END_BLOCK_2
+    : START_BLOCK_2 templateOperatorIncompleteObj ELSE_BLOCK_2 templateOperatorIncompleteObj END_BLOCK_2
+    | START_BLOCK_2 templateOperatorIncompleteObj END_BLOCK_2
+    ;
+
+templateOperatorIncompleteObj
+    : objPair (',' objPair)*
     ;
 
 pairValue
