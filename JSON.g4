@@ -57,7 +57,12 @@ value
    | 'true'
    | 'false'
    | 'null'
+   | TEMPLATE
    ;
+
+TEMPLATE
+    : L_OPERATOR_3 'template' (SAFECODEPOINT | WS)* R_OPERATOR_3
+    ;
 
 START_BLOCK_2
     : L_OPERATOR_2 '#' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
@@ -79,8 +84,18 @@ R_OPERATOR_2
     : '}}'
     ;
 
-// TODO define operators with 3 curly braces `{{{`
+L_OPERATOR_3
+    : '{{{'
+    ;
 
+R_OPERATOR_3
+    : '}}}'
+    ;
+
+
+
+// TODO define operators with 3 curly braces `{{{`
+// Not used
 T_EXPRESSION
     : L_OPERATOR_2 [WS]* (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
     ;
