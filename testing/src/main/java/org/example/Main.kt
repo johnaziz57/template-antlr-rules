@@ -1,20 +1,43 @@
 package org.example
 
+import org.antlr.v4.runtime.CharStreams
+import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.RecognitionException
+import org.example.jsonantlr.JSONLexer
+import org.example.jsonantlr.JSONParser
+import java.lang.RuntimeException
+import kotlin.io.path.Path
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 object Main {
     @JvmStatic
     fun main(args: Array<String>) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!")
+        val filePaths = listOf(
+            "testing/src/main/templates/template.tmpl",
+            "testing/src/main/templates/template-1.tmpl"
+        )
+        val red = "\u001b[31m"
+        val green = "\u001b[32m"
+        val reset = "\u001b[0m"
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (i in 1..5) {
+        for (path in filePaths) {
+            val lexer = JSONLexer(CharStreams.fromPath(Path(path)))
+            val tokens  = CommonTokenStream(lexer)
+            val parser = JSONParser(tokens)
+            try {
+                parser.json()
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            println("i = $i")
+                if (parser.numberOfSyntaxErrors == 0) {
+                    println("$path has $green succeeded $reset")
+                } else {
+                    println("$path has $red failed $reset")
+                }
+            } catch (e: RecognitionException) {
+                println("$path has failed")
+            } catch (e: RuntimeException) {
+                println("$path has failed")
+            }
         }
     }
 }
