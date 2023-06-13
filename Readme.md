@@ -1,3 +1,6 @@
+# TODO
+1. Test arrays
+
 
 Used this command to add `antlr` to maven local repo
 

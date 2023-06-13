@@ -42,6 +42,7 @@ pairValue
 arr
    : '[' value (',' value)* ']'
    | '[' ']'
+   | '[' templateOperatorValue ']'
    ;
 
 templateOperatorValue
