@@ -1,5 +1,5 @@
-package org.example.jsonantlr;
 // Generated from JSON.g4 by ANTLR 4.13.0
+package org.example.jsonantlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

@@ -15,7 +15,12 @@ object Main {
     fun main(args: Array<String>) {
         val filePaths = listOf(
             "testing/src/main/templates/template.tmpl",
-            "testing/src/main/templates/template-1.tmpl"
+            "testing/src/main/templates/template-1.tmpl",
+            "testing/src/main/templates/template-2.tmpl",
+            "testing/src/main/templates/template-3.tmpl",
+            "testing/src/main/templates/template-4.tmpl",
+            "testing/src/main/templates/template-5.tmpl",
+            "testing/src/main/templates/template-6.tmpl",
         )
         val red = "\u001b[31m"
         val green = "\u001b[32m"

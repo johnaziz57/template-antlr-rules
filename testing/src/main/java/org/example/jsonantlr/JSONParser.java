@@ -1,14 +1,10 @@
 // Generated from JSON.g4 by ANTLR 4.13.0
 package org.example.jsonantlr;
-
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
-import org.example.jsonantlr.JSONListener;
-import org.example.jsonantlr.JSONVisitor;
-
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -22,8 +18,9 @@ public class JSONParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		START_BLOCK_2=10, ELSE_BLOCK_2=11, END_BLOCK_2=12, L_OPERATOR_2=13, R_OPERATOR_2=14, 
-		T_EXPRESSION=15, STRING=16, NUMBER=17, WS=18;
+		TEMPLATE=10, START_BLOCK_2=11, ELSE_BLOCK_2=12, END_BLOCK_2=13, L_OPERATOR_2=14, 
+		R_OPERATOR_2=15, L_OPERATOR_3=16, R_OPERATOR_3=17, T_EXPRESSION=18, STRING=19, 
+		NUMBER=20, WS=21;
 	public static final int
 		RULE_json = 0, RULE_obj = 1, RULE_objPair = 2, RULE_pair = 3, RULE_templateOperatorPair = 4, 
 		RULE_templateOperatorIncompleteObj = 5, RULE_pairValue = 6, RULE_arr = 7, 
@@ -39,15 +36,15 @@ public class JSONParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'{'", "','", "'}'", "':'", "'['", "']'", "'true'", "'false'", 
-			"'null'", null, null, null, "'{{'", "'}}'"
+			"'null'", null, null, null, null, "'{{'", "'}}'", "'{{{'", "'}}}'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, "START_BLOCK_2", 
-			"ELSE_BLOCK_2", "END_BLOCK_2", "L_OPERATOR_2", "R_OPERATOR_2", "T_EXPRESSION", 
-			"STRING", "NUMBER", "WS"
+			null, null, null, null, null, null, null, null, null, null, "TEMPLATE", 
+			"START_BLOCK_2", "ELSE_BLOCK_2", "END_BLOCK_2", "L_OPERATOR_2", "R_OPERATOR_2", 
+			"L_OPERATOR_3", "R_OPERATOR_3", "T_EXPRESSION", "STRING", "NUMBER", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -113,7 +110,7 @@ public class JSONParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_json; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener) ((JSONListener)listener).enterJson(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterJson(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
@@ -121,7 +118,7 @@ public class JSONParser extends Parser {
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor) return ((JSONVisitor<? extends T>)visitor).visitJson(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitJson(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -566,6 +563,7 @@ public class JSONParser extends Parser {
 			case T__6:
 			case T__7:
 			case T__8:
+			case TEMPLATE:
 			case STRING:
 			case NUMBER:
 				enterOuterAlt(_localctx, 2);
@@ -597,6 +595,9 @@ public class JSONParser extends Parser {
 		public ValueContext value(int i) {
 			return getRuleContext(ValueContext.class,i);
 		}
+		public TemplateOperatorValueContext templateOperatorValue() {
+			return getRuleContext(TemplateOperatorValueContext.class,0);
+		}
 		public ArrContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -621,7 +622,7 @@ public class JSONParser extends Parser {
 		enterRule(_localctx, 14, RULE_arr);
 		int _la;
 		try {
-			setState(94);
+			setState(98);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
@@ -657,6 +658,17 @@ public class JSONParser extends Parser {
 				setState(92);
 				match(T__4);
 				setState(93);
+				match(T__5);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(94);
+				match(T__4);
+				setState(95);
+				templateOperatorValue();
+				setState(96);
 				match(T__5);
 				}
 				break;
@@ -707,32 +719,32 @@ public class JSONParser extends Parser {
 		TemplateOperatorValueContext _localctx = new TemplateOperatorValueContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_templateOperatorValue);
 		try {
-			setState(106);
+			setState(110);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(96);
-				match(START_BLOCK_2);
-				setState(97);
-				value();
-				setState(98);
-				match(ELSE_BLOCK_2);
-				setState(99);
-				value();
 				setState(100);
+				match(START_BLOCK_2);
+				setState(101);
+				value();
+				setState(102);
+				match(ELSE_BLOCK_2);
+				setState(103);
+				value();
+				setState(104);
 				match(END_BLOCK_2);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(102);
+				setState(106);
 				match(START_BLOCK_2);
-				setState(103);
+				setState(107);
 				value();
-				setState(104);
+				setState(108);
 				match(END_BLOCK_2);
 				}
 				break;
@@ -759,6 +771,7 @@ public class JSONParser extends Parser {
 		public ArrContext arr() {
 			return getRuleContext(ArrContext.class,0);
 		}
+		public TerminalNode TEMPLATE() { return getToken(JSONParser.TEMPLATE, 0); }
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -782,56 +795,63 @@ public class JSONParser extends Parser {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_value);
 		try {
-			setState(115);
+			setState(120);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(108);
+				setState(112);
 				match(STRING);
 				}
 				break;
 			case NUMBER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(109);
+				setState(113);
 				match(NUMBER);
 				}
 				break;
 			case T__0:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(110);
+				setState(114);
 				obj();
 				}
 				break;
 			case T__4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(111);
+				setState(115);
 				arr();
 				}
 				break;
 			case T__6:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(112);
+				setState(116);
 				match(T__6);
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(113);
+				setState(117);
 				match(T__7);
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(114);
+				setState(118);
 				match(T__8);
+				}
+				break;
+			case TEMPLATE:
+				enterOuterAlt(_localctx, 8);
+				{
+				setState(119);
+				match(TEMPLATE);
 				}
 				break;
 			default:
@@ -850,7 +870,7 @@ public class JSONParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0012v\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0015{\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001"+
@@ -865,58 +885,61 @@ public class JSONParser extends Parser {
 		"I\b\u0005\n\u0005\f\u0005L\t\u0005\u0001\u0006\u0001\u0006\u0003\u0006"+
 		"P\b\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0005\u0007"+
 		"V\b\u0007\n\u0007\f\u0007Y\t\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
-		"\u0001\u0007\u0003\u0007_\b\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
-		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0003\bk\b\b\u0001\t\u0001"+
-		"\t\u0001\t\u0001\t\u0001\t\u0001\t\u0001\t\u0003\tt\b\t\u0001\t\u0000"+
-		"\u0000\n\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0000\u0000|"+
-		"\u0000\u0014\u0001\u0000\u0000\u0000\u0002/\u0001\u0000\u0000\u0000\u0004"+
-		"3\u0001\u0000\u0000\u0000\u00065\u0001\u0000\u0000\u0000\bC\u0001\u0000"+
-		"\u0000\u0000\nE\u0001\u0000\u0000\u0000\fO\u0001\u0000\u0000\u0000\u000e"+
-		"^\u0001\u0000\u0000\u0000\u0010j\u0001\u0000\u0000\u0000\u0012s\u0001"+
-		"\u0000\u0000\u0000\u0014\u0015\u0003\u0012\t\u0000\u0015\u0016\u0005\u0000"+
-		"\u0000\u0001\u0016\u0001\u0001\u0000\u0000\u0000\u0017\u0018\u0005\u0001"+
-		"\u0000\u0000\u0018\u001d\u0003\u0006\u0003\u0000\u0019\u001a\u0005\u0002"+
-		"\u0000\u0000\u001a\u001c\u0003\u0006\u0003\u0000\u001b\u0019\u0001\u0000"+
-		"\u0000\u0000\u001c\u001f\u0001\u0000\u0000\u0000\u001d\u001b\u0001\u0000"+
-		"\u0000\u0000\u001d\u001e\u0001\u0000\u0000\u0000\u001e \u0001\u0000\u0000"+
-		"\u0000\u001f\u001d\u0001\u0000\u0000\u0000 !\u0005\u0003\u0000\u0000!"+
-		"0\u0001\u0000\u0000\u0000\"#\u0005\u0001\u0000\u0000#0\u0005\u0003\u0000"+
-		"\u0000$%\u0005\u0001\u0000\u0000%*\u0003\u0004\u0002\u0000&\'\u0005\u0002"+
-		"\u0000\u0000\')\u0003\u0004\u0002\u0000(&\u0001\u0000\u0000\u0000),\u0001"+
-		"\u0000\u0000\u0000*(\u0001\u0000\u0000\u0000*+\u0001\u0000\u0000\u0000"+
-		"+-\u0001\u0000\u0000\u0000,*\u0001\u0000\u0000\u0000-.\u0005\u0003\u0000"+
-		"\u0000.0\u0001\u0000\u0000\u0000/\u0017\u0001\u0000\u0000\u0000/\"\u0001"+
-		"\u0000\u0000\u0000/$\u0001\u0000\u0000\u00000\u0003\u0001\u0000\u0000"+
-		"\u000014\u0003\u0006\u0003\u000024\u0003\b\u0004\u000031\u0001\u0000\u0000"+
-		"\u000032\u0001\u0000\u0000\u00004\u0005\u0001\u0000\u0000\u000056\u0005"+
-		"\u0010\u0000\u000067\u0005\u0004\u0000\u000078\u0003\f\u0006\u00008\u0007"+
-		"\u0001\u0000\u0000\u00009:\u0005\n\u0000\u0000:;\u0003\n\u0005\u0000;"+
-		"<\u0005\u000b\u0000\u0000<=\u0003\n\u0005\u0000=>\u0005\f\u0000\u0000"+
-		">D\u0001\u0000\u0000\u0000?@\u0005\n\u0000\u0000@A\u0003\n\u0005\u0000"+
-		"AB\u0005\f\u0000\u0000BD\u0001\u0000\u0000\u0000C9\u0001\u0000\u0000\u0000"+
-		"C?\u0001\u0000\u0000\u0000D\t\u0001\u0000\u0000\u0000EJ\u0003\u0004\u0002"+
-		"\u0000FG\u0005\u0002\u0000\u0000GI\u0003\u0004\u0002\u0000HF\u0001\u0000"+
-		"\u0000\u0000IL\u0001\u0000\u0000\u0000JH\u0001\u0000\u0000\u0000JK\u0001"+
-		"\u0000\u0000\u0000K\u000b\u0001\u0000\u0000\u0000LJ\u0001\u0000\u0000"+
-		"\u0000MP\u0003\u0010\b\u0000NP\u0003\u0012\t\u0000OM\u0001\u0000\u0000"+
-		"\u0000ON\u0001\u0000\u0000\u0000P\r\u0001\u0000\u0000\u0000QR\u0005\u0005"+
-		"\u0000\u0000RW\u0003\u0012\t\u0000ST\u0005\u0002\u0000\u0000TV\u0003\u0012"+
-		"\t\u0000US\u0001\u0000\u0000\u0000VY\u0001\u0000\u0000\u0000WU\u0001\u0000"+
-		"\u0000\u0000WX\u0001\u0000\u0000\u0000XZ\u0001\u0000\u0000\u0000YW\u0001"+
-		"\u0000\u0000\u0000Z[\u0005\u0006\u0000\u0000[_\u0001\u0000\u0000\u0000"+
-		"\\]\u0005\u0005\u0000\u0000]_\u0005\u0006\u0000\u0000^Q\u0001\u0000\u0000"+
-		"\u0000^\\\u0001\u0000\u0000\u0000_\u000f\u0001\u0000\u0000\u0000`a\u0005"+
-		"\n\u0000\u0000ab\u0003\u0012\t\u0000bc\u0005\u000b\u0000\u0000cd\u0003"+
-		"\u0012\t\u0000de\u0005\f\u0000\u0000ek\u0001\u0000\u0000\u0000fg\u0005"+
-		"\n\u0000\u0000gh\u0003\u0012\t\u0000hi\u0005\f\u0000\u0000ik\u0001\u0000"+
-		"\u0000\u0000j`\u0001\u0000\u0000\u0000jf\u0001\u0000\u0000\u0000k\u0011"+
-		"\u0001\u0000\u0000\u0000lt\u0005\u0010\u0000\u0000mt\u0005\u0011\u0000"+
-		"\u0000nt\u0003\u0002\u0001\u0000ot\u0003\u000e\u0007\u0000pt\u0005\u0007"+
-		"\u0000\u0000qt\u0005\b\u0000\u0000rt\u0005\t\u0000\u0000sl\u0001\u0000"+
-		"\u0000\u0000sm\u0001\u0000\u0000\u0000sn\u0001\u0000\u0000\u0000so\u0001"+
-		"\u0000\u0000\u0000sp\u0001\u0000\u0000\u0000sq\u0001\u0000\u0000\u0000"+
-		"sr\u0001\u0000\u0000\u0000t\u0013\u0001\u0000\u0000\u0000\u000b\u001d"+
-		"*/3CJOW^js";
+		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0003\u0007"+
+		"c\b\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0001\b\u0001\b\u0003\bo\b\b\u0001\t\u0001\t\u0001\t\u0001\t\u0001"+
+		"\t\u0001\t\u0001\t\u0001\t\u0003\ty\b\t\u0001\t\u0000\u0000\n\u0000\u0002"+
+		"\u0004\u0006\b\n\f\u000e\u0010\u0012\u0000\u0000\u0083\u0000\u0014\u0001"+
+		"\u0000\u0000\u0000\u0002/\u0001\u0000\u0000\u0000\u00043\u0001\u0000\u0000"+
+		"\u0000\u00065\u0001\u0000\u0000\u0000\bC\u0001\u0000\u0000\u0000\nE\u0001"+
+		"\u0000\u0000\u0000\fO\u0001\u0000\u0000\u0000\u000eb\u0001\u0000\u0000"+
+		"\u0000\u0010n\u0001\u0000\u0000\u0000\u0012x\u0001\u0000\u0000\u0000\u0014"+
+		"\u0015\u0003\u0012\t\u0000\u0015\u0016\u0005\u0000\u0000\u0001\u0016\u0001"+
+		"\u0001\u0000\u0000\u0000\u0017\u0018\u0005\u0001\u0000\u0000\u0018\u001d"+
+		"\u0003\u0006\u0003\u0000\u0019\u001a\u0005\u0002\u0000\u0000\u001a\u001c"+
+		"\u0003\u0006\u0003\u0000\u001b\u0019\u0001\u0000\u0000\u0000\u001c\u001f"+
+		"\u0001\u0000\u0000\u0000\u001d\u001b\u0001\u0000\u0000\u0000\u001d\u001e"+
+		"\u0001\u0000\u0000\u0000\u001e \u0001\u0000\u0000\u0000\u001f\u001d\u0001"+
+		"\u0000\u0000\u0000 !\u0005\u0003\u0000\u0000!0\u0001\u0000\u0000\u0000"+
+		"\"#\u0005\u0001\u0000\u0000#0\u0005\u0003\u0000\u0000$%\u0005\u0001\u0000"+
+		"\u0000%*\u0003\u0004\u0002\u0000&\'\u0005\u0002\u0000\u0000\')\u0003\u0004"+
+		"\u0002\u0000(&\u0001\u0000\u0000\u0000),\u0001\u0000\u0000\u0000*(\u0001"+
+		"\u0000\u0000\u0000*+\u0001\u0000\u0000\u0000+-\u0001\u0000\u0000\u0000"+
+		",*\u0001\u0000\u0000\u0000-.\u0005\u0003\u0000\u0000.0\u0001\u0000\u0000"+
+		"\u0000/\u0017\u0001\u0000\u0000\u0000/\"\u0001\u0000\u0000\u0000/$\u0001"+
+		"\u0000\u0000\u00000\u0003\u0001\u0000\u0000\u000014\u0003\u0006\u0003"+
+		"\u000024\u0003\b\u0004\u000031\u0001\u0000\u0000\u000032\u0001\u0000\u0000"+
+		"\u00004\u0005\u0001\u0000\u0000\u000056\u0005\u0013\u0000\u000067\u0005"+
+		"\u0004\u0000\u000078\u0003\f\u0006\u00008\u0007\u0001\u0000\u0000\u0000"+
+		"9:\u0005\u000b\u0000\u0000:;\u0003\n\u0005\u0000;<\u0005\f\u0000\u0000"+
+		"<=\u0003\n\u0005\u0000=>\u0005\r\u0000\u0000>D\u0001\u0000\u0000\u0000"+
+		"?@\u0005\u000b\u0000\u0000@A\u0003\n\u0005\u0000AB\u0005\r\u0000\u0000"+
+		"BD\u0001\u0000\u0000\u0000C9\u0001\u0000\u0000\u0000C?\u0001\u0000\u0000"+
+		"\u0000D\t\u0001\u0000\u0000\u0000EJ\u0003\u0004\u0002\u0000FG\u0005\u0002"+
+		"\u0000\u0000GI\u0003\u0004\u0002\u0000HF\u0001\u0000\u0000\u0000IL\u0001"+
+		"\u0000\u0000\u0000JH\u0001\u0000\u0000\u0000JK\u0001\u0000\u0000\u0000"+
+		"K\u000b\u0001\u0000\u0000\u0000LJ\u0001\u0000\u0000\u0000MP\u0003\u0010"+
+		"\b\u0000NP\u0003\u0012\t\u0000OM\u0001\u0000\u0000\u0000ON\u0001\u0000"+
+		"\u0000\u0000P\r\u0001\u0000\u0000\u0000QR\u0005\u0005\u0000\u0000RW\u0003"+
+		"\u0012\t\u0000ST\u0005\u0002\u0000\u0000TV\u0003\u0012\t\u0000US\u0001"+
+		"\u0000\u0000\u0000VY\u0001\u0000\u0000\u0000WU\u0001\u0000\u0000\u0000"+
+		"WX\u0001\u0000\u0000\u0000XZ\u0001\u0000\u0000\u0000YW\u0001\u0000\u0000"+
+		"\u0000Z[\u0005\u0006\u0000\u0000[c\u0001\u0000\u0000\u0000\\]\u0005\u0005"+
+		"\u0000\u0000]c\u0005\u0006\u0000\u0000^_\u0005\u0005\u0000\u0000_`\u0003"+
+		"\u0010\b\u0000`a\u0005\u0006\u0000\u0000ac\u0001\u0000\u0000\u0000bQ\u0001"+
+		"\u0000\u0000\u0000b\\\u0001\u0000\u0000\u0000b^\u0001\u0000\u0000\u0000"+
+		"c\u000f\u0001\u0000\u0000\u0000de\u0005\u000b\u0000\u0000ef\u0003\u0012"+
+		"\t\u0000fg\u0005\f\u0000\u0000gh\u0003\u0012\t\u0000hi\u0005\r\u0000\u0000"+
+		"io\u0001\u0000\u0000\u0000jk\u0005\u000b\u0000\u0000kl\u0003\u0012\t\u0000"+
+		"lm\u0005\r\u0000\u0000mo\u0001\u0000\u0000\u0000nd\u0001\u0000\u0000\u0000"+
+		"nj\u0001\u0000\u0000\u0000o\u0011\u0001\u0000\u0000\u0000py\u0005\u0013"+
+		"\u0000\u0000qy\u0005\u0014\u0000\u0000ry\u0003\u0002\u0001\u0000sy\u0003"+
+		"\u000e\u0007\u0000ty\u0005\u0007\u0000\u0000uy\u0005\b\u0000\u0000vy\u0005"+
+		"\t\u0000\u0000wy\u0005\n\u0000\u0000xp\u0001\u0000\u0000\u0000xq\u0001"+
+		"\u0000\u0000\u0000xr\u0001\u0000\u0000\u0000xs\u0001\u0000\u0000\u0000"+
+		"xt\u0001\u0000\u0000\u0000xu\u0001\u0000\u0000\u0000xv\u0001\u0000\u0000"+
+		"\u0000xw\u0001\u0000\u0000\u0000y\u0013\u0001\u0000\u0000\u0000\u000b"+
+		"\u001d*/3CJOWbnx";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

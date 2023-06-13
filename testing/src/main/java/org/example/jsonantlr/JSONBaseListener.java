@@ -1,9 +1,9 @@
-package org.example.jsonantlr;// Generated from JSON.g4 by ANTLR 4.13.0
+// Generated from JSON.g4 by ANTLR 4.13.0
+package org.example.jsonantlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.example.jsonantlr.JSONListener;
 
 /**
  * This class provides an empty implementation of {@link JSONListener},
