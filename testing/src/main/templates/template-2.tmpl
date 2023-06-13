@@ -1,0 +1,23 @@
+{
+  "template_id": "single-promo-group",
+  "layout": {
+    "id": "single-promo-group-{{promoGroupId}}",
+    "type": "BLOCK",
+    "layout": {"type": "FLOW", "axis": "VERTICAL"},
+    "size": {"crossAxis": "12g"},
+    "children": [
+      {
+        "id": "single-promo-group-{{promoGroupId}}-header",
+        "type": "BLOCK",
+        "layout": {"type": "FLOW","axis": "VERTICAL"},
+        "size": {"crossAxis": "12g"},
+        "children": [{
+          "type": "PML",
+          "id": "1",
+          "size": {"mainAxis":32,"crossAxis": "12g"},
+          "pml": {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}}
+        }]
+      }
+      ]
+  }
+}

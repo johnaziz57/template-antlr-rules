@@ -1,0 +1,47 @@
+{
+  "template_id": "core-purchases-sub-header-template",
+  "layout": {
+                "pml_version": "0.1.0",
+                "component": {
+                    "type": "CONTAINER",
+                    "accessible": true,
+                    "width": "100%",
+                    "padding": {
+                    "top": 18,
+                    "bottom": 8,
+                    "left": 16,
+                    "right": 16
+                    },
+                    "child": {
+                    "type": "CONTAINER",
+                    "height": "100%",
+                    "child":
+                        {
+                        "type": "CONTAINER",
+                        "width": "100%",
+                        "child":
+                            {
+                            "type": "STACK",
+                            "axis": "HORIZONTAL",
+                            "alignment": "CENTER",
+                            "spacing": 12,
+                            "children": [
+                                {
+                                "type": "RICH_TEXT",
+                                "textAlignment": "LEFT",
+                                "numberOfLines": 1,
+                                "textAttributes": {
+                                    "size": 18,
+                                    "weight": "SEMIBOLD"
+                                },
+                                "markdown": "#(GREY5){{{subHeaderGroupTitle}}}#(GREY5)"
+                                }
+                            ]
+                            }
+                        }
+                    }
+                }
+            },
+  "context": {},
+  "metadata": {}
+}
