@@ -1,6 +1,50 @@
 # TODO
-1. Test arrays
 
+- [ ] Test arrays
+
+# Done
+
+1. This case is working
+
+``` 
+{
+    "template_id": "core0",
+    "layout": 
+      {{#and p }}
+        ""
+      {{else}}
+          {{#if p}}
+            {{{template 'core2' }}}
+          {{else}}
+              {{{template 'core3' }}}
+          {{/if}}
+      {{/and}}
+    ,
+    "context": {}
+}
+```
+
+while this case is not working
+
+```
+{
+    "template_id": "core0",
+    "layout": 
+      {{#and p }}
+        {{{template 'core1' }}}
+      {{else}}
+          {{#if p}}
+            {{{template 'core2' }}}
+          {{else}}
+              "3"
+          {{/if}}
+      {{/and}}
+    ,
+    "context": {}
+}
+```
+
+# Dependencies
 
 Used this command to add `antlr` to maven local repo
 

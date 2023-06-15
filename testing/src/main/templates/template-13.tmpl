@@ -1,0 +1,15 @@
+{
+    "template_id": "core0",
+    "layout":
+      {{#and p }}
+          "1"
+      {{else}}
+          {{#if p}}
+              "2"
+          {{else}}
+              "3"
+          {{/if}}
+      {{/and}}
+    ,
+    "context": {}
+}

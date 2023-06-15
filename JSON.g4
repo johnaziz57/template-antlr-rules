@@ -46,6 +46,7 @@ arr
    ;
 
 //TODO define special unless helper
+//TODO nested if else(s)
 helper
     : START_HELPER_BLOCK_2 (value | helper)+ ELSE_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
     | START_HELPER_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
@@ -63,7 +64,7 @@ value
    ;
 
 TEMPLATE_HELPER
-    : L_CURLY_3 'template' (SAFECODEPOINT | WS)* R_CURLY_3
+    : L_CURLY_3 'template' (SAFECODEPOINT)* R_CURLY_3
     ;
 
 START_HELPER_BLOCK_2
