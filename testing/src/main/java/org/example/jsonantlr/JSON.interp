@@ -49,13 +49,13 @@ WS
 rule names:
 json
 obj
-objPair
+operatorOrPair
 pair
-templateOperatorPair
-templateOperatorIncompleteObj
+operatorPair
+operatorIncompleteObj
 pairValue
 arr
-templateOperatorValue
+operatorValue
 value
 
 

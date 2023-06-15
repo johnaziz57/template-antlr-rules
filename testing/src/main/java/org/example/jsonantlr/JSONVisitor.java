@@ -23,11 +23,11 @@ public interface JSONVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitObj(JSONParser.ObjContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JSONParser#objPair}.
+	 * Visit a parse tree produced by {@link JSONParser#operatorOrPair}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitObjPair(JSONParser.ObjPairContext ctx);
+	T visitOperatorOrPair(JSONParser.OperatorOrPairContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JSONParser#pair}.
 	 * @param ctx the parse tree
@@ -35,17 +35,17 @@ public interface JSONVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPair(JSONParser.PairContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JSONParser#templateOperatorPair}.
+	 * Visit a parse tree produced by {@link JSONParser#operatorPair}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTemplateOperatorPair(JSONParser.TemplateOperatorPairContext ctx);
+	T visitOperatorPair(JSONParser.OperatorPairContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JSONParser#templateOperatorIncompleteObj}.
+	 * Visit a parse tree produced by {@link JSONParser#operatorIncompleteObj}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTemplateOperatorIncompleteObj(JSONParser.TemplateOperatorIncompleteObjContext ctx);
+	T visitOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JSONParser#pairValue}.
 	 * @param ctx the parse tree
@@ -59,11 +59,11 @@ public interface JSONVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArr(JSONParser.ArrContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JSONParser#templateOperatorValue}.
+	 * Visit a parse tree produced by {@link JSONParser#operatorValue}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTemplateOperatorValue(JSONParser.TemplateOperatorValueContext ctx);
+	T visitOperatorValue(JSONParser.OperatorValueContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link JSONParser#value}.
 	 * @param ctx the parse tree

@@ -22,13 +22,13 @@ public class JSONParser extends Parser {
 		R_OPERATOR_2=15, L_OPERATOR_3=16, R_OPERATOR_3=17, T_EXPRESSION=18, STRING=19, 
 		NUMBER=20, WS=21;
 	public static final int
-		RULE_json = 0, RULE_obj = 1, RULE_objPair = 2, RULE_pair = 3, RULE_templateOperatorPair = 4, 
-		RULE_templateOperatorIncompleteObj = 5, RULE_pairValue = 6, RULE_arr = 7, 
-		RULE_templateOperatorValue = 8, RULE_value = 9;
+		RULE_json = 0, RULE_obj = 1, RULE_operatorOrPair = 2, RULE_pair = 3, RULE_operatorPair = 4, 
+		RULE_operatorIncompleteObj = 5, RULE_pairValue = 6, RULE_arr = 7, RULE_operatorValue = 8, 
+		RULE_value = 9;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"json", "obj", "objPair", "pair", "templateOperatorPair", "templateOperatorIncompleteObj", 
-			"pairValue", "arr", "templateOperatorValue", "value"
+			"json", "obj", "operatorOrPair", "pair", "operatorPair", "operatorIncompleteObj", 
+			"pairValue", "arr", "operatorValue", "value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -154,11 +154,11 @@ public class JSONParser extends Parser {
 		public PairContext pair(int i) {
 			return getRuleContext(PairContext.class,i);
 		}
-		public List<ObjPairContext> objPair() {
-			return getRuleContexts(ObjPairContext.class);
+		public List<OperatorOrPairContext> operatorOrPair() {
+			return getRuleContexts(OperatorOrPairContext.class);
 		}
-		public ObjPairContext objPair(int i) {
-			return getRuleContext(ObjPairContext.class,i);
+		public OperatorOrPairContext operatorOrPair(int i) {
+			return getRuleContext(OperatorOrPairContext.class,i);
 		}
 		public ObjContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -229,7 +229,7 @@ public class JSONParser extends Parser {
 				setState(36);
 				match(T__0);
 				setState(37);
-				objPair();
+				operatorOrPair();
 				setState(42);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -239,7 +239,7 @@ public class JSONParser extends Parser {
 					setState(38);
 					match(T__1);
 					setState(39);
-					objPair();
+					operatorOrPair();
 					}
 					}
 					setState(44);
@@ -264,35 +264,35 @@ public class JSONParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ObjPairContext extends ParserRuleContext {
+	public static class OperatorOrPairContext extends ParserRuleContext {
 		public PairContext pair() {
 			return getRuleContext(PairContext.class,0);
 		}
-		public TemplateOperatorPairContext templateOperatorPair() {
-			return getRuleContext(TemplateOperatorPairContext.class,0);
+		public OperatorPairContext operatorPair() {
+			return getRuleContext(OperatorPairContext.class,0);
 		}
-		public ObjPairContext(ParserRuleContext parent, int invokingState) {
+		public OperatorOrPairContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_objPair; }
+		@Override public int getRuleIndex() { return RULE_operatorOrPair; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterObjPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterOperatorOrPair(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitObjPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitOperatorOrPair(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitObjPair(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitOperatorOrPair(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ObjPairContext objPair() throws RecognitionException {
-		ObjPairContext _localctx = new ObjPairContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_objPair);
+	public final OperatorOrPairContext operatorOrPair() throws RecognitionException {
+		OperatorOrPairContext _localctx = new OperatorOrPairContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_operatorOrPair);
 		try {
 			setState(51);
 			_errHandler.sync(this);
@@ -308,7 +308,7 @@ public class JSONParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(50);
-				templateOperatorPair();
+				operatorPair();
 				}
 				break;
 			default:
@@ -377,38 +377,38 @@ public class JSONParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class TemplateOperatorPairContext extends ParserRuleContext {
+	public static class OperatorPairContext extends ParserRuleContext {
 		public TerminalNode START_BLOCK_2() { return getToken(JSONParser.START_BLOCK_2, 0); }
-		public List<TemplateOperatorIncompleteObjContext> templateOperatorIncompleteObj() {
-			return getRuleContexts(TemplateOperatorIncompleteObjContext.class);
+		public List<OperatorIncompleteObjContext> operatorIncompleteObj() {
+			return getRuleContexts(OperatorIncompleteObjContext.class);
 		}
-		public TemplateOperatorIncompleteObjContext templateOperatorIncompleteObj(int i) {
-			return getRuleContext(TemplateOperatorIncompleteObjContext.class,i);
+		public OperatorIncompleteObjContext operatorIncompleteObj(int i) {
+			return getRuleContext(OperatorIncompleteObjContext.class,i);
 		}
 		public TerminalNode ELSE_BLOCK_2() { return getToken(JSONParser.ELSE_BLOCK_2, 0); }
 		public TerminalNode END_BLOCK_2() { return getToken(JSONParser.END_BLOCK_2, 0); }
-		public TemplateOperatorPairContext(ParserRuleContext parent, int invokingState) {
+		public OperatorPairContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_templateOperatorPair; }
+		@Override public int getRuleIndex() { return RULE_operatorPair; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterTemplateOperatorPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterOperatorPair(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitTemplateOperatorPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitOperatorPair(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitTemplateOperatorPair(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitOperatorPair(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final TemplateOperatorPairContext templateOperatorPair() throws RecognitionException {
-		TemplateOperatorPairContext _localctx = new TemplateOperatorPairContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_templateOperatorPair);
+	public final OperatorPairContext operatorPair() throws RecognitionException {
+		OperatorPairContext _localctx = new OperatorPairContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_operatorPair);
 		try {
 			setState(67);
 			_errHandler.sync(this);
@@ -419,11 +419,11 @@ public class JSONParser extends Parser {
 				setState(57);
 				match(START_BLOCK_2);
 				setState(58);
-				templateOperatorIncompleteObj();
+				operatorIncompleteObj();
 				setState(59);
 				match(ELSE_BLOCK_2);
 				setState(60);
-				templateOperatorIncompleteObj();
+				operatorIncompleteObj();
 				setState(61);
 				match(END_BLOCK_2);
 				}
@@ -434,7 +434,7 @@ public class JSONParser extends Parser {
 				setState(63);
 				match(START_BLOCK_2);
 				setState(64);
-				templateOperatorIncompleteObj();
+				operatorIncompleteObj();
 				setState(65);
 				match(END_BLOCK_2);
 				}
@@ -453,41 +453,41 @@ public class JSONParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class TemplateOperatorIncompleteObjContext extends ParserRuleContext {
-		public List<ObjPairContext> objPair() {
-			return getRuleContexts(ObjPairContext.class);
+	public static class OperatorIncompleteObjContext extends ParserRuleContext {
+		public List<OperatorOrPairContext> operatorOrPair() {
+			return getRuleContexts(OperatorOrPairContext.class);
 		}
-		public ObjPairContext objPair(int i) {
-			return getRuleContext(ObjPairContext.class,i);
+		public OperatorOrPairContext operatorOrPair(int i) {
+			return getRuleContext(OperatorOrPairContext.class,i);
 		}
-		public TemplateOperatorIncompleteObjContext(ParserRuleContext parent, int invokingState) {
+		public OperatorIncompleteObjContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_templateOperatorIncompleteObj; }
+		@Override public int getRuleIndex() { return RULE_operatorIncompleteObj; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterTemplateOperatorIncompleteObj(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterOperatorIncompleteObj(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitTemplateOperatorIncompleteObj(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitOperatorIncompleteObj(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitTemplateOperatorIncompleteObj(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitOperatorIncompleteObj(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final TemplateOperatorIncompleteObjContext templateOperatorIncompleteObj() throws RecognitionException {
-		TemplateOperatorIncompleteObjContext _localctx = new TemplateOperatorIncompleteObjContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_templateOperatorIncompleteObj);
+	public final OperatorIncompleteObjContext operatorIncompleteObj() throws RecognitionException {
+		OperatorIncompleteObjContext _localctx = new OperatorIncompleteObjContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_operatorIncompleteObj);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(69);
-			objPair();
+			operatorOrPair();
 			setState(74);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -497,7 +497,7 @@ public class JSONParser extends Parser {
 				setState(70);
 				match(T__1);
 				setState(71);
-				objPair();
+				operatorOrPair();
 				}
 				}
 				setState(76);
@@ -519,8 +519,8 @@ public class JSONParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class PairValueContext extends ParserRuleContext {
-		public TemplateOperatorValueContext templateOperatorValue() {
-			return getRuleContext(TemplateOperatorValueContext.class,0);
+		public OperatorValueContext operatorValue() {
+			return getRuleContext(OperatorValueContext.class,0);
 		}
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
@@ -555,7 +555,7 @@ public class JSONParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(77);
-				templateOperatorValue();
+				operatorValue();
 				}
 				break;
 			case T__0:
@@ -595,8 +595,8 @@ public class JSONParser extends Parser {
 		public ValueContext value(int i) {
 			return getRuleContext(ValueContext.class,i);
 		}
-		public TemplateOperatorValueContext templateOperatorValue() {
-			return getRuleContext(TemplateOperatorValueContext.class,0);
+		public OperatorValueContext operatorValue() {
+			return getRuleContext(OperatorValueContext.class,0);
 		}
 		public ArrContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -667,7 +667,7 @@ public class JSONParser extends Parser {
 				setState(94);
 				match(T__4);
 				setState(95);
-				templateOperatorValue();
+				operatorValue();
 				setState(96);
 				match(T__5);
 				}
@@ -686,7 +686,7 @@ public class JSONParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class TemplateOperatorValueContext extends ParserRuleContext {
+	public static class OperatorValueContext extends ParserRuleContext {
 		public TerminalNode START_BLOCK_2() { return getToken(JSONParser.START_BLOCK_2, 0); }
 		public List<ValueContext> value() {
 			return getRuleContexts(ValueContext.class);
@@ -696,28 +696,28 @@ public class JSONParser extends Parser {
 		}
 		public TerminalNode ELSE_BLOCK_2() { return getToken(JSONParser.ELSE_BLOCK_2, 0); }
 		public TerminalNode END_BLOCK_2() { return getToken(JSONParser.END_BLOCK_2, 0); }
-		public TemplateOperatorValueContext(ParserRuleContext parent, int invokingState) {
+		public OperatorValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_templateOperatorValue; }
+		@Override public int getRuleIndex() { return RULE_operatorValue; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterTemplateOperatorValue(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterOperatorValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitTemplateOperatorValue(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitOperatorValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitTemplateOperatorValue(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitOperatorValue(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final TemplateOperatorValueContext templateOperatorValue() throws RecognitionException {
-		TemplateOperatorValueContext _localctx = new TemplateOperatorValueContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_templateOperatorValue);
+	public final OperatorValueContext operatorValue() throws RecognitionException {
+		OperatorValueContext _localctx = new OperatorValueContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_operatorValue);
 		try {
 			setState(110);
 			_errHandler.sync(this);

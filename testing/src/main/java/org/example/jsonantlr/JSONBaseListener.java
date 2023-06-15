@@ -41,13 +41,13 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObjPair(JSONParser.ObjPairContext ctx) { }
+	@Override public void enterOperatorOrPair(JSONParser.OperatorOrPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObjPair(JSONParser.ObjPairContext ctx) { }
+	@Override public void exitOperatorOrPair(JSONParser.OperatorOrPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -65,25 +65,25 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTemplateOperatorPair(JSONParser.TemplateOperatorPairContext ctx) { }
+	@Override public void enterOperatorPair(JSONParser.OperatorPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTemplateOperatorPair(JSONParser.TemplateOperatorPairContext ctx) { }
+	@Override public void exitOperatorPair(JSONParser.OperatorPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTemplateOperatorIncompleteObj(JSONParser.TemplateOperatorIncompleteObjContext ctx) { }
+	@Override public void enterOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTemplateOperatorIncompleteObj(JSONParser.TemplateOperatorIncompleteObjContext ctx) { }
+	@Override public void exitOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -113,13 +113,13 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTemplateOperatorValue(JSONParser.TemplateOperatorValueContext ctx) { }
+	@Override public void enterOperatorValue(JSONParser.OperatorValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTemplateOperatorValue(JSONParser.TemplateOperatorValueContext ctx) { }
+	@Override public void exitOperatorValue(JSONParser.OperatorValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

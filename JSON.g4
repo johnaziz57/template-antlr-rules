@@ -11,44 +11,47 @@ json
 obj
    : '{' pair (',' pair)* '}'
    | '{' '}'
-   | '{' objPair (',' objPair)* '}'
+   | '{' operatorOrPair (',' operatorOrPair)* '}'
 //   | '{' pair (',' objPair)* '}'
    ;
 
 
-objPair
+operatorOrPair
     : pair
-    | templateOperatorPair
+    | operatorPair
     ;
 
 pair
    : STRING ':' pairValue
    ;
 
-templateOperatorPair
-    : START_BLOCK_2 templateOperatorIncompleteObj ELSE_BLOCK_2 templateOperatorIncompleteObj END_BLOCK_2
-    | START_BLOCK_2 templateOperatorIncompleteObj END_BLOCK_2
+operatorPair
+    : START_BLOCK_2 operatorIncompleteObj ELSE_BLOCK_2 operatorIncompleteObj END_BLOCK_2
+    | START_BLOCK_2 operatorIncompleteObj END_BLOCK_2
     ;
 
-templateOperatorIncompleteObj
-    : objPair (',' objPair)*
+operatorIncompleteObj
+    : operatorOrPair (',' operatorOrPair)*
     ;
 
 pairValue
-    : templateOperatorValue
+    : operatorValue
     | value
     ;
 
 arr
    : '[' value (',' value)* ']'
    | '[' ']'
-   | '[' templateOperatorValue ']'
+   | '[' operatorValue ']'
    ;
 
-templateOperatorValue
+// TODO value inside TemplateOperatorValue is not good enough
+operatorValue
     : START_BLOCK_2 value ELSE_BLOCK_2 value END_BLOCK_2
     | START_BLOCK_2 value END_BLOCK_2
     ;
+
+
 
 value
    : STRING
