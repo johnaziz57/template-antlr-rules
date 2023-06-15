@@ -28,15 +28,15 @@ public interface JSONListener extends ParseTreeListener {
 	 */
 	void exitObj(JSONParser.ObjContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JSONParser#operatorOrPair}.
+	 * Enter a parse tree produced by {@link JSONParser#helperOrPair}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperatorOrPair(JSONParser.OperatorOrPairContext ctx);
+	void enterHelperOrPair(JSONParser.HelperOrPairContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JSONParser#operatorOrPair}.
+	 * Exit a parse tree produced by {@link JSONParser#helperOrPair}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperatorOrPair(JSONParser.OperatorOrPairContext ctx);
+	void exitHelperOrPair(JSONParser.HelperOrPairContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JSONParser#pair}.
 	 * @param ctx the parse tree
@@ -48,25 +48,25 @@ public interface JSONListener extends ParseTreeListener {
 	 */
 	void exitPair(JSONParser.PairContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JSONParser#operatorPair}.
+	 * Enter a parse tree produced by {@link JSONParser#helperPair}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperatorPair(JSONParser.OperatorPairContext ctx);
+	void enterHelperPair(JSONParser.HelperPairContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JSONParser#operatorPair}.
+	 * Exit a parse tree produced by {@link JSONParser#helperPair}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperatorPair(JSONParser.OperatorPairContext ctx);
+	void exitHelperPair(JSONParser.HelperPairContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JSONParser#operatorIncompleteObj}.
+	 * Enter a parse tree produced by {@link JSONParser#helperIncompleteObj}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx);
+	void enterHelperIncompleteObj(JSONParser.HelperIncompleteObjContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JSONParser#operatorIncompleteObj}.
+	 * Exit a parse tree produced by {@link JSONParser#helperIncompleteObj}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx);
+	void exitHelperIncompleteObj(JSONParser.HelperIncompleteObjContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JSONParser#pairValue}.
 	 * @param ctx the parse tree
@@ -88,15 +88,25 @@ public interface JSONListener extends ParseTreeListener {
 	 */
 	void exitArr(JSONParser.ArrContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JSONParser#operatorValue}.
+	 * Enter a parse tree produced by {@link JSONParser#helperArrayValue}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperatorValue(JSONParser.OperatorValueContext ctx);
+	void enterHelperArrayValue(JSONParser.HelperArrayValueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link JSONParser#operatorValue}.
+	 * Exit a parse tree produced by {@link JSONParser#helperArrayValue}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperatorValue(JSONParser.OperatorValueContext ctx);
+	void exitHelperArrayValue(JSONParser.HelperArrayValueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link JSONParser#helper}.
+	 * @param ctx the parse tree
+	 */
+	void enterHelper(JSONParser.HelperContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JSONParser#helper}.
+	 * @param ctx the parse tree
+	 */
+	void exitHelper(JSONParser.HelperContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link JSONParser#value}.
 	 * @param ctx the parse tree

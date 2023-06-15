@@ -3,7 +3,7 @@
   "layout": {{#gt groups.length 0}}
                 {{#each groups as | purchasesPageSection |}}
                     {{#eq purchasesPageSection.groupIdentifier identifier}}
-                        {{#template 'core-vertical-tiles-purchases-category-root' groupData=purchasesPageSection}}{{/template}}
+                        {{{template 'core-vertical-tiles-purchases-category-root' groupData=purchasesPageSection}}}
                     {{/eq}}
                 {{/each}}
             {{/gt}},

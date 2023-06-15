@@ -18,9 +18,9 @@ public class JSONLexer extends Lexer {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		TEMPLATE=10, START_BLOCK_2=11, ELSE_BLOCK_2=12, END_BLOCK_2=13, L_OPERATOR_2=14, 
-		R_OPERATOR_2=15, L_OPERATOR_3=16, R_OPERATOR_3=17, T_EXPRESSION=18, STRING=19, 
-		NUMBER=20, WS=21;
+		TEMPLATE_HELPER=10, START_HELPER_BLOCK_2=11, ELSE_BLOCK_2=12, END_HELPER_BLOCK_2=13, 
+		L_CURLY_2=14, R_CURLY_2=15, L_CURLY_3=16, R_CURLY_3=17, T_EXPRESSION=18, 
+		STRING=19, NUMBER=20, WS=21;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -32,8 +32,8 @@ public class JSONLexer extends Lexer {
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
-			"TEMPLATE", "START_BLOCK_2", "ELSE_BLOCK_2", "END_BLOCK_2", "L_OPERATOR_2", 
-			"R_OPERATOR_2", "L_OPERATOR_3", "R_OPERATOR_3", "T_EXPRESSION", "STRING", 
+			"TEMPLATE_HELPER", "START_HELPER_BLOCK_2", "ELSE_BLOCK_2", "END_HELPER_BLOCK_2", 
+			"L_CURLY_2", "R_CURLY_2", "L_CURLY_3", "R_CURLY_3", "T_EXPRESSION", "STRING", 
 			"ESC", "UNICODE", "HEX", "SAFECODEPOINT", "NUMBER", "INT", "EXP", "WS"
 		};
 	}
@@ -48,9 +48,10 @@ public class JSONLexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, "TEMPLATE", 
-			"START_BLOCK_2", "ELSE_BLOCK_2", "END_BLOCK_2", "L_OPERATOR_2", "R_OPERATOR_2", 
-			"L_OPERATOR_3", "R_OPERATOR_3", "T_EXPRESSION", "STRING", "NUMBER", "WS"
+			null, null, null, null, null, null, null, null, null, null, "TEMPLATE_HELPER", 
+			"START_HELPER_BLOCK_2", "ELSE_BLOCK_2", "END_HELPER_BLOCK_2", "L_CURLY_2", 
+			"R_CURLY_2", "L_CURLY_3", "R_CURLY_3", "T_EXPRESSION", "STRING", "NUMBER", 
+			"WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();

@@ -11,48 +11,54 @@ json
 obj
    : '{' pair (',' pair)* '}'
    | '{' '}'
-   | '{' operatorOrPair (',' operatorOrPair)* '}'
+   | '{' helperOrPair (',' helperOrPair)* '}'
 //   | '{' pair (',' objPair)* '}'
    ;
 
 
-operatorOrPair
+helperOrPair
     : pair
-    | operatorPair
+    | helperPair
     ;
 
 pair
    : STRING ':' pairValue
    ;
 
-operatorPair
-    : START_BLOCK_2 operatorIncompleteObj ELSE_BLOCK_2 operatorIncompleteObj END_BLOCK_2
-    | START_BLOCK_2 operatorIncompleteObj END_BLOCK_2
+helperPair
+    : START_HELPER_BLOCK_2 helperIncompleteObj ELSE_BLOCK_2 helperIncompleteObj END_HELPER_BLOCK_2
+    | START_HELPER_BLOCK_2 helperIncompleteObj END_HELPER_BLOCK_2
     ;
 
-operatorIncompleteObj
-    : operatorOrPair (',' operatorOrPair)*
+helperIncompleteObj
+    : helperOrPair (',' helperOrPair)*
     ;
 
 pairValue
-    : operatorValue
+    : helperArrayValue
     | value
     ;
 
 arr
-   : '[' value (',' value)* ']'
+   : '[' (helperArrayValue)+ ']'
+   | '[' value (',' value)* ']'
    | '[' ']'
-   | '[' operatorValue ']'
    ;
 
-// TODO value inside TemplateOperatorValue is not good enough
-operatorValue
-    : START_BLOCK_2 value ELSE_BLOCK_2 value END_BLOCK_2
-    | START_BLOCK_2 value END_BLOCK_2
+// TODO value inside helperArrayValue is not good enough
+helperArrayValue
+    : START_HELPER_BLOCK_2 (value | helper)+ ELSE_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
+    | START_HELPER_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
+    ;
+
+helper
+    : START_HELPER_BLOCK_2 value ELSE_BLOCK_2 value END_HELPER_BLOCK_2
+    | START_HELPER_BLOCK_2 value END_HELPER_BLOCK_2
     ;
 
 
 
+// TODO try later to include helper inside value
 value
    : STRING
    | NUMBER
@@ -61,38 +67,38 @@ value
    | 'true'
    | 'false'
    | 'null'
-   | TEMPLATE
+   | TEMPLATE_HELPER
    ;
 
-TEMPLATE
-    : L_OPERATOR_3 'template' (SAFECODEPOINT | WS)* R_OPERATOR_3
+TEMPLATE_HELPER
+    : L_CURLY_3 'template' (SAFECODEPOINT | WS)* R_CURLY_3
     ;
 
-START_BLOCK_2
-    : L_OPERATOR_2 '#' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+START_HELPER_BLOCK_2
+    : L_CURLY_2 '#' (SAFECODEPOINT)+ [WS]* R_CURLY_2
     ;
 
 ELSE_BLOCK_2
-    : L_OPERATOR_2 'else' R_OPERATOR_2
+    : L_CURLY_2 'else' R_CURLY_2
     ;
 
-END_BLOCK_2
-    : L_OPERATOR_2 '/' (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+END_HELPER_BLOCK_2
+    : L_CURLY_2 '/' (SAFECODEPOINT)+ [WS]* R_CURLY_2
     ;
 
-L_OPERATOR_2
+L_CURLY_2
     : '{{'
     ;
 
-R_OPERATOR_2
+R_CURLY_2
     : '}}'
     ;
 
-L_OPERATOR_3
+L_CURLY_3
     : '{{{'
     ;
 
-R_OPERATOR_3
+R_CURLY_3
     : '}}}'
     ;
 
@@ -101,7 +107,7 @@ R_OPERATOR_3
 // TODO define operators with 3 curly braces `{{{`
 // Not used
 T_EXPRESSION
-    : L_OPERATOR_2 [WS]* (SAFECODEPOINT)+ [WS]* R_OPERATOR_2
+    : L_CURLY_2 [WS]* (SAFECODEPOINT)+ [WS]* R_CURLY_2
     ;
 
 STRING

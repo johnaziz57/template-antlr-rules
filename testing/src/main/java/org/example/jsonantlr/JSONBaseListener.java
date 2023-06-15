@@ -41,13 +41,13 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperatorOrPair(JSONParser.OperatorOrPairContext ctx) { }
+	@Override public void enterHelperOrPair(JSONParser.HelperOrPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperatorOrPair(JSONParser.OperatorOrPairContext ctx) { }
+	@Override public void exitHelperOrPair(JSONParser.HelperOrPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -65,25 +65,25 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperatorPair(JSONParser.OperatorPairContext ctx) { }
+	@Override public void enterHelperPair(JSONParser.HelperPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperatorPair(JSONParser.OperatorPairContext ctx) { }
+	@Override public void exitHelperPair(JSONParser.HelperPairContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx) { }
+	@Override public void enterHelperIncompleteObj(JSONParser.HelperIncompleteObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx) { }
+	@Override public void exitHelperIncompleteObj(JSONParser.HelperIncompleteObjContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -113,13 +113,25 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOperatorValue(JSONParser.OperatorValueContext ctx) { }
+	@Override public void enterHelperArrayValue(JSONParser.HelperArrayValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOperatorValue(JSONParser.OperatorValueContext ctx) { }
+	@Override public void exitHelperArrayValue(JSONParser.HelperArrayValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterHelper(JSONParser.HelperContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHelper(JSONParser.HelperContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -32,7 +32,7 @@ public class JSONBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOperatorOrPair(JSONParser.OperatorOrPairContext ctx) { return visitChildren(ctx); }
+	@Override public T visitHelperOrPair(JSONParser.HelperOrPairContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -46,14 +46,14 @@ public class JSONBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOperatorPair(JSONParser.OperatorPairContext ctx) { return visitChildren(ctx); }
+	@Override public T visitHelperPair(JSONParser.HelperPairContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOperatorIncompleteObj(JSONParser.OperatorIncompleteObjContext ctx) { return visitChildren(ctx); }
+	@Override public T visitHelperIncompleteObj(JSONParser.HelperIncompleteObjContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -74,7 +74,14 @@ public class JSONBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitOperatorValue(JSONParser.OperatorValueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitHelperArrayValue(JSONParser.HelperArrayValueContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitHelper(JSONParser.HelperContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
