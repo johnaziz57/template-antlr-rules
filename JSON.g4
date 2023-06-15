@@ -45,14 +45,12 @@ arr
    | '[' ']'
    ;
 
+//TODO define special unless helper
 helper
     : START_HELPER_BLOCK_2 (value | helper)+ ELSE_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
     | START_HELPER_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
     ;
 
-
-
-// TODO try later to include helper inside value
 value
    : STRING
    | NUMBER
@@ -94,14 +92,6 @@ L_CURLY_3
 
 R_CURLY_3
     : '}}}'
-    ;
-
-
-
-// TODO define operators with 3 curly braces `{{{`
-// Not used
-T_EXPRESSION
-    : L_CURLY_2 [WS]* (SAFECODEPOINT)+ [WS]* R_CURLY_2
     ;
 
 STRING
