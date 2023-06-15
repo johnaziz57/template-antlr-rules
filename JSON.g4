@@ -35,25 +35,19 @@ helperIncompleteObj
     ;
 
 pairValue
-    : helperArrayValue
+    : helper
     | value
     ;
 
 arr
-   : '[' (helperArrayValue)+ ']'
+   : '[' (helper)+ ']'
    | '[' value (',' value)* ']'
    | '[' ']'
    ;
 
-// TODO value inside helperArrayValue is not good enough
-helperArrayValue
+helper
     : START_HELPER_BLOCK_2 (value | helper)+ ELSE_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
     | START_HELPER_BLOCK_2 (value | helper)+ END_HELPER_BLOCK_2
-    ;
-
-helper
-    : START_HELPER_BLOCK_2 value ELSE_BLOCK_2 value END_HELPER_BLOCK_2
-    | START_HELPER_BLOCK_2 value END_HELPER_BLOCK_2
     ;
 
 

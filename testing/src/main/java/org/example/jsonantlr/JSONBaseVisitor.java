@@ -74,13 +74,6 @@ public class JSONBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements J
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitHelperArrayValue(JSONParser.HelperArrayValueContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitHelper(JSONParser.HelperContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

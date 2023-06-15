@@ -59,12 +59,6 @@ public interface JSONVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArr(JSONParser.ArrContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link JSONParser#helperArrayValue}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitHelperArrayValue(JSONParser.HelperArrayValueContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link JSONParser#helper}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

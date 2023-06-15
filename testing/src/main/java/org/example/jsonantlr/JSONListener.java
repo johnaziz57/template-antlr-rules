@@ -88,16 +88,6 @@ public interface JSONListener extends ParseTreeListener {
 	 */
 	void exitArr(JSONParser.ArrContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link JSONParser#helperArrayValue}.
-	 * @param ctx the parse tree
-	 */
-	void enterHelperArrayValue(JSONParser.HelperArrayValueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link JSONParser#helperArrayValue}.
-	 * @param ctx the parse tree
-	 */
-	void exitHelperArrayValue(JSONParser.HelperArrayValueContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link JSONParser#helper}.
 	 * @param ctx the parse tree
 	 */
