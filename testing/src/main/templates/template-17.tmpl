@@ -1,0 +1,42 @@
+{
+  "template_id": "c-s",
+  "layout": {
+  "id": "c-s",
+  "type": "BLOCK",
+  "layout": {
+      "type": "FLOW",
+      "axis": "VERTICAL"
+  },
+  "size": {
+      "crossAxis": "12g"
+  },
+  "children": [
+              {{#and subHeader (gt sellingUnits.length 0)}}
+              {
+                  "id": "horizontal",
+                  "type": "BLOCK",
+                  "layout": {
+                      "type": "FLOW",
+                      "axis": "VERTICAL"
+                  },
+                  "size": {
+                      "crossAxis": "12g"
+                  },
+                  "children": [
+                      {
+                        "type": "PML",
+                        "id": "1",
+                        "size": {
+                          "mainAxis":48,
+                          "crossAxis": "12g"
+                          },
+                          "pml":
+                          {{{template 'c-s' subHeader=subHeader  }}}
+                      }
+                  ]
+              },
+              {{/and}}
+  ]
+},
+  "metadata": {}
+}

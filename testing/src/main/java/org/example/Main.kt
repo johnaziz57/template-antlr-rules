@@ -32,6 +32,7 @@ object Main {
             "testing/src/main/templates/template-15.tmpl",
             "testing/src/main/templates/template-16.tmpl",
             "testing/src/main/templates/template-17.tmpl",
+            "testing/src/main/templates/template-18.tmpl",
         )
         val red = "\u001b[31m"
         val green = "\u001b[32m"
