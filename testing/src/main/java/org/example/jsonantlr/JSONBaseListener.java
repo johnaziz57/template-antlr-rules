@@ -113,6 +113,18 @@ public class JSONBaseListener implements JSONListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterHelperOrValue(JSONParser.HelperOrValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitHelperOrValue(JSONParser.HelperOrValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterHelper(JSONParser.HelperContext ctx) { }
 	/**
 	 * {@inheritDoc}

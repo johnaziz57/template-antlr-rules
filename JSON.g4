@@ -35,16 +35,20 @@ helperIncompleteObj
     ;
 
 pairValue
-    : helper
-    | value
+    : value
+    | helper
     ;
 
 arr
-   : '[' (helper)+ ']'
-   | '[' value (',' value)* ']'
+   : '[' value (',' value)* ']'
    | '[' ']'
+   | '[' (helperOrValue)+ ']'
    ;
 
+helperOrValue
+    : value
+    | helper
+    ;
 //TODO define special unless helper
 //TODO nested if else(s)
 helper
@@ -68,7 +72,7 @@ TEMPLATE_HELPER
     ;
 
 START_HELPER_BLOCK_2
-    : L_CURLY_2 '#' (SAFECODEPOINT)+ [WS]* R_CURLY_2
+    : L_CURLY_2 '#' (SAFEHELPERCODE)+ (WS)* (SAFEHELPERCODE | WS)* R_CURLY_2
     ;
 
 ELSE_BLOCK_2
@@ -76,7 +80,7 @@ ELSE_BLOCK_2
     ;
 
 END_HELPER_BLOCK_2
-    : L_CURLY_2 '/' (SAFECODEPOINT)+ [WS]* R_CURLY_2
+    : L_CURLY_2 '/' (SAFEHELPERCODE)+ R_CURLY_2
     ;
 
 L_CURLY_2
@@ -115,6 +119,9 @@ fragment HEX
    : [0-9a-fA-F]
    ;
 
+fragment SAFEHELPERCODE
+    : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']'
+    ;
 
 fragment SAFECODEPOINT
    : ~ ["\\\u0000-\u001F]
@@ -127,6 +134,7 @@ NUMBER
 
 
 fragment INT
+   // integer part forbis leading 0s (e.g. `01`)
    : '0' | [1-9] [0-9]*
    ;
 

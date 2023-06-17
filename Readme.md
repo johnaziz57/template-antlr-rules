@@ -1,6 +1,18 @@
 # TODO
 
 - [ ] Test arrays
+- [ ] Handle `unless`
+- [ ] This case is not working. The problem is with "+"
+```
+{
+  "layout": {
+        "layout": {},
+        {{#with "+" }}
+        "children": []
+        {{/with}}
+    }
+}
+```
 
 # Done
 
@@ -43,6 +55,19 @@ while this case is not working
     "context": {}
 }
 ```
+
+# How to
+
+To generate a new set of rules after updating the grammar
+```bash
+antlr -Dlanguage=Java JSON.g4
+```
+
+To generate a new set of rules after updating the grammar with visitor
+```bash
+antlr -Dlanguage=Java JSON.g4 -visitor
+```
+
 
 # Dependencies
 
