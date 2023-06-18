@@ -9,9 +9,9 @@ json
    ;
 
 obj
-   : '{' pair (',' pair)* '}'
+   : '{' helperOrPair (',' helperOrPair)* '}'
+   | '{' pair (',' pair)* '}'
    | '{' '}'
-   | '{' helperOrPair (',' helperOrPair)* '}'
 //   | '{' pair (',' objPair)* '}'
    ;
 
@@ -40,9 +40,9 @@ pairValue
     ;
 
 arr
-   : '[' value (',' value)* ']'
+   : '[' helperOrValue (','? helperOrValue)*  ']'
+   | '[' value (',' value)* ']'
    | '[' ']'
-   | '[' (helperOrValue)+ ']'
    ;
 
 helperOrValue
