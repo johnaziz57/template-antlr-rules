@@ -1,0 +1,119 @@
+{
+  "template_id": "core-L1-category-page-vertical-list-section",
+  "layout": {
+        "type": "BLOCK",
+        "id": "core-L1-category-page-vertical-list-section",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL"
+        },
+        "size": {
+            "crossAxis": "12g"
+        },
+        "children": [
+            {   "type":"BLOCK",
+                "id":"core-L1-category-page-list",
+                "layout": {
+                    "type":"FLOW",
+                    "axis":"VERTICAL",
+                    "corner_radius": {
+                        "topLeft": 12,
+                        "topRight": 12,
+                        "bottomRight": 12,
+                        "bottomLeft": 12
+                    },
+                    "backgroundColor": "WHITE",
+                    "padding": {
+                        "right":8,
+                        "left":8
+                    }
+                    },
+                    "size": {
+                        "cross_axis":"12g"
+                    },
+                    "children": [
+                        {{#each L1CategoryPageData as | item |}}
+                        {{#and item.includedInCategoryTree (gt item.subcategoryIds.length 0)}}
+                        {{#with (
+                            eq pppCategoryTreeL3FeatureFlag.isEmpty true
+                            yes=(join '' "nl.picnic-supermarkt://categories/" L1ParentCategory "/l2/" item.id)
+                            no=(join '' "nl.picnic-supermarkt://store/page;id=L2-category-page-root,category_id=" item.id))
+                            as | deeplink |}}
+                        {
+                            "type":"PML",
+                            "id": "core-list-item-category-{{item.id}}",
+                            "analytics": {
+                                "contexts":[
+                                    {
+                                        "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                        "data": {
+                                            "type":"pml",
+                                            "position": {
+                                                "x": 1,
+                                                "y": {{math @index "+" 1}}
+                                            }
+                                        }
+                                    }, {
+                                        "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                        "data": {
+                                            "template_id":"core-L1-category-page-vertical-list-section",
+                                            "type": "category_tree_item",
+                                            "deeplink": "{{deeplink}}"
+                                        }
+                                    },
+                                    {
+                                        "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                        "data": {
+                                            "name": "{{item.name}}",
+                                            "type": "category_tree_item"
+                                        }
+                                    }
+                                ]
+                            },
+                            "size": {
+                                "main_axis":81,
+                                "cross_axis":"12g"
+                            },
+                            {{#if item.thumbnailImageFallbackImageId}}
+                                "pml": {{{template 'core-list-item-template' title=item.name deeplink=deeplink image=item.thumbnailImageFallbackImageId}}}
+                            {{else}}
+                                "pml": {{{template 'core-list-item-template' title=item.name deeplink=deeplink image="empty"}}}
+                            {{/if}}
+                        }
+                        {{/with}}
+                        {{#unless @last}}
+                        ,{
+                            "type":"PML",
+                            "id": "core-list-item-category-{{item.id}}-divider",
+                            "size": {
+                                "main_axis":1,
+                                "cross_axis":"12g"
+                            },
+                            "pml": {
+                                "pml_version": "0.1.0",
+                                "component":  {
+                                    "type": "CONTAINER",
+                                    "height": 1,
+                                    "background_color": "GREY1",
+                                    "width": "100%"
+                                }
+                            }
+                        }
+                        ,
+                        {{/unless}}
+                        {{/and}}
+                        {{/each}}
+                    ]
+            }
+        ]
+    },
+  "context": {
+    "pppCategoryTreeL3FeatureFlag": {
+      "$query": "SELECT * FROM feature_flags WHERE id IN ('PPP_CATEGORY_TREE_L3')"
+    }
+  },
+  "metadata": {
+    "title": "Category tree list",
+    "properties_schema": "{\"properties\":{}}"
+  }
+}

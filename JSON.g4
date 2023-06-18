@@ -68,7 +68,7 @@ value
    ;
 
 TEMPLATE_HELPER
-    : L_CURLY_3 'template' (SAFE_CODE_POINT)* R_CURLY_3
+    : L_CURLY_3 'template' (WS|SAFE_HELPER_CODE_POINT)* R_CURLY_3
     ;
 
 ONE_CLAUSE_HELPER
