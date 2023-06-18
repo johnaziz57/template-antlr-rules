@@ -26,8 +26,8 @@ pair
    ;
 
 helperPair
-    : START_HELPER_BLOCK_2 helperIncompleteObj ELSE_BLOCK_2 helperIncompleteObj END_HELPER_BLOCK_2
-    | START_HELPER_BLOCK_2 helperIncompleteObj END_HELPER_BLOCK_2
+    : START_HELPER_BLOCK_2 ','? helperIncompleteObj ','? ELSE_BLOCK_2 ','? helperIncompleteObj ','? END_HELPER_BLOCK_2
+    | START_HELPER_BLOCK_2 ','? helperIncompleteObj ','? END_HELPER_BLOCK_2
     ;
 
 helperIncompleteObj
