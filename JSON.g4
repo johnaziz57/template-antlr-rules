@@ -64,11 +64,16 @@ value
    | 'true'
    | 'false'
    | 'null'
+   | ONE_CLAUSE_HELPER
    | TEMPLATE_HELPER
    ;
 
 TEMPLATE_HELPER
     : L_CURLY_3 'template' (SAFE_CODE_POINT)* R_CURLY_3
+    ;
+
+ONE_CLAUSE_HELPER
+    : L_CURLY_2 ONE_CLAUSE_HELPER_NAME WS (SAFE_HELPER_CODE_POINT | WS)+ R_CURLY_2
     ;
 
 START_HELPER_BLOCK_2
@@ -121,6 +126,10 @@ fragment HEX
 
 fragment SAFE_HELPER_CODE_POINT
     : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']'
+    ;
+
+ONE_CLAUSE_HELPER_NAME
+    : 'math'
     ;
 
 fragment SAFE_CODE_POINT
