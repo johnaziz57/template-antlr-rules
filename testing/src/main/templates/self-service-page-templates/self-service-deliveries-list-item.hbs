@@ -1,0 +1,71 @@
+{
+  "template_id": "self-service-deliveries-list-item",
+  "layout": {
+    {{#with delivery}}
+    {{#with (join '' deliveryFeedbackDeeplink.prefix deliveryId deliveryFeedbackDeeplink.suffix issue) as | finalDeeplink |}}
+    "type": "PML",
+    "id": "list-item-id-{{deliveryId}}",
+    "analytics": {
+      "contexts": [
+        {
+          "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+          "data": {"type": "pml"}
+        }, 
+        {
+          "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+          "data": {
+            "template_id": "core-list-item-template",
+            "type": "list_item",
+            "deeplink": "{{finalDeeplink}}"
+          } 
+        }
+      ]
+    },
+    "size": {
+      "main_axis": 56,
+      "cross_axis": "12g"
+    },
+    {{#eq (deltaCalendarDays expectedDeliveryWindowStart) -1}}
+    "pml": {{#template 'core-list-item-template' title=(capitalizeFirst(localize(COPY.yesterday))) deeplink=finalDeeplink actionType=actionType}}{{/template}}
+    {{else}}
+    {{#eq (deltaCalendarDays expectedDeliveryWindowStart) 0}}
+    "pml": {{#template 'core-list-item-template' title=(capitalizeFirst(localize(COPY.today))) deeplink=finalDeeplink actionType=actionType}}{{/template}}
+    {{else}}
+    "pml": {{#template 'core-list-item-template' title=(capitalizeFirst(dateFormat expectedDeliveryWindowStart (localize(COPY.dateFormat)) (localize(COPY.locale)))) deeplink=finalDeeplink actionType=actionType}}{{/template}}
+    {{/eq}}
+    {{/eq}}
+    {{/with}}
+    {{/with}}
+  },
+  "context": {
+    "COPY": {
+      "dateFormat": {
+        "nl": "EEEE d MMMM",
+        "de": "EEEE d. MMMM",
+        "fr": "EEEE d MMMM"
+      },
+      "locale": {
+        "nl": "nl",
+        "de": "de",
+        "fr": "fr"
+      },
+      "today": {
+        "nl": "Vandaag",
+        "de": "Heute",
+        "fr": "Aujourd'hui"
+      },
+      "yesterday": {
+        "nl": "Gisteren",
+        "de": "Gestern",
+        "fr": "Hier"
+      }
+    },
+    "deliveryFeedbackDeeplink": {
+      "$literal": {
+        "prefix": "app.picnic://store/delivery-feedback;id=",
+        "suffix": ",issue="
+      }
+    }
+  },
+  "metadata": {}
+}

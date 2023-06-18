@@ -1,0 +1,22 @@
+{
+  "template_id": "horizontal-tiles-section-wrapper",
+  "layout": "  {{#template 'core-horizontal-tiles-section' articles=horizontalTilesSectionArticles subHeader=horizontalTilesSection.subHeader moreButtonDeeplink=horizontalTilesSection.moreButtonDeeplink numberOfTiles=horizontalTilesSection.carouselConfig.numberOfTiles}}\n  {{/template}}",
+  "context": {
+    "horizontalTilesSectionArticles": {
+      "$query": "SELECT * FROM articles WHERE id IN ('11414648', '11429835', '10075923', '10289118', '10075949', '10074665', '11716285', '11429666', '10075021', '11628542', '90006104')"
+    },
+    "horizontalTilesSection": {
+      "$literal": {
+        "subHeader": {
+          "title": "string"
+        },
+        "moreButtonDeeplink": {
+          "target": "string"
+        },
+        "carouselConfig": {
+          "numberOfTiles": "number"
+        }
+      }
+    }
+  }
+}

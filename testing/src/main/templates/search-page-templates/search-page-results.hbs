@@ -1,0 +1,232 @@
+{
+  "template_id": "search-page-results",
+  "layout": {
+    {{!--
+      The search data source accepts has the following API:
+      ```
+      [
+        {
+          "sellingUnits": {
+            "length": number, <- is_recipe ? 0 : number of selling units
+            "data": Article[], <- is_recipe ? empty list : list of selling units
+            "filters": ArticleFilter[] <- is_recipe ? empty list : list of selling units
+          },
+          "isRecipe": boolean, <- Forwards `is_recipe` parameter
+          "recipes": {
+            "length": number, <- Always reflects number of recipes, regardless of `is_recipe`
+            "data": Recipe[] <- is_recipe ? list of recipes : empty list
+          },
+          "requestedFilters": ArticleFilter[],
+          "searchTerm": string,
+          "spellCorrection": boolean
+        }
+      ]
+      ```
+    --}}
+    "id": "search-page-results",
+    {{#with search_results.[0] as |results|}}
+    {{!--
+    The header will be visible, if there are filters. The possible cases are:
+        1. There are only selling units in the search results with applicable filters.
+        2. There are both selling units and recipes in the search results. At least one filter `recipes` will be visible.
+
+    The header will be hidden, if there are no filters. The possible cases are:
+        1. There are only selling units in the search results with no applicable filters.
+        2. There are only recipes in the search results. The `Recipes` filter is not going to be shown as it is now redundant.
+      Since the data source doesn't return the `sellingUnits.length` when `is_recipe=true`, to avoid showing
+      the recipe button when there are no selling units, we check if it's the first time that page is rendered,
+      and if there are some articles.
+     --}}
+    {{#or
+      (gt results.sellingUnits.filters.length 0)
+      (and
+        (not recipe_search_feature_flag.isEmpty)
+        (gt results.recipes.length 0)
+        (or
+          is_not_first_search_result
+          (and (not is_not_first_search_result) (gt results.sellingUnits.length 0))
+        )
+      )
+    }}
+    {{!--
+      `has_recipes_initial_filter` is true when all of the following is true
+        1. First time to do search
+        2. Recipe results are more than 0
+        3. Recipe FF is true
+
+      `has_recipes_initial_filter` will be passed to the filter template to add `Recipes` as part of the
+      `initial_filters` in the url
+
+    --}}
+      "header": {
+        "type": "PML",
+        "component": {{{template
+          'search-page-header'
+          filters=results.sellingUnits.filters
+          search_term=search_term
+          corrected_search_term=results.searchTerm
+          initial_filters=initial_filters
+          has_recipes_initial_filter=(
+            and
+              (gt results.recipes.length 0)
+              (not recipe_search_feature_flag.isEmpty)
+              (not is_not_first_search_result)
+          )
+          is_recipe=is_recipe
+          recipes_length=results.recipes.length
+          has_recipe_button=(
+            and
+              (gt results.recipes.length 0)
+              (eq selected_filters.length 0)
+              (not recipe_search_feature_flag.isEmpty)
+          )
+        }}},
+      },
+    {{/or}}
+
+    "body":
+      {
+        "type": "BLOCK",
+        "id": "search-page-results-root",
+        "analytics": {
+          "contexts": [
+            {
+              "schema": "iglu:nl.picnic.snowplow/search/jsonschema/1-4-0",
+              "data": {
+                "search_id": "{{#uuid}}{{/uuid}}",
+                "query": "{{search_term}}",
+                {{#gt from.length 0}}
+                "from": "{{{from.[0]}}}",
+                {{/gt}}
+                {{#if results.spellCorrection}}
+                "query_corrected": "{{results.searchTerm}}",
+                {{/if}}
+                "is_first_search_result": {{not is_not_first_search_result}},
+                "product_ids": [
+                  {{#each results.sellingUnits.data as |sellingUnit|}}
+                    "{{sellingUnit.id}}",
+                  {{/each}}
+                ],
+                "recipe_ids": [
+                  {{#not (gt results.sellingUnits.length 0)}}
+                    {{#each results.recipes.data as |recipe|}}
+                      "{{recipe.id}}",
+                    {{/each}}
+                  {{/not}}
+                ],
+                {{#gt initial_filters.length 0}}
+                  "initial_filters": [
+                    {{#each initial_filters as |initialFilter|}}
+                      "{{initialFilter}}",
+                    {{/each}}
+                  ],
+                {{else}}
+                  "initial_filters": [
+                  {{!-- Add `Recipes` only when all of the following is true
+                      1. Recipe results are more than 0
+                      2. Recipe FF is true
+                      3. First time to do search
+
+                    Why only on the first time to do search? because `Recipes` will be added as part of
+                    the `initial_filter` parameter of in the filters' urls, so subsequent searches
+                    will have `Recipes` as part of the `initial_filters` by default.
+
+                  --}}
+                    {{#and
+                        (gt results.recipes.length 0)
+                        (not recipe_search_feature_flag.isEmpty)
+                        (and (not is_not_first_search_result) (gt results.sellingUnits.length 0))
+                    }}
+                      "Recipes",
+                    {{/and}}
+                    {{#each results.sellingUnits.filters as |initialFilter|}}
+                      "{{{initialFilter.name}}}",
+                    {{/each}}
+                  ],
+                {{/gt}}
+                "selected_filters": [
+                  {{#if is_recipe }}"Recipes",{{/if}}
+                  {{#each results.sellingUnits.filters as |filter|}}
+                    {{#if filter.selected}}
+                      "{{{filter.name}}}",
+                    {{/if}}
+                  {{/each}}
+                ],
+              }
+            }
+          ]
+        },
+        "size": {
+          "cross_axis": "SCREEN_WIDTH"
+        },
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL"
+        },
+        "children": [
+          {{#or
+            (gt results.sellingUnits.length 0)
+            (and (not recipe_search_feature_flag.isEmpty) (gt results.recipes.length 0))
+          }}
+            {{{template
+              'search-page-content'
+              sellingUnits=results.sellingUnits
+              recipes=results.recipes
+              spellCorrection=results.spellCorrection
+              searchTerm=results.searchTerm
+            }}}
+          {{else}}
+            {{{template 'search-page-no-results-block'}}}
+          {{/or}}
+        ]
+      }
+    {{/with}}
+  },
+  "context": {
+    "search_term": {
+      "$param": "search_term"
+    },
+    "from": {
+      "$param": {
+        "name": "from",
+        "type": "list-of-strings",
+        "nullable": true
+      }
+    },
+    "is_recipe": {
+      "$param": {
+        "name": "is_recipe",
+        "type": "boolean",
+        "nullable": true
+      }
+    },
+    "is_not_first_search_result": {
+      "$param": {
+        "name": "is_not_first_search_result",
+        "type": "boolean",
+        "nullable": true
+      }
+    },
+    "selected_filters": {
+      "$param": {
+        "name": "selected_filters",
+        "type": "list-of-strings",
+        "nullable": true
+      }
+    },
+    "initial_filters": {
+      "$param": {
+        "name": "initial_filters",
+        "type": "list-of-strings",
+        "nullable": true
+      }
+    },
+    "search_results": {
+      "$query": "SELECT * FROM search_result WHERE search_term = ${search_term} AND requested_filters IN (${selected_filters}) AND is_recipe = ${is_recipe}"
+    },
+    "recipe_search_feature_flag": {
+      "$query": "SELECT * FROM feature_flags WHERE id IN ('PPP_RECIPE_SEARCH')"
+    }
+  },
+  "metadata": {}
+}

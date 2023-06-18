@@ -1,0 +1,57 @@
+{
+  "template_id": "core-selling-unit-tile-template",
+  "layout": {
+    "id": "selling-unit-{{sellingUnit.id}}-tile",
+    "size": {
+      "mainAxis": "(SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 2",
+      "crossAxis": "118 + (((SCREEN_WIDTH - 16 - 16 ) / 2) * (9/13))"
+      },
+    "analytics": {
+      "contexts": [
+        {
+          "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+          "data": {
+            "type": "tile"
+            {{#or position (eq position 0) }}
+              ,
+              "position": {
+                "x": {{math position "+" 1}},
+                "y": 1
+              }
+            {{/or}}
+          }
+        }, 
+        {
+          "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+          "data": {
+            "type": "article_tile",
+            "template_id": "core-article-tile-template"
+          }
+        },
+        {
+          "schema": "iglu:tech.picnic.snowplow.analytics/product/jsonschema/1-0-0",
+          "data": {
+            "product_id": "{{sellingUnit.id}}"
+          }
+        }
+        {{#if subHeader}}
+        ,
+        {
+          "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+          "data": {
+            "name":"{{subHeader.title}}",
+            "type": "article_tile"
+          } 
+        }
+        {{/if}}
+      ]
+    },
+    "features": [ {{#each features as | feature |}} "{{feature}}" {{#unless @last}},{{/unless}} {{/each}} ],
+    "type": "ARTICLE_TILE",
+    "post_processing_instructions": [
+      { "type": "ARTICLE_TILE", "selling_unit": {{#json sellingUnit}}{{/json}} }
+    ]
+  },
+  "context": {},
+  "metadata": {}
+}

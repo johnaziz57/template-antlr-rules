@@ -1,0 +1,183 @@
+{
+  "template_id": "single-promo-group",
+  "layout": {
+    "id": "single-promo-group-{{promoGroupId}}",
+    "type": "BLOCK",
+    "layout": {"type": "FLOW", "axis": "VERTICAL"},
+    "size": {"crossAxis": "12g"},
+    "children": [
+      {
+        "id": "single-promo-group-{{promoGroupId}}-header",
+        "type": "BLOCK",
+        "layout": {"type": "FLOW","axis": "VERTICAL"},
+        "size": {"crossAxis": "12g"},
+        "children": [{
+          "type": "PML",
+          "id": "1",
+          "size": {"mainAxis":32,"crossAxis": "12g"},
+          "pml": {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}}
+        }]
+      },
+      {{#each banners as | banner |}}
+        {{#and (eq banner.promoGroupId promoGroup.id) (eq banner.position "top")}}
+          {
+            "id": "single-promo-group-header-top-banner-{{promoGroup.id}}",
+            "type": "BLOCK",
+            "layout": {
+              "type": "FLOW",
+              "axis": "VERTICAL",
+              "padding": {"bottom": 8, "left": 8, "right": 8},
+              "backgroundColor": "GREY1"
+            },
+            "size": {"crossAxis": "SCREEN_WIDTH"},
+            "children": [{{#template 'single-promo-group-banner-image' banner=banner}}{{/template}}]
+          },
+        {{/and}}
+      {{/each}}
+      {
+        "id": "vertical-selling-unit-tiles-promo-group-{{promoGroupId}}",
+        "type": "BLOCK",
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL",
+          "spacing": {"mainAxis": 4,"crossAxis": 4},
+          "padding": {"left": 8,"right": 8,"bottom": 8}
+        },
+        "size": {"crossAxis": "12g"},
+        "children": [
+          {{#each sellingUnits as | sellingUnit |}}
+            {{#lt @index (math numberOfTopSellingUnits "-" 1)}}
+              {{{template 'core-vertical-selling-unit-tile-template' sectionContextTitle=promoGroup.title sellingUnit=sellingUnit position=@index}}}
+              {{#unless @last}},{{/unless}}
+            {{/lt}}
+            {{#eq @index (math numberOfTopSellingUnits "-" 1)}}
+              {{#gt sellingUnits.length numberOfTopSellingUnits}}
+                {{#eq (math @index "%" 2) 0}}
+                  {{{template 'core-vertical-selling-unit-tile-template' sectionContextTitle=promoGroup.title sellingUnit=sellingUnit position=@index}}},
+                  {{#with (concatLists (slice sellingUnits numberOfTopSellingUnits) (slice sellingUnits 0 numberOfTopSellingUnits)) as | moreButtonItems |}}
+                    {
+                      "type":"PML",
+                      "id":"1",
+                      "analytics": {
+                        "contexts":[
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                            "data": {
+                              "type":"pml",
+                              "position": { 
+                                "x": {{#math (math @index "%" 2) "+" 1}} {{/math}},
+                                "y": {{#math (math (math (math @index "+" 1) "%" 2) "+" (math @index "+" 1)) "/" 2}} {{/math}}
+                              }
+                            }
+                          },
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                            "data": {
+                              "template_id":"single-promo-group-more-button",
+                              "type": "more_button",
+                              "deeplink": "{{deepDivePageDeeplink}}"
+                            }
+                          },
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                            "data": {
+                              "name":"{{promoGroup.title}}",
+                              "type": "more_button"
+                            }
+                          }
+                        ]
+                      },
+                      "size":{"crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2","mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"},
+                      "pml": {{{template 'single-promo-group-more-button' moreButtonItems=moreButtonItems deeplink=deepDivePageDeeplink}}}
+                    }
+                  {{/with}}
+                {{else}}
+                  {{#with (concatLists (slice sellingUnits @index) (slice sellingUnits 0 numberOfTopSellingUnits)) as | moreButtonItems |}}
+                    {
+                      "type":"PML",
+                      "id":"1",
+                      "analytics": {
+                        "contexts":[
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                            "data": {
+                              "type":"pml",
+                              "position": { 
+                                "x": {{#math (math @index "%" 2) "+" 1}} {{/math}},
+                                "y": {{#math (math (math (math @index "+" 1) "%" 2) "+" (math @index "+" 1)) "/" 2}} {{/math}}
+                              }
+                            }
+                          },
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                            "data": {
+                              "template_id":"single-promo-group-more-button",
+                              "type": "more_button",
+                              "deeplink": "{{deepDivePageDeeplink}}"
+                            }
+                          },
+                          {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                            "data": {
+                              "name":"{{promoGroup.title}}",
+                              "type": "more_button"
+                            }
+                          }
+                        ]
+                      },
+                      "size":{"crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2","mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"},
+                      "pml": {{{template 'single-promo-group-more-button' moreButtonItems=moreButtonItems deeplink=deepDivePageDeeplink}}}
+                    }
+                  {{/with}}
+                {{/eq}}
+              {{else}}
+                {{{template 'core-vertical-selling-unit-tile-template' sectionContextTitle=promoGroup.title sellingUnit=sellingUnit position=@index}}}
+                {{#eq (math @index "%" 2) 0}}
+                  ,{
+                    "type":"PML",
+                    "id":"1",
+                    "size":{"crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2","mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"},
+                    "pml": {{{template 'core-empty-tile-template'}}}
+                  }
+                {{/eq}}
+              {{/gt}}
+            {{/eq}}
+          {{/each}}
+          {{#gt numberOfTopSellingUnits sellingUnits.length}}
+            {{#gt (math sellingUnits.length "%" 2) 0}}
+              ,{
+                "type":"PML",
+                "id":"1",
+                "size":{"crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2","mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"},
+                "pml": {{{template 'core-empty-tile-template'}}}
+              }
+            {{/gt}}
+          {{/gt}}
+        ]
+      }
+      {{#each banners as | banner |}}
+        {{#and (eq banner.promoGroupId promoGroup.id) (eq banner.position "bottom")}}
+          ,{
+            "id": "single-promo-group-header-bottom-banner-{{promoGroup.id}}",
+            "type": "BLOCK",
+            "layout": {
+              "type": "FLOW",
+              "axis": "VERTICAL",
+              "padding": {"bottom": 8, "left": 8, "right": 8},
+              "backgroundColor": "GREY1"
+            },
+            "size": {"crossAxis": "SCREEN_WIDTH"},
+            "children": [{{#template 'single-promo-group-banner-image' banner=banner}}{{/template}}]
+          }
+        {{/and}}
+      {{/each}}
+    ]
+  },
+  "context": {
+    "promoGroupIdParam": {"$param": "promoGroupId"},
+    "deepDivePageDeeplink": "nl.picnic-supermarkt://store/page;id=promo-group-deep-dive,promo_group_id=${promoGroupIdParam}",
+    "banners": [],
+    "numberOfTopSellingUnits": 4
+  },
+  "metadata": {}
+}

@@ -1,0 +1,61 @@
+{
+  "template_id": "L1-category-page-root",
+  "layout": {
+    "id": "L1-category-page-root",
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "spacing": { "mainAxis": 4 },
+        "padding": { "top": 4, "right": 0, "bottom": 4, "left": 0 },
+        "backgroundColor": "WHITE"
+      },
+      "size": { "crossAxis": "SCREEN_WIDTH" },
+      "children": [
+        {{{template 'core-L1-category-page-vertical-list-section' L1CategoryPageData=L1CategoryPageData L1ParentCategory=selected_L1_category}}}
+      ]
+    },
+      "header": {
+        {{#if L0CategoryHeaderData.[0].header_image.fallback_image_id}}
+          "type": "DEFAULT",
+        {{else}}
+          "type": "STATIC",
+        {{/if}}
+        "title": "{{{L0CategoryHeaderData.[0].name}}}",
+        {{#if L0CategoryHeaderData.[0].header_image.fallback_image_id}}
+        "image": {
+          "imageId": "{{L0CategoryHeaderData.[0].header_image.fallback_image_id}}",
+          {{#if L0CategoryHeaderData.[0].header_image.size}}
+           {{#eq L0CategoryHeaderData.[0].header_image.size "SMALL"}}
+            "height": 250
+           {{else}}
+            {{#eq L0CategoryHeaderData.[0].header_image.size "MEDIUM"}}
+              "height": 300
+            {{else}}
+              "height": 350
+            {{/eq}}
+           {{/eq}}
+          {{/if}}
+        }
+        {{/if}}
+    }
+  },
+  "context": {
+    "selected_L1_category": {
+      "$param": "category_id"
+    },
+    "L1CategoryPageData": {
+      "$query": "SELECT * FROM calcite_categories WHERE direct_parent_id = ${selected_L1_category} ORDER BY priority DESC"
+    },
+    "L0CategoryHeaderData": {
+      "$query": "SELECT * FROM calcite_categories WHERE id = ${selected_L1_category}"
+    }
+  },
+  "metadata": {
+    "title": "L1 category page root",
+    "type": "ROOT_PAGE",
+    "properties_schema": "{\"properties\":{}}"
+  }
+}

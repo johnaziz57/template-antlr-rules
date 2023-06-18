@@ -1,0 +1,169 @@
+{
+    "template_id": "core-horizontal-recipe-tiles-section-localized",
+    "layout": {
+        "id": "core-horizontal-recipe-tiles-section-localized",
+        "type": "BLOCK",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL"
+        },
+        "size": {
+            "crossAxis": "12g"
+        },
+        "children": [
+            {{#if subHeader}}
+            {
+                "id": "horizontal-recipe-tiles-section-localized-sub-header",
+                "type": "BLOCK",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL"
+                },
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children": [
+                    {
+                        "type": "PML",
+                        "id": "core-sub-header",
+                        "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                        },
+                        "pml":
+                        {{#if subHeader.subHeaderButton}}
+                            {{#gt recipes.length numberOfTiles}}
+                                {{{template 'core-sub-header-template-localized' subHeader=subHeader subHeaderButton=subHeader.subHeaderButton}}}
+                            {{else}}
+                                {{{template 'core-sub-header-template-localized' subHeader=subHeader}}}
+                            {{/gt}}
+                        {{else}}
+                            {{{template 'core-sub-header-template-localized' subHeader=subHeader}}}
+                        {{/if}}
+                    }
+                ]
+            },
+            {{/if}}
+            {
+                "type": "BLOCK",
+                "id": "horizontal-recipe-tiles-section-localized",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "HORIZONTAL",
+                    "spacing": {
+                        "mainAxis": 4
+                    },
+                    "padding": {
+                        "top": 4,
+                        "right": 8,
+                        "bottom": 4,
+                        "left": 8
+                    }
+                },
+                "size": {
+                    "crossAxis": "12g",
+                    "mainAxis": "((SCREEN_WIDTH - 12) * 0.6) + 86"
+                },
+                "children":[
+                    {{#each recipes as | recipe |}}
+                        {{#lt @index numberOfTiles}}
+                            {
+                                "analytics": {
+                                    "contexts": [
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "type":"pml",
+                                                "position": {
+                                                    "x": {{math @index "+" 1}},
+                                                    "y": 1
+                                                }
+                                                
+                                            }
+                                        },
+                                        {
+                                            "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "type": "recipe_tile",
+                                                "template_id": "core-horizontal-recipe-tiles-section-localized"
+                                            }
+                                        },
+                                        {
+                                            "schema": "iglu:tech.picnic.snowplow.analytics/recipe/jsonschema/1-1-0",
+                                            "data": {
+                                                "recipe_id": "{{recipe.id}}"
+                                            }
+                                        }
+                                        {{#if subHeader}}
+                                        ,
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                            "data": {
+                                                "name":"{{subHeader.title}}",
+                                                "type": "recipe_tile"
+                                            } 
+                                        }
+                                        {{/if}}
+                                    ]
+                                },
+                                "type": "PML",
+                                "id": "core-recipe-tile",
+                                "size": {
+                                    {{#and (eq recipes.length 1) (not seeMoreRecipesButton)}}
+                                        "mainAxis": "(SCREEN_WIDTH - 16)",
+                                    {{else}}
+                                        "mainAxis": "(SCREEN_WIDTH - 12) * 0.6",
+                                    {{/and}}
+                                    "crossAxis": "12g"
+                                },
+                                "post_processing_instructions": [
+                                    {{{template 'instruction-recipe-price' recipe=recipe}}}
+                                ],
+                                "pml": {{{template 'core-recipe-tile-template' recipe=recipe contentHeight=86}}}
+                            },
+                        {{/lt}}
+                        {{#eq @index numberOfTiles}}
+                        {{#and seeAllButton.backgroundImage seeAllButton.deeplink}}
+                        {
+                            "type":"PML",
+                            "id": "core-recipe-see-all-button",
+                            "size":{
+                                "mainAxis": "(SCREEN_WIDTH - 12) * 0.6",
+                                "crossAxis": "12g"
+                            },
+                            "pml": {{{template 'core-recipe-see-all-button-template' deeplink=seeAllButton.deeplink backgroundImage=seeAllButton.backgroundImage}}}
+                        }
+                        {{/and}}
+                        {{#and (not seeAllButton.backgroundImage) seeAllButton.deeplink}}
+                        {
+                            "type":"PML",
+                            "id": "core-recipe-more-button",
+                            "size":{
+                                "mainAxis": "(SCREEN_WIDTH - 12) * 0.6",
+                                "crossAxis": "12g"
+                            },
+                            "pml": {{{template 'core-recipe-more-button-template' deeplink=seeAllButton.deeplink}}}
+                        }
+                        {{/and}}
+                        {{/eq}}
+                    {{/each}}
+                    {{#eq recipes.length 1}}
+                    {{#if seeMoreRecipesButton}}
+                        {
+                            "type":"PML",
+                            "id": "core-recipe-more-recipes-button",
+                            "size":{
+                                "mainAxis": "(SCREEN_WIDTH - 12) * 0.6",
+                                "crossAxis": "12g"
+                            },
+                            "pml": {{{template 'core-recipe-more-button-template' title=(localize seeMoreRecipesButton.title) deeplink=seeMoreRecipesButton.deeplink}}}
+                        }
+                    {{/if}}
+                    {{/eq}}
+                ]
+            }
+        ]
+    },
+    "context": {},
+    "metadata": {}
+}

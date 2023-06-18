@@ -1,0 +1,101 @@
+  {
+    "template_id": "core-vertical-tiles-section",
+    "layout": {
+    "id": "vertical-article-tiles-section",
+    "type": "BLOCK",
+    "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+    },
+    "size": {
+        "crossAxis": "12g"
+    },
+    "children": [
+                {{#if subHeader}}
+                {
+                    "id": "vertical-article-tiles-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL"
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                          "type": "PML",
+                          "id": "1",
+                          "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{#template 'core-sub-header-template' subHeader=subHeader}}
+                            {{/template}}
+                        }
+                    ]
+                },
+                {{/if}}
+                {
+                  "id": "vertical-article-tiles",
+                  "type": "BLOCK",
+                  "layout": {
+                      "type": "FLOW",
+                      "axis": "VERTICAL",
+                      "spacing": {
+                           "mainAxis": 4,
+                          "crossAxis": 4
+                      },
+                      "padding": {
+                          "left": 8,
+                "right": 8,
+                      "top": 4,
+                      "bottom": 4
+                      }
+                  },
+                  "size": {
+                      "crossAxis": "12g"
+                  },
+                  "children": [
+                   
+                      {{#each articles as | article |}}
+                      {{#lt @index numberOfTiles}}
+                      {{#if articleFeatures}}
+                        {{#template 'core-vertical-article-tile-template' article=article position=@index  features=articleFeatures}}{{/template}}
+                      {{else}}
+                        {{#template 'core-vertical-article-tile-template' article=article position=@index  features=defaultArticleFeatures}}{{/template}}
+                      {{/if}}
+                      {{#unless @last}},{{/unless}}
+                      {{/lt}}
+                      {{#eq @index numberOfTiles}}
+                      {{#with (concatLists (slice articles numberOfTiles (math numberOfTiles "+" 4)) (slice articles 0 numberOfTiles)) as | moreButtonItems |}}
+                       {"type":"PML","id":"1","size":
+                       {
+                        "crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2",
+                        "mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+                        },"pml":
+                        {{#template 'core-more-button-template' moreButtonItems=moreButtonItems moreButtonDeeplink=moreButtonDeeplink}}
+                        {{/template}}
+                       }
+                       {{/with}}
+                      {{/eq}}
+                      {{/each}}
+                  ]
+              }
+          
+    ]
+},
+    "context": {
+        "defaultArticleFeatures": [ "SHOW_CATEGORY_ACTION" ]
+    },
+    "metadata": {
+      "title": "Vertical Tiles",
+      "type": "BLOCK",
+      "description": "Display tiles vertically",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/5f7a107868a9009d59919842c0d3b86d224a30bdc1298208e48925bca1ff3327/large.png"
+      },
+      "properties_schema": "{\"required\":[\"articles\",\"moreButtonDeeplink\",\"numberOfTiles\"],\"properties\":{\"subHeader\":{\"name\":\"subHeader\",\"$id\":\"subHeader\",\"title\":\"Sub Header\",\"type\":\"object\",\"required\":[\"title\"],\"properties\":{\"title\":{\"name\":\"title\",\"$id\":\"subHeader.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Subheader title should not be empty\"}},\"subHeaderButton\":{\"name\":\"subHeaderButton\",\"$id\":\"subHeader.subHeaderButton\",\"title\":\"Sub Header Button\",\"type\":\"object\",\"required\":[\"deeplink\",\"title\",\"textColor\"],\"properties\":{\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"subHeader.subHeaderButton.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"title\":{\"name\":\"title\",\"$id\":\"subHeader.subHeaderButton.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"textColor\":{\"name\":\"textColor\",\"$id\":\"subHeader.subHeaderButton.textColor\",\"title\":\"text Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"backgroundColor\":{\"name\":\"backgroundColor\",\"$id\":\"subHeader.subHeaderButton.backgroundColor\",\"title\":\"Background Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"icon\":{\"name\":\"icon\",\"$id\":\"subHeader.subHeaderButton.icon\",\"title\":\"Icon\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}}},\"errorMessage\":{\"required\":{\"deeplink\":\"Subheader Button deeplink is required\",\"title\":\"Subheader Button title is required\",\"textColor\":\"Subheader Button textColor is required\"}}}},\"errorMessage\":{\"required\":{\"title\":\"Subheader title is required\"}}},\"articles\":{\"name\":\"articles\",\"$id\":\"articles\",\"title\":\"Articles Query\",\"type\":\"object\",\"required\":[\"$query\"],\"properties\":{\"$query\":{\"name\":\"$query\",\"$id\":\"articles.$query\",\"title\":\"SQL Query\",\"type\":\"string\",\"pattern\":\"^SELECT \\\\* FROM articles WHERE ID IN ([\\\\S]+)\",\"errorMessage\":{\"pattern\":\"Should start with: SELECT * FROM articles WHERE ID IN ('id1', 'id2',...)\"}}},\"errorMessage\":{\"required\":{\"$query\":\"Please provide SQL Query for articles\"}}},\"moreButtonDeeplink\":{\"name\":\"moreButtonDeeplink\",\"$id\":\"moreButtonDeeplink\",\"title\":\"More Button DeepLink\",\"type\":\"object\",\"required\":[\"target\"],\"properties\":{\"target\":{\"name\":\"target\",\"$id\":\"moreButtonDeeplink.target\",\"title\":\"Deeplink Target\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}}},\"errorMessage\":{\"required\":{\"target\":\"Target for deeplink is required\"}}},\"numberOfTiles\":{\"name\":\"numberOfTiles\",\"$id\":\"numberOfTiles\",\"title\":\"Number of Tiles\",\"type\":\"number\",\"minimum\":1}},\"errorMessage\":{\"required\":{\"articles\":\"Please provide SQL Query for articles\",\"moreButtonDeeplink\":\"Please enter Deeplink for More Button\",\"numberOfTiles\":\"Please enter Number of Tiles\"}}}"
+    }
+  }

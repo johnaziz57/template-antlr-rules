@@ -1,0 +1,64 @@
+{
+    "template_id": "search-page-banner-block",
+    "layout": {
+        "type": "PML",
+        "id": "search-page-banner-block-{{banner.bannerId}}",
+        "size": {
+            "cross_axis": "12g",
+            "main_axis": "(((SCREEN_WIDTH)/0.78) * (({{banner.heightPercentage}} * 0.75) / 100))"
+        }, 
+        "analytics": {
+            "contexts": [
+                {
+                    "schema": "iglu:tech.picnic.snowplow.analytics/banner/jsonschema/1-2-0",
+                    "data": {
+                        "type": "banner",
+                        "id": "{{banner.bannerId}}"
+                    }    
+                }
+            ]
+        },
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "TOUCHABLE",
+                {{#if banner.externalDescription.isPresent}}
+                    "accessibilityLabel": "{{banner.externalDescription.orElseThrow}}",
+                {{else}}
+                    "accessibilityLabel": "",
+                {{/if}}
+                "accessibilityHint": "Tik dubbel om te openen.",
+                "onPress": {
+                    "actionType": "OPEN",
+                    {{#if banner.target.isPresent}}
+                        "target": {{{template 'core-deeplink-resolver' deeplink=banner.target.orElseThrow.deepLink}}}
+                    {{else}}
+                        "target": ""
+                    {{/if}}
+                },
+                "activeOpacity": 0.8,
+                "activeScale": 0.98,
+                "child": {
+                    "type": "CONTAINER",
+                    "overflow": "hidden",
+                    "border_radius": 12,
+                    "width": "100%",
+                    "height": "100%",
+                    "backgroundColor": "WHITE",
+                    "child": {
+                        "type": "IMAGE",
+                        "source": {
+                            "id": "{{banner.imageId}}"
+                        },
+                        "resize_mode": "CONTAIN",
+                        "placeholder": "NONE",
+                        "width": "100%",
+                        "aspect_ratio": 0.78
+                    }
+                }
+            }
+        }
+    },
+    "context": {},
+    "metadata": {}
+}

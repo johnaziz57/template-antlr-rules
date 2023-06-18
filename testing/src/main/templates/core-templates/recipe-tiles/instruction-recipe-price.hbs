@@ -1,0 +1,106 @@
+{
+    "template_id": "instruction-recipe-price",
+    "layout": {
+        "type": "RECIPE_PROMO_PRICE",
+        "instruction_id": "calculate_recipe_price",
+        "recipe_articles": [
+            {{#each recipe.articles as | article |}}
+                {
+                    "id": "{{article.id}}",
+                    "quantity": {{article.quantity}}
+                }
+                {{#unless @last}}
+                ,
+                {{/unless}}
+            {{/each}}
+        ],
+        "servings": {{#if recipe.servings.isPresent}}{{recipe.servings.orElseThrow}}{{else}}1{{/if}},
+        "default_pml": {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "height": "100%",
+            "alignment": "END",
+            "spacing": 4,
+            "children": [
+                {{#if recipe.servings.isPresent}}
+                {
+                    "type": "CONTAINER",
+                    "padding": {
+                        "bottom": 2
+                    },
+                    "child": {
+                        "type": "RICH_TEXT",
+                        "text_alignment": "START",
+                        "text_attributes": {
+                            "size": 14,
+                            "weight": "REGULAR"
+                        },
+                        "markdown": "#(GREY3){{localize COPY.pricePerPerson}}#(GREY3)"
+                    }
+                },
+                {{/if}}
+                {
+                    "type": "PRICE",
+                    "price": "%PRICE%",
+                    "font_size": 24,
+                    "color": "BLACK"
+                }
+            ]
+        },
+        "promoted_pml": {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "height": "100%",
+            "alignment": "END",
+            "spacing": 4,
+            "children": [
+                {{#if recipe.servings.isPresent}}
+                {
+                    "type": "CONTAINER",
+                    "padding": {
+                        "bottom": 2
+                    },
+                    "child": {
+                        "type": "RICH_TEXT",
+                        "text_alignment": "START",
+                        "text_attributes": {
+                            "size": 14,
+                            "weight": "REGULAR"
+                        },
+                        "markdown": "#(GREY3){{localize COPY.pricePerPerson}}#(GREY3)"
+                    }
+                },
+                {{/if}}
+                {
+                    "type": "CONTAINER",
+                    "padding": {
+                        "bottom": 2
+                    },
+                    "child": {
+                        "type": "PRICE",
+                        "price": "%PRICE%",
+                        "font_size": 18,
+                        "is_crossed": true,
+                        "color": "GREY3"
+                    }
+                },
+                {
+                    "type": "PRICE",
+                    "price": "%PROMO_PRICE%",
+                    "font_size": 24,
+                    "color": "RED1"
+                }
+            ]
+        }
+    },
+    "context": {
+        "COPY": {
+                "pricePerPerson": {
+                    "nl": "p.p.",
+                    "de": "p.P.",
+                    "fr": "p/pers."
+                }
+        }
+    },
+    "metadata": {}
+}

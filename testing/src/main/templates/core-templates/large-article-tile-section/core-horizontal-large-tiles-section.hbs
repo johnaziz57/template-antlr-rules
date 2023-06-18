@@ -1,0 +1,181 @@
+{
+    "template_id": "core-horizontal-large-tiles-section",
+    "layout": {
+                "type": "BLOCK",
+                "id": "large-tiles-section",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL"
+                },
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children": [
+                {{#if subHeader}}
+                {
+                    "id": "large-tiles-section-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL",
+                        "spacing": {
+                            "mainAxis": 4
+                        }
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                        "type": "PML",
+                        "id": "1",
+                        "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{{template 'core-sub-header-template' subHeader=subHeader}}}
+                        }
+                    ]
+                    },
+                    {{/if}}
+                    {"type":"BLOCK","id":"large-tiles-section-content",
+                        "layout":
+                                {
+                                    "type": "FLOW",
+                                    "axis": "HORIZONTAL",
+                                    "spacing": {
+                                        "mainAxis": 4
+                                    },
+                                    "padding": {
+                                        "top": 4,
+                                        "right": 8,
+                                        "bottom": 4,
+                                        "left": 8
+                                    }
+                                },
+                            "size": {
+                                "crossAxis": "12g",
+                                "mainAxis": "((SCREEN_WIDTH - 12) * 0.6) + 56"
+                            },
+                            "children":[
+                                {{#each largeTileArticles as | article |}}
+                                    {{#if (lookup largeTilesProductData article.id)}}
+                                {
+                                    "type": "PML",
+                                    "id": "1",
+                                    {{#with (lookup largeTilesProductData article.id)}}
+                                    "analytics": {
+                                        "contexts":[
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "type":"pml",
+                                                    "position": {
+                                                        "x": {{math @index "+" 1}},
+                                                        "y": 1
+                                                    }
+                                                }
+                                            }, {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "template_id":"core-large-article-tile-template",
+                                                    "type": "large_tile",
+                                                    "deeplink": {{{template 'core-deeplink-resolver' deeplink=deeplink}}}
+                                                } 
+                                            }
+                                            {{#if subHeader}}
+                                            ,
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                                "data": {
+                                                    "name":"{{subHeader.title}}",
+                                                    "type": "large_tile"
+                                                } 
+                                            }
+                                            {{/if}}
+                                        ]
+                                    },
+                                    {{/with}}
+                                    "size": {
+                                        "mainAxis": "(SCREEN_WIDTH - 12) * 0.6",
+                                        "crossAxis": "((SCREEN_WIDTH - 12) * 0.6) + 56"
+                                        },
+                                    "post_processing_instructions": [
+                                                {
+                                                "type": "ARTICLE_PRICE",
+                                                "instruction_id": "instruction-{{article.id}}",
+                                                "article": {{#json article}}{{/json}},
+                                                "default_pml": {
+                                                    "type": "PRICE",
+                                                    "price": "%PRICE%",
+                                                    "color": "GREY5",
+                                                    "font_size": 24
+                                                },
+                                                "promoted_pml": {
+                                                    "type": "PRICE",
+                                                    "price": "%PROMO_PRICE%",
+                                                    "color": "GREY5",
+                                                    "font_size": 24
+                                                }
+                                                }
+                                            ],
+                                            "pml":
+                                            {{{template 'core-large-article-tile-template' item=(lookup largeTilesProductData article.id) article=article}}}
+                                        },
+                                {{/if}}
+                                {{/each}}
+                                {
+                                    "type":"PML",
+                                    "id":"1",
+                                    "analytics": {
+                                        "contexts":[
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "type":"pml",
+                                                    "position": {
+                                                        "x": {{math largeTileArticles.length "+" 1}},
+                                                        "y": 1
+                                                    }
+                                                }
+                                            }, {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "template_id":"core-large-more-button-template",
+                                                    "type": "large_more_button",
+                                                    "deeplink": {{{template 'core-deeplink-resolver' deeplink=moreTileItems.deeplink}}}
+                                                } 
+                                            }
+                                            {{#if subHeader}}
+                                            ,
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                                "data": {
+                                                    "name":"{{subHeader.title}}",
+                                                    "type": "large_more_button"
+                                                } 
+                                            }
+                                            {{/if}}
+                                        ]
+                                    },
+                                    "size":{"mainAxis":"(SCREEN_WIDTH - 12) * 0.6",
+                                    "crossAxis":"((SCREEN_WIDTH - 12) * 0.6) + 56"},
+                                    "pml":
+                                    {{{template 'core-large-more-button-template' moreTileItems=moreTileItems}}}
+                                }
+                            ]
+                    }
+                ]
+            },
+    "context": {},
+    "metadata": {
+        "title": "Horizontal Large Tiles",
+        "type": "BLOCK",
+        "description": "Display large tiles horizontally",
+        "preview_image": {
+            "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/0a17ad8db30d1b783a565c69711eb674c067dcb2e7210784fc1e6de68ea1bfed/large.png"
+        },
+        "properties_schema": "{\"required\":[\"largeTileArticles\",\"largeTilesProductData\",\"moreTileItems\"],\"properties\":{\"subHeader\":{\"name\":\"subHeader\",\"$id\":\"subHeader\",\"title\":\"Sub Header\",\"type\":\"object\",\"required\":[\"title\"],\"properties\":{\"title\":{\"name\":\"title\",\"$id\":\"subHeader.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Subheader title should not be empty\"}},\"subHeaderButton\":{\"name\":\"subHeaderButton\",\"$id\":\"subHeader.subHeaderButton\",\"title\":\"Sub Header Button\",\"type\":\"object\",\"required\":[\"deeplink\",\"title\",\"textColor\"],\"properties\":{\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"subHeader.subHeaderButton.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"title\":{\"name\":\"title\",\"$id\":\"subHeader.subHeaderButton.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"textColor\":{\"name\":\"textColor\",\"$id\":\"subHeader.subHeaderButton.textColor\",\"title\":\"text Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"backgroundColor\":{\"name\":\"backgroundColor\",\"$id\":\"subHeader.subHeaderButton.backgroundColor\",\"title\":\"Background Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"icon\":{\"name\":\"icon\",\"$id\":\"subHeader.subHeaderButton.icon\",\"title\":\"Icon\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}}},\"errorMessage\":{\"required\":{\"deeplink\":\"Subheader Button deeplink is required\",\"title\":\"Subheader Button title is required\",\"textColor\":\"Subheader Button textColor is required\"}}}},\"errorMessage\":{\"required\":{\"title\":\"Subheader title is required\"}}},\"largeTileArticles\":{\"name\":\"largeTileArticles\",\"$id\":\"largeTileArticles\",\"title\":\"Articles Query\",\"type\":\"object\",\"required\":[\"$query\"],\"properties\":{\"$query\":{\"name\":\"$query\",\"$id\":\"largeTileArticles.$query\",\"title\":\"SQL Query\",\"type\":\"string\",\"pattern\":\"^SELECT \\\\* FROM articles WHERE ID IN ([\\\\S]+)\",\"errorMessage\":{\"pattern\":\"Should start with: SELECT * FROM articles WHERE ID IN ('id1', 'id2',...)\"}}},\"errorMessage\":{\"required\":{\"$query\":\"Please provide SQL Query for articles\"}}},\"largeTilesProductData\":{\"name\":\"largeTilesProductData\",\"$id\":\"largeTilesProductData\",\"title\":\"Product Data\",\"type\":\"array\",\"asObject\":true,\"primaryKey\":\"articleId\",\"items\":{\"name\":\"largeTilesProductDataItem\",\"$id\":\"largeTilesProductDataItem\",\"type\":\"object\",\"title\":\"Product Data Item\",\"required\":[\"articleId\",\"deeplink\",\"backgroundImage\",\"productImage\",\"title\",\"subtitle\"],\"properties\":{\"articleId\":{\"name\":\"articleId\",\"$id\":\"largeTilesProductDataItem.articleId\",\"title\":\"Article ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"largeTilesProductDataItem.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"backgroundImage\":{\"name\":\"backgroundImage\",\"$id\":\"largeTilesProductDataItem.backgroundImage\",\"title\":\"Background Image ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"productImage\":{\"name\":\"productImage\",\"$id\":\"largeTilesProductDataItem.productImage\",\"title\":\"Product Image ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"title\":{\"name\":\"title\",\"$id\":\"largeTilesProductDataItem.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"subtitle\":{\"name\":\"subtitle\",\"$id\":\"largeTilesProductDataItem.subtitle\",\"title\":\"Subtitle\",\"type\":\"string\"}},\"errorMessage\":{\"required\":{\"articleId\":\"Please provide ArticleID for Product Item\",\"deeplink\":\"Please provide deeplink for Product Item\",\"backgroundImage\":\"Please provide backgroundImage for Product Item\",\"productImage\":\"Please provide productImage for Product Item\",\"title\":\"Please provide title for Product Item\",\"subtitle\":\"Please provide subtitle for Product Item\"}}}},\"moreTileItems\":{\"name\":\"moreTileItems\",\"$id\":\"moreTileItems\",\"title\":\"More Tile Button\",\"type\":\"object\",\"required\":[\"deeplink\",\"images\"],\"properties\":{\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"moreTileItems.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"images\":{\"name\":\"images\",\"$id\":\"moreTileItems.images\",\"title\":\"More tile images\",\"type\":\"array\",\"minItems\":9,\"maxItems\":9,\"items\":{\"name\":\"moreTileItems.images.items\",\"$id\":\"moreTileItems.images.items\",\"type\":\"object\",\"title\":\"More Tile Image\",\"required\":[\"id\"],\"properties\":{\"id\":{\"name\":\"id\",\"$id\":\"moreTileItems.moreTileItem.id\",\"title\":\"Image ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}}}}}}}},\"errorMessage\":{\"required\":{\"largeTileArticles\":\"Please provide Articles Query\",\"largeTilesProductData\":\"Please provide Product Data\",\"moreTileItems\":\"Please enter details for More tile button\"}}}"
+    }
+}

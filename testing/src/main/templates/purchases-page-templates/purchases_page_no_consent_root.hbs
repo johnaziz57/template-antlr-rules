@@ -1,0 +1,67 @@
+{
+    "template_id": "purchases_page_no_consent_root",
+    "layout": {
+                "id": "purchases_page_no_consent_root",
+                "analytics": {},
+                "body": {
+                    "type": "BLOCK",
+                    "id": "root",
+                    "analytics": {},
+                    "size": { "crossAxis": "SCREEN_WIDTH" },
+                    "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL",
+                    "backgroundColor": "GREY1"
+                    },
+                    "children": [
+                    {
+                        "type": "PML",
+                        "id": "core-no-previous-purchases-page-header",
+                        "analytics": {},
+                        "size": { "mainAxis": 94, "crossAxis": "12g" },
+                        "pml": {{#template 'core-no-previous-purchases-page-header' headerTitle=(localize purchasesPageRootData.purchasesPageHeader.title)}}{{/template}}
+                    },
+                    {
+                        "type": "PML",
+                        "id": "core-no-previous-purchases-page-content",
+                        "analytics": {},
+                        "size": {
+                        "mainAxis": "CONTAINER_HEIGHT - 94 - SAFE_AREA_TOP",
+                        "crossAxis": "12g"
+                        },
+                        "pml": {{#template  'core-no-previous-purchases-page-content' description=(localize purchasesPageRootData.purchasesPageContent.description) buttonTitle=(localize purchasesPageRootData.purchasesPageContent.button.title) buttonDeeplink=purchasesPageRootData.purchasesPageContent.button.deeplink.target}}{{/template}}
+                    }
+                    ]
+                },
+                "header": null
+            },
+    "context": {
+            "purchasesPageRootData": {
+                    "purchasesPageHeader": {
+                        "title": {
+                            "nl": "Opnieuw bestellen",
+                            "de": "Nochmal bestellen",
+                            "fr": "Historique"
+                        }
+                    },
+                    "purchasesPageContent": {
+                        "description": {
+                            "nl": "#(GREY3)Nog makkelijker boodschappen doen? Met één klik zetten we al je favoriete producten op een rijtje!#(GREY3)",
+                            "de": "#(GREY3)Noch schneller einkaufen? Mit nur einem Klick zeigen wir dir alle deine Lieblingsprodukte!#(GREY3)",
+                            "fr": "#(GREY3)Des courses toujours plus faciles ? En un clic, retrouvez tous vos favoris !#(GREY3)"
+                        },
+                        "button": {
+                            "title": {
+                                "nl": "Favorieten aanzetten",
+                                "de": "Favoriten anzeigen",
+                                "fr": "Voir mes favoris"
+                            },
+                            "deeplink": {
+                                "target": "nl.picnic-supermarkt://store/profile/settings/privacy-settings;topic=610486efb7bf61daf7d37513638c552b262d40a59b772bc806cef52991102b32"
+                            }
+                        }
+                    }
+            }
+        },
+        "metadata": {}
+}

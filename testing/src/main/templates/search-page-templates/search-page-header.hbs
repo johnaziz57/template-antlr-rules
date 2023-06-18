@@ -1,0 +1,77 @@
+{
+  "template_id": "search-page-header",
+  "layout": {
+    "type": "BLOCK",
+    "id": "search-page-header",
+    "size": {
+      "cross_axis": "SCREEN_WIDTH",
+      "main_axis": 48
+    },
+    "layout": {
+      "type": "FLOW",
+      "axis": "HORIZONTAL",
+      "padding": {
+        "top": 4,
+        "bottom": 12,
+        "left": 12,
+        "right": 12
+      },
+      "spacing": {
+        "main_axis": 8
+      }
+    },
+    "children": [
+      {{#if has_recipe_button}}
+        {{{template 'search-page-filter-item'
+          filter_id='recipe'
+          name=(neq recipes_length 1 yes=(localize COPY.multipleRecipes) no=(localize COPY.singleRecipe))
+          selected=is_recipe
+          term=corrected_search_term
+          initial_filters=initial_filters
+          has_recipes_initial_filter=has_recipes_initial_filter
+          filters=filters
+          prefix=recipes_length
+          is_recipe_button='true'
+        }}},
+      {{/if}}
+      {{#each filters as |filter|}}
+        {{{template 'search-page-filter-item'
+          filter_id=filter.id
+          name=filter.name
+          selected=filter.selected
+          term=search_term
+          initial_filters=initial_filters
+          has_recipes_initial_filter=has_recipes_initial_filter
+          filters=filters
+        }}},
+      {{/each}}
+      {
+        "type": "PML",
+        "id": "search-filter-single-item-workaround",
+        "size": {
+          "main_axis": 1,
+          "cross_axis": 1
+        },
+        "pml": {
+          "pml_version": "0.1.0",
+          "component": {}
+        }
+      },
+    ]
+  },
+  "context": {
+    "COPY": {
+      "multipleRecipes": {
+        "nl": "Recepten",
+        "de": "Rezepte",
+        "fr": "Recettes"
+      },
+      "singleRecipe": {
+        "nl": "Recept",
+        "de": "Rezept",
+        "fr": "Recette"
+      }
+    }
+  },
+  "metadata": {}
+}

@@ -1,0 +1,27 @@
+{
+    "template_id": "loyalty-page-progress-bar",
+    "layout": {
+        "id": "loyalty-page-progress-bar",
+        "type": "PML",
+        {{#if (gt data.length 0)}}
+        {{#with (slice data 0) as |items| }}
+        "size": {"crossAxis": "12g", "mainAxis": 150 },
+        "pml": {{{items.[0].content}}}
+        {{/with}}
+        {{else}}
+        "size": {"crossAxis": "12g", "mainAxis": 0 },
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "CONTAINER"
+            }
+        }
+        {{/if}}
+    },
+    "context": {
+        "data": {
+            "$query": "SELECT * FROM messages WHERE id IN ('LOYALTY_PAGE_HEADER')"
+        }
+    },
+    "metadata": {}
+}

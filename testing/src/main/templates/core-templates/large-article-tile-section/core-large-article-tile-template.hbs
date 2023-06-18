@@ -1,0 +1,143 @@
+  {
+    "template_id": "core-large-article-tile-template",
+    "layout": {
+        "pml_version": "0.1.0",
+        "component": {
+            "type": "TOUCHABLE",
+            "accessibilityLabel": "{{#join ', ' item.title item.subtitle}}{{/join}}",
+            "accessibilityHint": "{{localize COPY.accessibilityHint}}",
+            "on_press": {
+                "action_type": "OPEN",
+                "target": {{{template 'core-deeplink-resolver' deeplink=item.deeplink}}}
+            },
+            "active_opacity": 0.8,
+            "active_scale": 0.98,
+            "child": {
+                "type": "CONTAINER",
+                "border_radius": 12,
+                "overflow": "hidden",
+                "width": "100%",
+                "height": "100%",
+                "child": {
+                    "type": "STACK",
+                    "axis": "VERTICAL",
+                    "alignment": "SPACE_BETWEEN",
+                    "children": [
+                        {
+                            "type": "CONTAINER",
+                            "absolute_position": {
+                                "top": 0,
+                                "bottom": 0,
+                                "left": 0,
+                                "right": 0
+                            },
+                            "child": {
+                                "type": "IMAGE",
+                                "source": {
+                                    "id": "{{item.backgroundImage}}"                     
+                                },
+                                "resize_mode": "COVER",
+                                "placeholder": "NONE",
+                                "width": "100%",
+                                "height": "100%"
+                            }
+                        },
+                        {
+                            "type": "CONTAINER",
+                            "width": "100%",
+                            "height": "100%",
+                            "padding": {
+                                "left": 24,
+                                "right": 24,
+                                "top": 24
+                            },
+                            "child": {
+                                "type": "IMAGE",
+                                "source": {
+                                    "id": "{{item.productImage}}"
+                                },
+                                "resize_mode": "CONTAIN",
+                                "width": "100%",
+                                "aspect_ratio": 1
+                            }
+                        },
+                        {
+                            "type": "CONTAINER",
+                            "absolute_position": {
+                                "bottom": 0,
+                                "left": 0,
+                                "right": 0
+                            },
+                            "child": {
+                                "type": "STACK",
+                                "axis": "HORIZONTAL",
+                                "distribution": "SPACE_BETWEEN",
+                                "alignment": "END",
+                                "spacing": 8,
+                                "padding": {
+                                    "left": 12,
+                                    "right": 12,
+                                    "top": 12,
+                                    "bottom": 12
+                                },
+                                "children": [
+                                    {
+                                        "type": "STACK",
+                                        "axis": "VERTICAL",
+                                        "children": [
+                                            {
+                                                "type": "RICH_TEXT",
+                                                "text_alignment": "START",
+                                                "number_of_lines": 3,
+                                                "text_attributes": {
+                                                    "size": 18,
+                                                    "weight": "SEMIBOLD"
+                                                },
+                                                "markdown": "#(WHITE){{{item.title}}}#(WHITE)"
+                                            },
+                                            {
+                                                "type": "RICH_TEXT",
+                                                "text_alignment": "START",
+                                                "number_of_lines": 1,
+                                                "text_attributes": {
+                                                    "size": 15,
+                                                    "weight": "REGULAR"
+                                                },
+                                                "markdown": "#(WHITE){{{item.subtitle}}}#(WHITE)"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "CONTAINER",
+                                        "background_color": "WHITE",
+                                        "padding": {
+                                            "bottom": 1,
+                                            "top": 1,
+                                            "left": 3,
+                                            "right": 3
+                                        },
+                                        "border_radius": 6,
+                                        "child": {
+                                            "type": "PLACEHOLDER",
+                                            "instruction_id": "instruction-{{article.id}}"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }   
+    },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "Tik dubbel voor meer.",
+            "de": "Tippe zwei Mal, um mehr anzuzeigen.",
+            "fr": "double-cliquer pour plus d’informations"
+          }
+      }
+    },
+    "metadata": {}
+}

@@ -1,0 +1,122 @@
+{
+    "template_id": "core-list-item-template",
+    "layout": {
+        "pml_version": "0.1.0",
+        "component": {
+            "type": "TOUCHABLE",
+            "accessibility_label": "{{#stripMarkdown (join ', ' labelTitle title)}}{{/stripMarkdown}}",
+            "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+            "on_press": { 
+                {{#if actionType}}
+                "action_type": "{{actionType}}",
+                {{else}}
+                "action_type": "OPEN",
+                {{/if}}
+                "target": {{{template 'core-deeplink-resolver' deeplink=deeplink}}} 
+            },
+            "active_opacity": 0.5,
+            "child": {
+                "type": "STACK",
+                "axis": "HORIZONTAL",
+                "height": "100%",
+                "spacing": 8,
+                "padding": {
+                    "right": 8
+                },
+                "alignment": "CENTER",
+                "distribution": "SPACE_BETWEEN",
+                "children": [
+                    {
+                        "type": "STACK",
+                        "axis": "HORIZONTAL",
+                        "spacing": 16,
+                        "distribution": "CENTER",
+                        "alignment": "CENTER",
+                        "children": [
+                            {{#if image}}
+                            {
+                                "type": "IMAGE",
+                                "source": {
+                                    "id": "{{image}}"
+                                },
+                                "resize_mode": "CONTAIN",
+                                "width": 64,
+                                "height": 64
+                            },
+                            {{/if}}
+                            {{#if icon}}
+                            {
+                                "type": "ICON",
+                                "icon_key": "{{icon}}",
+                                "width": 24,
+                                "height": 24,
+                                "color": "GREY4"
+                            },
+                            {{/if}}
+                            {{#if showRightLabel}}
+                            {
+                                "type": "STACK",
+                                "axis": "HORIZONTAL",
+                                "spacing": 8,
+                                "children": [
+                                    {
+                                        "type": "RICH_TEXT",
+                                        "text_alignment": "LEFT",
+                                        "number_of_lines": 2,
+                                        "text_attributes": {
+                                            "size": 16,
+                                            "weight": "REGULAR"
+                                        },
+                                        "markdown": "{{title}}"
+                                    }
+                                    {{#and labelTitle labelTextColor labelTextColor}}
+                                    ,{{{template 'core-list-item-label' labelBackgroundColor=labelBackgroundColor labelTextColor=labelTextColor labelTitle=labelTitle}}}
+                                    {{/and}}
+                                ]
+                            }
+                            {{else}}
+                            {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "spacing": 2,
+                                "children": [
+                                    {{#and labelTitle labelTextColor labelTextColor}}
+                                    {{{template 'core-list-item-label' labelBackgroundColor=labelBackgroundColor labelTextColor=labelTextColor labelTitle=labelTitle}}},
+                                    {{/and}}
+                                    {
+                                        "type": "RICH_TEXT",
+                                        "text_alignment": "LEFT",
+                                        "number_of_lines": 2,
+                                        "text_attributes": {
+                                            "size": 16,
+                                            "weight": "REGULAR"
+                                        },
+                                        "markdown": "{{title}}"
+                                    }
+                                ]
+                            }
+                            {{/if}}
+                        ]
+                    },
+                    {
+                        "type": "ICON",
+                        "icon_key": "rightChevron",
+                        "width": 8,
+                        "height": 13,
+                        "color": "GREY3"
+                    }
+                ]
+            }
+        }
+    },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal um mehr anzuzeigen.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+      }
+    },
+    "metadata": {}
+}

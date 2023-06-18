@@ -1,0 +1,66 @@
+{
+    "template_id": "core-free-flow-text-section",
+    "layout": {
+        "type": "BLOCK",
+        "id": "{{id}}",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "padding": {
+                "left": 16,
+                "right": 16
+            },
+        },
+        "size": {
+            "crossAxis": "12g"
+        },
+        "children": [{
+                "id": "core-free-flow-text-section-pml",
+                "type": "PML",
+                "analytics": {
+                    "contexts":[
+                        {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                            "data": {
+                              "type":"pml",
+                            }
+                        },
+                        {
+                            "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                            "data": {
+                              "template_id":"core-free-flow-text-section",
+                            }
+                        }
+                    ]    
+                },    
+                {{#with (stripMarkdown markdown) as | plainText |}}
+                "size": {
+                    "cross_axis": "12g",
+                    "main_axis": "round({{fontSize}} * 1.2 * ceil({{fontSize}} * 0.5 * {{plainText.length}} / (CONTAINER_WIDTH - 16 - 16)))",
+                    "is_main_axis_estimated": true
+                },
+                {{/with}}
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "RICH_TEXT",
+                        "text_alignment": {{#if textAlignment.isPresent}}{{textAlignment}}{{else}}"START"{{/if}},
+                        "text_attributes": {
+                            "size": {{fontSize}},
+                            "weight": "REGULAR",
+                        },
+                        "markdown": "{{{markdown}}}"
+                    }
+                }
+
+        }]
+    },
+    "context": {
+    },
+    "metadata": {
+        "title": "Vertical Text Block",
+        "type": "BLOCK",
+        "description": "Display text blocks vertically",
+        "properties_schema":  "{\"required\":[\"fontSize\",\"markdown\",\"id\"],\"properties\":{\"fontSize\":{\"name\":\"fontSize\",\"$id\":\"fontSize\",\"title\":\"Font Size\",\"type\":\"number\",\"minimum\":13,\"errorMessage\":{\"required\":\"Font size is required\", \"minimum\":\"Minimum font size is 13\"}},\"markdown\":{\"name\":\"markdown\",\"$id\":\"markdown\",\"title\":\"Markdown\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Markdown should not be empty\"}},\"id\":{\"name\":\"id\",\"$id\":\"id\",\"title\":\"ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"required\":\"ID is required\"}},\"textAlignment\":{\"name\":\"textAlignment\",\"$id\":\"textAlignment\",\"title\":\"Text Alignment\",\"type\":\"string\",\"pattern\":\"^(?:CENTER|START|END)$\",\"errorMessage\":{\"pattern\":\"Text alignment should be CENTER, START or END\"}}}}"
+  }
+}

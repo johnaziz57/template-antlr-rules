@@ -1,0 +1,214 @@
+{
+  "template_id": "self-service-cancel-delivery-confirmation-root",
+  "layout": {
+    "id": "self-service-cancel-delivery-confirmation-root",
+    "presentation": {
+      "type": "FULL_SCREEN",
+      "style": {
+        "background_color": "GREY5",
+        "opacity": 0.7
+      }
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "dialog-root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+      },
+      "size": {
+        "cross_axis": "SCREEN_WIDTH",
+        "main_axis": "SCREEN_HEIGHT"
+      },
+      "children": [
+        {
+          "type": "PML",
+          "id": "core-dialog",
+          "size": {
+            "cross_axis": "12g",
+            "main_axis": "SCREEN_HEIGHT"
+          },
+          "pml":{
+            "pml_version": "0.1.0",
+            "component": {
+              "type": "TOUCHABLE",
+              "accessible": false,
+              "on_press": { 
+                "action_type": "CLOSE"
+              },
+              "child": {
+                "accessible": false,
+                "type": "STACK",
+                "axis": "VERTICAL",
+                "width": "100%",
+                "height": "100%",
+                "distribution": "CENTER",
+                "padding": {
+                  "top": 16,
+                  "bottom": 16,
+                  "right": 16,
+                  "left": 16
+                },
+                "children": [
+                  {
+                    "type": "CONTAINER",
+                    "overflow": "hidden",
+                    "accessible": false,
+                    "width": "100%",
+                    "background_color": "WHITE",
+                    "border_radius": 12,
+                    "child": {
+                      "type": "STACK",
+                      "axis": "VERTICAL",
+                      "width": "100%",
+                      "spacing": 8,
+                      "padding": {
+                        "top": 16,
+                        "bottom": 16,
+                        "right": 16,
+                        "left": 16
+                      },
+                      "children": [
+                        {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "LEFT",
+                          "number_of_lines": 2,
+                          "text_attributes": {
+                            "size": 25,
+                            "weight": "REGULAR"
+                          },
+                          "markdown": "{{localize COPY.title}}"
+                        },
+                        {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "LEFT",
+                          "number_of_lines": 2,
+                          "text_attributes": {
+                            "size": 16,
+                            "weight": "REGULAR"
+                          },
+                          "markdown": "{{localize COPY.body}}"
+                        },
+                        {
+                          "type": "STACK",
+                          "axis": "HORIZONTAL",
+                          "width": "100%",
+                          "spacing": 24,
+                          "distribution": "END",
+                          "padding": {
+                            "top": 8
+                          },
+                          "children": [
+                          {{#each buttons as | button |}}
+                            {
+                              "type": "TOUCHABLE",
+                              {{#eq button.action_type "ENDPOINT"}}
+                              "on_press": {
+                                "action_type": "ENDPOINT",
+                                "method": "post",
+                                "url": "order/delivery/{{deliveryId}}/cancel",
+                                "on_success": { 
+                                  "action_type": "EVENT",            
+                                  "action": {
+                                    "type": "REFRESH",
+                                    "source": "UPCOMING_DELIVERIES_CACHE",
+                                    "id": "{{deliveryId}}",
+                                    "on_next": {
+                                      "action_type": "CLOSE"
+                                    }  
+                                  }
+                                },
+                                "on_error": {
+                                  "action_type": "CLOSE",
+                                  "on_next": {
+                                    "action_type": "EVENT",
+                                    "action": {
+                                      "type": "TOAST",
+                                      "message": "{{localize COPY.badRequestError}}"
+                                    }           
+                                  }                       
+                                }
+                              },
+                              {{/eq}}
+                              {{#eq button.action_type "CLOSE"}}
+                                "on_press": {
+                                  "action_type": "CLOSE"
+                                },
+                              {{/eq}}
+                              "active_opacity": 0.8,
+                              "active_scale": 0.98,
+                              "hit_slop": {
+                                "horizontal": 8,
+                                "vertical": 8
+                              },
+                              "child": {
+                                "type": "RICH_TEXT",
+                                "text_alignment": "CENTER",
+                                "text_attributes": {
+                                  "size": 17,
+                                  "weight": "MEDIUM"
+                                },
+                                "markdown": "#({{button.textColor}}){{localize button.title}}#({{button.textColor}})"
+                              }
+                            }
+                            {{#unless @last}},{{/unless}}
+                          {{/each}}
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "context": {
+    "deliveryId": {
+      "$param": "delivery_id"
+    },
+    "COPY": {
+      "title": {
+        "nl": "Weet je het zeker?",
+        "de": "Bist du dir sicher?",
+        "fr": "Êtes-vous sûr ?"
+      },
+      "body": {
+        "nl": "We annuleren je bestelling en komen je boodschappen niet bezorgen.",
+        "de": "Wir stornieren deine Bestellung und bringen dir nicht deinen Einkauf.",
+        "fr": "Nous annulerons votre commande et vous ne serez pas livré."
+      },
+      "badRequestError": {
+        "nl": "Hé, daar ging iets mis",
+        "de": "Oh, hier ist was schiefgegangen",
+        "en": "Oops, something went wrong",
+        "fr": "Oups, quelque chose a mal tourné par ici"
+      }
+    },
+    "buttons": {
+      "var0": {
+        "title": {
+          "nl": "Terug",
+          "de": "Zurück",
+          "fr": "Retour"
+        },
+        "textColor": "GREY3",
+        "action_type": "CLOSE"
+        
+      },
+      "var1": {
+        "title": {
+          "nl": "Bestelling annuleren",
+          "de": "Bestellung stornieren",
+          "fr": "Annuler la commande"
+        },
+        "textColor": "RED1",
+        "action_type": "ENDPOINT"
+      }
+    }
+  },
+  "metadata": {}
+}

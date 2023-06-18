@@ -1,0 +1,160 @@
+{
+  "template_id": "single-promo-group-more-button",
+  "layout": {
+    "pml_version": "0.1.0",
+    "component":   {
+      "type": "TOUCHABLE",
+      "accessibilityHint": "{{localize COPY.accessibilityHint}}",
+      "onPress": {"actionType": "OPEN","target": "{{deeplink}}"},
+      "activeOpacity": 0.5,
+      "child": {
+        "type":"CONTAINER",
+        "overflow": "hidden",
+        "border_radius": 8,
+        "height": "100%",
+        "width": "100%",
+        "backgroundColor": "WHITE",
+        "child": {
+          "type": "STACK",
+          "axis": "VERTICAL",
+          "padding": {"top": 26,"bottom": 26,"left": 8,"right": 8},
+          "alignment": "CENTER",
+          "distribution": "CENTER",
+          "spacing": 24,
+          "children": [
+            {
+              "type": "STACK",
+              "axis": "VERTICAL",
+              "distribution": "CENTER",
+              "padding": {"left": 18,"right": 18},
+              "spacing": 8,
+              "children": [
+                {
+                  "type": "STACK",
+                  "axis": "HORIZONTAL",
+                  "spacing": 8,
+                  "distribution": "CENTER",
+                  "children": [
+                    {
+                      "type": "IMAGE",
+                      "source": {
+                        {{#and moreButtonItems.[0] (not moreButtonItems.[0].tileImage.isEmpty)}}
+                        "id": "{{moreButtonItems.[0].tileImage.orElseThrow}}"
+                        {{else}}
+                        "id": ""
+                        {{/and}}
+                      },
+                      "resize_mode": "CONTAIN",
+                      "width": "50%",
+                      "aspectRatio": 1
+                    },
+                    {
+                      "type": "IMAGE",
+                      "source": {
+                        {{#and moreButtonItems.[1] (not moreButtonItems.[1].tileImage.isEmpty)}}
+                        "id": "{{moreButtonItems.[1].tileImage.orElseThrow}}"
+                        {{else}}
+                        "id": ""
+                        {{/and}}
+                      },
+                      "resize_mode": "CONTAIN",
+                      "width": "50%",
+                      "aspectRatio": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "STACK",
+                  "axis": "HORIZONTAL",
+                  "spacing": 8,
+                  "distribution": "CENTER",
+                  "children": [
+                    {
+                      "type": "IMAGE",
+                      "source": {
+                        {{#and moreButtonItems.[2] (not moreButtonItems.[2].tileImage.isEmpty)}}
+                        "id": "{{moreButtonItems.[2].tileImage.orElseThrow}}"
+                        {{else}}
+                        "id": ""
+                        {{/and}}
+                      },
+                      "resize_mode": "CONTAIN",
+                      "width": "50%",
+                      "aspectRatio": 1
+                    },
+                    {
+                      "type": "IMAGE",
+                      "source": {
+                        {{#and moreButtonItems.[3] (not moreButtonItems.[3].tileImage.isEmpty)}}
+                        "id": "{{moreButtonItems.[3].tileImage.orElseThrow}}"
+                        {{else}}
+                        "id": ""
+                        {{/and}}
+                      },
+                      "resize_mode": "CONTAIN",
+                      "width": "50%",
+                      "aspectRatio": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type":"CONTAINER",
+              "padding": {
+                "top": 9,
+                "bottom": 9,
+                "left": 12,
+                "right": 12
+              },
+              "backgroundColor": "GREY1",
+              "borderRadius": 8,
+              "child": {
+                "type": "STACK",
+                "axis": "HORIZONTAL",
+                "alignment": "CENTER",
+                "distribution": "CENTER",
+                "spacing": 8,
+                "children" : [
+                  {
+                    "type": "RICH_TEXT",
+                      "text_alignment": "CENTER",
+                      "text_attributes": {
+                        "size": 15,
+                        "weight": "MEDIUM"
+                      },
+                      "markdown": "#(GREY4){{localize COPY.buttonTitle}}#(GREY4)"
+                  },
+                  {
+                    "type": "ICON",
+                    "icon_key": "rightChevron",
+                    "width": 8,
+                    "height": 13,
+                    "color": "GREY4"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "context": {
+    "COPY": {
+      "buttonTitle" : {
+        "nl": "Bekijk alles",
+        "de": "Alles anzeigen",
+        "fr": "Voir plus"
+      },
+      "accessibilityHint": {
+        "nl": "tik dubbel om te openen.",
+        "de": "Tippe zwei Mal zum Öffnen.",
+        "fr": "Double-cliquer pour ouvrir"
+      }
+    }
+  },
+  "metadata": {
+    "comment": "This template is practically a copy of 'core-more-button-purchases-template', just better formatted. Ensure to merge these two."
+  }
+}

@@ -1,0 +1,62 @@
+{
+    "template_id": "date-only-schedule-template",
+    "layout": 
+        {{#each scheduleDataItems as | schedule |}}
+            {{#with (join '' (schedule.fromDate) "T00:00:00.000") as | startingDate |}}
+            {{#eq scheduleDataItems.length 1}}
+                {{#if (isBefore startingDate)}}
+                    {{{template priorTemplateId}}}
+                {{else if (isAfter startingDate)}}
+                    {{{template schedule.templateId}}}
+                {{/if}}
+            {{else}}
+                {{#if @last}}
+                    {{#if (isAfter startingDate)}}
+                        {{{template schedule.templateId}}}
+                    {{/if}}
+                {{else}}
+                    {{#if @first}}
+                        {{#if (isBefore startingDate)}}
+                            {{{template priorTemplateId}}}
+                        {{else}}
+                        {{#with (math @index "+" 1) as | nextIndex |}}
+                        {{#each scheduleDataItems as | subSchedule |}}
+                            {{#if (eq @index nextIndex)}}
+                            {{#with (join '' (subSchedule.fromDate) "T00:00:00.000") as | nextDate |}}
+                                {{#and (isAfter startingDate) (isBefore nextDate)}}
+                                    {{{template schedule.templateId}}}
+                                {{/and}}
+                            {{/with}}
+                            {{/if}}
+                        {{/each}}
+                        {{/with}}
+                        {{/if}}
+                    {{else}}
+                    {{#with (math @index "+" 1) as | nextIndex |}}
+                    {{#each scheduleDataItems as | subSchedule |}}
+                        {{#if (eq @index nextIndex)}}
+                        {{#with (join '' (subSchedule.fromDate) "T00:00:00.000") as | nextDate |}}
+                            {{#and (isAfter startingDate) (isBefore nextDate)}}
+                                {{{template schedule.templateId}}}
+                            {{/and}}
+                        {{/with}}
+                        {{/if}}
+                    {{/each}}
+                    {{/with}}
+                    {{/if}}
+                {{/if}}
+            {{/eq}}
+            {{/with}}
+        {{/each}},
+    "context": {},
+    "metadata": {
+        "title": "Date-Only Scheduler",
+        "type": "PAGE_WRAPPER_BLOCK",
+        "description": "Schedule root pages based only on date",
+        "preview_image": {
+            "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/66ffa7d79c223178bc6a902698a96a9f9f356feb4be0a73fb7636ca295e47752/large.png"
+        },
+        "properties_schema": "{\"required\":[\"scheduleDataItems\",\"priorTemplateId\"],\"properties\":{\"priorTemplateId\":{\"name\":\"priorTemplateId\",\"$id\":\"priorTemplateId\",\"title\":\"Prior Template ID\",\"type\":\"string\",\"minLength\":5,\"errorMessage\":{\"minLength\":\"Prior template ID is required\"}},\"scheduleDataItems\":{\"name\":\"scheduleDataItems\",\"$id\":\"scheduleDataItems\",\"title\":\"Scheduler Data - add in chronological order!\",\"type\":\"array\",\"asObject\":false,\"items\":{\"name\":\"scheduleDataItem\",\"$id\":\"scheduleDataItem\",\"type\":\"object\",\"title\":\"Schedule Data Item\",\"required\":[\"fromDate\",\"templateId\"],\"properties\":{\"fromDate\":{\"name\":\"fromDate\",\"$id\":\"scheduleDataItem.fromDate\",\"title\":\"From Date\",\"type\":\"string\",\"pattern\":\"^([12]\\\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\\\d|3[01]))$\",\"errorMessage\":{\"pattern\":\"Should be in format YYYY-MM-DD\"}},\"templateId\":{\"name\":\"templateId\",\"$id\":\"scheduleDataItem.templateId\",\"title\":\"Template ID\",\"type\":\"string\",\"minLength\":5,\"errorMessage\":{\"minLength\":\"Should not be empty\"}}},\"errorMessage\":{\"required\":{\"fromDate\":\"Please provide From Date for Schedule Item\",\"templateID\":\"Please provide Template ID for Schedule Item\"}}}}},\"errorMessage\":{\"required\":{\"scheduleDataItems\":\"Please provide data for the schedule\",\"priorTemplateId\":\"Please provide data for the prior/current template\"}}}"
+    }
+}
+        

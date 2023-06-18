@@ -1,0 +1,356 @@
+{
+  "template_id": "self-service-contact-page-root",
+  "layout": {
+    "id": "self-service-contact-page-root",
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "background_color": "GREY1"
+      },
+      "size": {
+          "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+      {
+        "id": "list-sub-header",
+        "type": "BLOCK",
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL"
+        },
+        "size": {
+          "crossAxis": "12g"
+        },
+        "children": [
+          {
+            "type": "PML",
+            "id": "1",
+            "size": {
+              "mainAxis": 48, 
+              "crossAxis": "12g"
+            },
+            "pml": {{#template 'core-sub-header-template-localized' subHeader=selfServiceSection.subHeader textSize=15}}{{/template}}
+          }
+        ]
+      },
+      {   
+        "type": "BLOCK",
+        "id": "list",
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL",
+          "spacing": {
+              "main_axis": 12,
+              "cross_axis": 0
+          },
+          "padding": {
+              "top": 4,
+              "bottom": 4,
+              "right": 8,
+              "left": 8
+          }
+        },
+        "size": {
+            "cross_axis": "12g"
+        },
+        "children": [
+          {   
+            "type": "BLOCK",
+            "id": "list",
+            "layout": {
+              "type": "FLOW",
+              "axis": "VERTICAL",
+              "corner_radius": {
+                  "topLeft": 12,
+                  "topRight": 12,
+                  "bottomRight": 12,
+                  "bottomLeft": 12
+              },
+              "backgroundColor": "WHITE",
+              "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 8
+              }
+            },
+            "size": {
+                "cross_axis": "12g"
+            },
+            "children": [
+              {{#gt deliveries.length 0}}
+              {{#with (slice deliveries 0) as | delivery |}}
+              {{#each selfServiceSection.reportIssueItems as | item |}}
+              {
+                "type": "PML",
+                "id": "list-item-id",
+                "analytics": {
+                  "contexts": [
+                    {
+                      "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                      "data": {"type": "pml"}
+                    }, 
+                    {
+                      "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                      "data": {
+                          "template_id": "core-list-item-template",
+                          "type": "list_item",
+                          {{#eq deliveries.length 1}}
+                          "deeplink": "{{#join '' item.issueEntry.singleDeliveryDeeplink delivery.[0].deliveryId}}{{/join}}"
+                          {{else}}
+                          "deeplink": "{{item.issueEntry.multipleDeliveriesDeeplink}}"
+                          {{/eq}}
+                      } 
+                    }
+                  ]
+                },
+                "size": {
+                  "main_axis": 56,
+                  "cross_axis": "12g"
+                },
+                {{#eq deliveries.length 1}}
+                "pml": {{#template 'core-list-item-template' title=(localize item.issueEntry.title) icon=item.issueEntry.icon deeplink=(join '' item.issueEntry.singleDeliveryDeeplink delivery.[0].deliveryId)}}{{/template}}
+                {{else}}
+                "pml": {{#template 'core-list-item-template' title=(localize item.issueEntry.title) icon=item.issueEntry.icon deeplink=item.issueEntry.multipleDeliveriesDeeplink}}{{/template}}
+                {{/eq}}
+              },
+              {
+                "type": "PML",
+                "id": "list-item-id-{{item.issueEntry.title}}",
+                "size": {
+                  "main_axis": 1,
+                  "cross_axis": "12g"
+                },
+                "pml": {
+                  "pml_version": "0.1.0",
+                  "component":  {
+                      "type": "CONTAINER",
+                      "height": 1,
+                      "background_color": "GREY1",
+                      "width": "100%"
+                  }
+                }
+              },
+              {{/each}}
+              {{/with}}
+              {{/gt}}
+              {{#with selfServiceSection }}
+              {
+                "type": "PML",
+                "id": "list-item-id",
+                "analytics": {
+                  "contexts":[
+                      {
+                        "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                        "data": {"type": "pml"}
+                      }, 
+                      {
+                        "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                        "data": {
+                          "template_id": "core-list-item-template",
+                          "type": "list_item",
+                          "deeplink": "{{faqItem.deeplink}}"
+                        } 
+                      }
+                  ]
+                },
+                "size": {
+                  "main_axis": 56,
+                  "cross_axis": "12g"
+                },
+                "pml": {{#template 'core-list-item-template' title=(localize faqItem.title) icon=faqItem.icon deeplink=faqItem.deeplink}}{{/template}}
+              }
+              {{/with}}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "list-sub-header",
+        "type": "BLOCK",
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL"
+        },
+        "size": {
+          "crossAxis": "12g"
+        },
+        "children": [
+          {
+            "type": "PML",
+            "id": "1",
+            "size": {
+              "mainAxis": 48, 
+              "crossAxis": "12g"
+            },
+            "pml": {{#template 'core-sub-header-template-localized' subHeader=customerServiceSection.subHeader textSize=15}}{{/template}}
+          }
+        ]
+      },
+      {   
+        "type": "BLOCK",
+        "id": "list",
+        "layout": {
+          "type": "FLOW",
+          "axis": "VERTICAL",
+          "spacing": {
+              "main_axis": 12,
+              "cross_axis": 0
+          },
+          "padding": {
+              "top": 4,
+              "bottom": 4,
+              "right": 8,
+              "left": 8
+          }
+        },
+        "size": {
+            "cross_axis": "12g"
+        },
+        "children": [
+          {
+            "type": "BLOCK",
+            "id": "list",
+            "layout": {
+              "type": "FLOW",
+              "axis": "VERTICAL",
+              "corner_radius": {
+                  "topLeft": 12,
+                  "topRight": 12,
+                  "bottomRight": 12,
+                  "bottomLeft": 12
+              },
+              "backgroundColor": "WHITE",
+              "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 8
+              }
+            },
+            "size": {
+                "cross_axis": "12g"
+            },
+            "children": [
+              {{#template 'self-service-customer-service-section'}}{{/template}}
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PML",
+        "id": "image-footer",
+        "size": {
+          "crossAxis": "12g",
+          "main_axis": 230
+        },
+        "pml": {
+          "pmlVersion": "0.1.0",
+          "component": {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "distribution": "CENTER",
+            "alignment": "CENTER",
+            "padding": {
+              "top": 24,
+              "bottom": 16
+            },
+            "children": [
+              {
+                "type": "IMAGE",
+                "source": {
+                    "id": "picnic-page/{{localize(COPY.footerImage)}}"
+                },
+                "resize_mode": "CONTAIN",
+                "height": 230,
+                "aspect_ratio": 1
+              }
+            ]
+          }
+        }
+      }
+      ]
+    },
+    "header": {
+      "title": "{{localize(COPY.header)}}"
+    }
+  },
+  "context": {
+    "COPY": {
+      "header": {
+        "nl": "Klantenservice",
+        "de": "Kundenservice",
+        "fr": "Service client"
+      },
+      "footerImage": {
+        "nl": "61bcde317b1bc3f8a36b2c7bc8ced67005dffa8ba7159778ae6af02f1d1dfe50",
+        "de": "0e2cfc3e66cb28c5a08830dde8bc9bcaad958561393fd15f189c9662ea77fced",
+        "fr": "3c81b3d6acb47e9a00b1b8356093afda617ff03d37e15de15495eac706e1916e"
+      }
+    },
+    "deliveries": {
+      "$query": "SELECT * FROM recent_deliveries_by_order_status WHERE id IN ('COMPLETED') LIMIT 2"
+    },
+    "selfServiceSection": {
+      "$literal": {
+        "subHeader": {
+          "title": {
+            "nl": "Direct zelf oplossen",
+            "de": "Schnelle Hilfe",
+            "fr": "Aide directe"
+          }
+        },
+        "faqItem": {
+          "icon": "dialogueBubble",
+          "title": {
+            "nl": "Veelgestelde vragen",
+            "de": "Häufig gestellte Fragen",
+            "fr": "Foire aux questions"
+          },
+          "deeplink": "app.picnic://store/faq"
+        },
+        "reportIssueItems": {
+          "var0": {
+            "issueEntry": {
+              "icon": "warning",
+              "title": {
+                "nl": "Product niet in orde",
+                "de": "Produkt nicht in Ordnung",
+                "fr": "Produit non conforme"
+              },
+              "singleDeliveryDeeplink": "app.picnic://store/delivery-feedback;issue=LOW_QUALITY,id=",
+              "multipleDeliveriesDeeplink": "app.picnic://store/page;id=self-service-recent-deliveries-list-root,issue=LOW_QUALITY,presentation-mode=MODAL_OVER_CONTEXT"
+            }
+          },
+          "var1": {
+            "issueEntry": {
+              "icon": "close",
+              "title": {
+                "nl": "Product niet ontvangen",
+                "de": "Produkt fehlt",
+                "fr": "Produit non reçu"
+              },
+              "singleDeliveryDeeplink": "app.picnic://store/delivery-feedback;issue=NOT_PRESENT,id=",
+              "multipleDeliveriesDeeplink": "app.picnic://store/page;id=self-service-recent-deliveries-list-root,issue=NOT_PRESENT,presentation-mode=MODAL_OVER_CONTEXT"
+            }
+          }
+        }
+      }
+    },
+    "customerServiceSection": {
+      "$literal": {
+        "subHeader": {
+          "title": {
+            "nl": "Hulp nodig?",
+            "de": "Direkter Kontakt",
+            "fr": "Besoin d’aide ?"
+          }
+        }
+      }
+    }
+  },
+  "metadata": {}
+}

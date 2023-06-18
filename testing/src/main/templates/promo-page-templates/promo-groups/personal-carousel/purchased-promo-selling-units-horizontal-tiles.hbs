@@ -1,0 +1,51 @@
+{
+  "template_id": "purchased-promo-selling-units-horizontal-tiles",
+  "layout": {{#gt sellingUnits.length 2}}
+      {{{template
+        "core-horizontal-selling-unit-section-localized"
+        sellingUnits=sellingUnits
+        articleFeatures=articleFeatures
+        subHeader=subHeader
+        moreButtonDeeplink=moreButtonDeeplink
+        numberOfTiles=carouselConfig.numberOfTiles
+      }}}
+    {{else}}
+      {{{template "core-empty-pml-section"}}}
+    {{/gt}},
+  "context": {
+    "sellingUnits": {
+      "$query": "SELECT * FROM purchased_promo_selling_units WHERE id IN ('irrelevant') LIMIT 20"
+    },
+    "articleFeatures": [],
+    "subHeader": {
+      "title": {
+        "nl": "Jouw acties",
+        "de": "Deine Angebote",
+        "fr": "Vos promos"
+      },
+      "subHeaderButton": {
+        "deeplink": "nl.picnic-supermarkt://store/page;id=purchased-promo-selling-units-deep-dive",
+        "backgroundColor": "GREY1",
+        "textColor": "GREEN1",
+        "title":{
+          "nl": "Bekijk alles",
+          "de": "Alles anzeigen",
+          "fr": "Voir plus"
+        },
+        "icon": "rightChevron"
+      }
+    },
+    "moreButtonDeeplink": {
+      "target": "nl.picnic-supermarkt://store/page;id=purchased-promo-selling-units-deep-dive"
+    }
+  },
+  "metadata": {
+    "title": "Personal Promo Carousel",
+    "type": "BLOCK",
+    "description": "List recently purchased promoted selling units",
+    "preview_image": {
+      "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/6def85cc30b243e1b68feb043d85ee7de2ee5ee642740efeebfd548562f1cca4/large.png"
+    },
+    "properties_schema": "{\"required\":[\"carouselConfig\"],\"properties\":{\"carouselConfig\":{\"name\":\"carouselConfig\",\"$id\":\"carouselConfig\",\"title\":\"Articles Carousel Configuration\",\"type\":\"object\",\"required\":[\"numberOfTiles\"],\"properties\":{\"numberOfTiles\":{\"name\":\"numberOfTiles\",\"$id\":\"carouselConfig.numberOfTiles\",\"title\":\"Number of Top Articles\",\"type\":\"number\",\"minimum\":3}}}},\"errorMessage\":{\"required\":{\"carouselConfig\":\"Please fill all carousel configuration\"}}}"
+  }
+}

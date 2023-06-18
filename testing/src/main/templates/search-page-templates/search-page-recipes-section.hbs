@@ -1,0 +1,47 @@
+  {
+    "template_id": "search-page-recipes-section",
+    "layout": 
+    {{#each recipes.data as | recipe |}}
+      {
+        "type": "PML",
+        "id": "core-wide-recipe-tile",
+        "size": {
+          "main_axis": "128",
+          "cross_axis": "12g"
+        },
+        "analytics": {
+          "contexts": [
+            {
+              "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+              "data": {
+                "type":"pml",
+                "position": {
+                  "x": 1,
+                  "y": {{{math @index "+" 1}}}
+                }
+              }
+            },
+            {
+              "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+              "data": {
+                "type": "wide_recipe_tile",
+                "template_id": "core-wide-recipe-tiles-section"
+              }
+            },
+            {
+              "schema": "iglu:tech.picnic.snowplow.analytics/recipe/jsonschema/1-1-0",
+              "data": {
+                  "recipe_id": "{{recipe.id}}"
+              }
+            }
+          ]
+        },
+        "post_processing_instructions": [
+            {{{template 'instruction-recipe-price' recipe=recipe }}}
+        ],
+        "pml": {{{template 'core-wide-recipe-tile-template' recipe=recipe }}}
+      },
+    {{/each}},
+    "context": {},
+    "metadata": {}
+  }

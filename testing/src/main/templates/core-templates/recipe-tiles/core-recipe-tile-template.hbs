@@ -1,0 +1,211 @@
+{
+    "template_id": "core-recipe-tile-template",
+    "layout": {
+        "pml_version": "0.1.0",
+        {{#with recipe}}
+        "component": {
+            "type": "TOUCHABLE",
+            "accessibilityLabel": "{{name}}{{#if servings.isPresent}}, {{localize COPY.description.dishFor}} {{servings.orElseThrow}} {{localize COPY.description.people}}{{/if}} {{#if preparationTime.toMinutesPart}}, {{preparationTime.toMinutesPart}} {{localize COPY.description.cookingTime}}.{{/if}}",
+            "accessibilityHint": "{{localize COPY.accessibilityHint}}",
+            "on_press": {
+                "actionType": "OPEN",
+                "target": "nl.picnic-supermarkt://store/recipe-detail;id={{id}}"
+            },
+            "active_opacity": 0.8,
+            "active_scale": 0.98,
+            "child": {
+                "type": "CONTAINER",
+                "overflow": "hidden",
+                "border_radius": 8,
+                "width": "100%",
+                "height": "100%",
+                "background_color": "WHITE",
+                "child": {
+                    "type": "STACK",
+                    "axis": "VERTICAL",
+                    "height": "100%",
+                    "children": [
+                        {
+                            "type": "STACK",
+                            "axis": "VERTICAL",
+                            "distribution": "FILL",
+                            "children": [
+                                {{#gt imageIds.length 0}}
+                                {{#with (slice imageIds 0) as | imageId |}}
+                                {
+                                    "type": "IMAGE",
+                                    "source": {
+                                        "id": "recipes/{{imageId.[0]}}"
+                                    },
+                                    "width": "100%",
+                                    "resize_mode": "COVER",
+                                    "placeholder": "NONE"
+                                }
+                                {{/with}}
+                                {{/gt}}
+                            ]
+                        },
+                        {{#if labels}}
+                        {
+                            "type": "CONTAINER",
+                            "absolute_position": {
+                                "bottom": {{contentHeight}},
+                                "left": 0,
+                                "right": 0
+                            },
+                            "child": {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "padding": {
+                                    "top": 4,
+                                    "bottom": 8,
+                                    "left": 8,
+                                    "right": 8
+                                },
+                                "children": [
+                                    {{#each labels as | label |}}
+                                    {
+                                        "type": "CONTAINER",
+                                        "background_color": "{{label.backgroundColor}}",
+                                        "border_radius": 4,
+                                        "padding": {
+                                            "top": 2,
+                                            "bottom": 3,
+                                            "left": 4,
+                                            "right": 4
+                                        },
+                                        "child": {
+                                            "type": "RICH_TEXT",
+                                            "text_alignment": "START",
+                                            "text_attributes": {
+                                                "size": 13,
+                                                "weight": "MEDIUM"
+                                            },
+                                            "markdown": "#({{label.textColor}}){{{label.text}}}#({{label.textColor}})"
+                                        }
+                                    },
+                                    {{/each}}
+                                ]
+                            }
+                        },
+                        {{/if}}
+                        {
+                            "type": "CONTAINER",
+                            "overflow": "hidden",
+                            "width": "100%",
+                            "height": {{contentHeight}},
+                            "background_color": "WHITE",
+                            "child": {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "width": "100%",
+                                "padding": {
+                                    "left": 8,
+                                    "right": 8,
+                                    "top": 4,
+                                    "bottom": 4
+                                },
+                                "children": [
+                                    {
+                                        "type": "CONTAINER",
+                                        "child": {
+                                            "type": "RICH_TEXT",
+                                            "text_alignment": "START",
+                                            "text_attributes": {
+                                                "size": 16,
+                                                "weight": "REGULAR"
+                                            },
+                                            "number_of_lines": 2,
+                                            "markdown": "#(GREY5){{#replaceRegex name (localize COPY.title.veganRegex) '**#(GREEN1)$1#(GREEN1)**'}}{{/replaceRegex}}#(GREY5)"
+                                        }
+                                    },
+                                    {
+                                        "type": "STACK",
+                                        "axis": "VERTICAL",
+                                        "distribution": "FILL",
+                                        "children": [
+                                            {
+                                                "type": "STACK",
+                                                "axis": "HORIZONTAL",
+                                                "width": "100%",
+                                                "distribution": "SPACE_BETWEEN",
+                                                "children": [
+                                                    {
+                                                        "type": "RICH_TEXT",
+                                                        "text_alignment": "START",
+                                                        "text_attributes": {
+                                                            "size": 15,
+                                                            "weight": "REGULAR"
+                                                        },
+                                                        "number_of_lines": 2,
+                                                        "markdown": "#(GREY3){{#if preparationTime.toHoursPart}}{{preparationTime.toHoursPart}} {{localize COPY.description.hour}} {{/if}}{{#if preparationTime.toMinutesPart}}{{preparationTime.toMinutesPart}} {{localize COPY.description.minutes}}{{/if}}{{#if showRecipeServings}}{{#if servings.isPresent}} | {{servings.orElseThrow}} {{localize COPY.description.people}}{{/if}}{{/if}}#(GREY3)"
+                                                    },
+                                                    {
+                                                        "type": "CONTAINER",
+                                                        "absolute_position": {
+                                                            "bottom": 0,
+                                                            "right": 0,
+                                                        },
+                                                        "child": {
+                                                            "type": "PLACEHOLDER",
+                                                            "instruction_id": "calculate_recipe_price"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+        {{/with}}
+    },
+    "context": {
+      "COPY": {
+          "accessibilityHint": {
+              "nl": "Tik dubbel om receptdetails te bekijken",
+              "de": "Tippe zwei Mal, um die Rezeptdetails zu sehen",
+              "fr": "Double-cliquer pour voir les détails de la recette"
+          },
+          "title": {
+              "veganRegex": {
+                "nl": "^(Vega(n?))",
+                "de": "^(Vegetarisch|Vegan)",
+                "fr": "^(Végétarien|Vegan)"
+              }
+          },
+          "description": {
+              "hour": {
+                  "nl": "uur",
+                  "de": "Std.",
+                  "fr": "heure"
+              },
+              "minutes": {
+                  "nl": "min",
+                  "de": "Min.",
+                  "fr": "min."
+              },
+              "people": {
+                  "nl": "personen",
+                  "de": "Personen",
+                  "fr": "personnes"
+              },
+              "dishFor": {
+                  "nl": "gerecht voor",
+                  "de": "Gericht für",
+                  "fr": "Pour"
+              },
+              "cookingTime": {
+                  "nl": "Bereidingstijd",
+                  "de": "Zubereitungszeit",
+                  "fr": "Temps de préparation"
+              }
+          }
+      }
+    },
+    "metadata": {}
+}

@@ -1,0 +1,126 @@
+  {
+    "template_id": "gifting-horizontal-cards-section-new",
+    "layout": {
+                "type": "BLOCK",
+                "id": "gifting-horizontal-cards-section-new",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL"
+                },
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children": [
+                {{#and (subHeader) (gt giftingHorizontalCardItems.length 0)}}
+                {
+                    "id": "horizontal-cards-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL",
+                        "spacing": {
+                            "mainAxis": 4
+                        }
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                        "type": "PML",
+                        "id": "1",
+                        "size": {
+                            "mainAxis":48,
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{{template 'core-sub-header-template' subHeader=subHeader}}}
+                        }
+                    ]
+                },
+                {{/and}}
+                {{#if giftingHorizontalCardItems.[0]}}
+                {
+                    "type":"BLOCK",
+                    "id":"gifting-horizontal-cards-section-content",
+                    "layout":
+                        {
+                            "type": "FLOW",
+                            "axis": "HORIZONTAL",
+                            "spacing": {
+                                "mainAxis": 4,
+                                "crossAxis":4
+                            },
+                            "padding": {
+                                "top": 4,
+                                "right": 8,
+                                "bottom": 4,
+                                "left": 8
+                            }
+                        },
+                        "size": {
+                            "crossAxis": "16g",
+                            "mainAxis": "(SCREEN_WIDTH - 12) * 0.6"
+                        },
+                        "children":[
+                            {{#each giftingHorizontalCardItems as | item |}}
+                            {
+                                "type": "PML",
+                                "id": "1",
+                                "analytics": {
+                                    "contexts":[
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "type":"pml",
+                                                "position": {
+                                                    "x": {{math @index "+" 1}},
+                                                    "y": 1
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "template_id":"gifting-horizontal-card-template",
+                                                "type": "horizontal_card",
+                                                "deeplink": "nl.picnic-supermarkt://store/gift-selection;user-campaign-id={{item.userCampaignId}}"
+                                            }
+                                        }
+                                        {{#if subHeader}}
+                                        ,
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                            "data": {
+                                                "name":"{{subHeader.title}}",
+                                                "type": "horizontal_card"
+                                            }
+                                        }
+                                        {{/if}}
+                                    ]
+                                },
+                                "size": {
+                                    "mainAxis": "(SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 2",
+                                    "crossAxis": "(SCREEN_WIDTH - 12) * 0.6"
+                                    },
+                                "pml":
+                                {{{template 'gifting-horizontal-card-template-new' item=item index=@index imageIds=giftImageIds}}}
+                            }
+                            {{#unless @last}},{{/unless}}
+                            {{/each}}
+                        ]
+                }
+                {{/if}}
+            ]
+        },
+    "context": {},
+    "metadata": {
+      "title": "Gifting Cards New",
+      "type": "BLOCK",
+      "description": "Display gifting cards",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/d5ce9591e856e3fff4ae0ec7a646d708bbdabb3530531fd65f7db471f1de6f0b/large.png"
+      },
+      "properties_schema": "{\"required\":[\"subHeader\",\"giftingHorizontalCardItems\",\"giftImageIds\"],\"properties\":{\"subHeader\":{\"name\":\"subHeader\",\"$id\":\"subHeader\",\"title\":\"Sub Header\",\"type\":\"object\",\"required\":[\"title\"],\"properties\":{\"title\":{\"name\":\"title\",\"$id\":\"subHeader.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Subheader title should not be empty\"}}},\"errorMessage\":{\"required\":{\"title\":\"Please enter subheader title\"}}},\"giftImageIds\":{\"name\":\"giftImageIds\",\"$id\":\"giftimageids\",\"title\":\"Gift Image IDs\",\"type\":\"array\",\"minItems\":5,\"items\":{\"name\":\"giftImageId\",\"$id\":\"giftimageid\",\"title\":\"Image\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"name\":\"id\",\"$id\":\"id\",\"title\":\"ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"ID is required\"}}},\"errorMessage\":{\"required\":{\"id\":\"Image ID is required\"}}},\"errorMessage\":{\"minItems\":\"At least 5 Image ID is required\"}},\"giftingHorizontalCardItems\":{\"name\":\"giftingHorizontalCardItems\",\"$id\":\"giftingHorizontalCardItems\", \"title\": \"Gifting items query\",\"type\":\"object\",\"required\":[\"$query\"],\"properties\":{\"$query\":{\"name\":\"$query\",\"$id\":\"giftingHorizontalCardItems.$query\",\"title\":\"SQL Query\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Query is required\"}}},\"errorMessage\":{\"required\":{\"$query\":\"Please enter Card Items Query\"}}}},\"errorMessage\":{\"required\":{\"subHeader\":\"Please enter Sub-header\",\"$query\":\"Please enter Query\",\"giftImageIds\":\"Please enter Image IDs\"}}}"
+    }
+  }

@@ -1,0 +1,89 @@
+{
+  "template_id": "core-recently-purchased-articles-section",
+  "layout": {{#gt articlesQuery.length 0}}
+  {{#if pppPurchasesPageFeatureFlag.isEmpty }}
+    {{{template
+      "core-horizontal-tiles-section-localized"
+      articles=articlesQuery
+      articleFeatures=articleFeatures
+      subHeader=subHeader
+      moreButtonDeeplink=moreButtonDeeplink
+      numberOfTiles=carouselConfig.numberOfTiles
+    }}}
+  {{else}}
+    {{{template
+      "core-horizontal-tiles-section-localized"
+      articles=articlesQuery
+      articleFeatures=articleFeatures
+      subHeader=newPurchasesPageSubHeader
+      moreButtonDeeplink=newPurchasesPageMoreButtonDeeplink
+      numberOfTiles=carouselConfig.numberOfTiles
+    }}}
+  {{/if}}
+{{else}}
+  {{{template "core-empty-pml-section"}}}
+{{/gt}},
+  "context": {
+    "articlesQuery": {
+      "$query": "SELECT * FROM purchased_articles WHERE id IN ('irrelevant') LIMIT 20"
+    },
+    "pppPurchasesPageFeatureFlag": {
+      "$query": "SELECT * FROM feature_flags WHERE id IN ('PPP_PURCHASES_TAB')"
+    },
+    "articleFeatures": ["SHOW_CATEGORY_ACTION", "SHOW_REMOVE_FROM_PURCHASES_PAGE_ACTION"],
+    "newPurchasesPageSubHeader": {
+      "title": {
+        "nl": "Opnieuw bestellen",
+        "de": "Nochmal bestellen",
+        "fr": "Historique"
+      },
+      "subHeaderButton": {
+        "deeplink": "nl.picnic-supermarkt://store/page;id=purchases-page-root",
+        "backgroundColor": "GREY1",
+        "textColor": "GREEN1",
+        "title":{
+          "nl": "Bekijk alles",
+          "de": "Alles anzeigen",
+          "fr": "Voir plus"
+        },
+        "icon": "rightChevron"
+      }
+    },
+    "subHeader": {
+      "title": {
+        "nl": "Opnieuw bestellen",
+        "de": "Nochmal bestellen",
+        "fr": "Historique"
+      },
+      "subHeaderButton": {
+        "deeplink": "nl.picnic-supermarkt://categories/purchases",
+        "backgroundColor": "GREY1",
+        "textColor": "GREEN1",
+        "title": {
+          "nl": "Bekijk alles",
+          "de": "Alles anzeigen",
+          "fr": "Voir plus"
+        },
+        "icon": "rightChevron"
+      }
+    },
+    "newPurchasesPageMoreButtonDeeplink": {
+      "target": "nl.picnic-supermarkt://store/page;id=purchases-page-root"
+    },
+    "moreButtonDeeplink": {
+      "target": "nl.picnic-supermarkt://categories/purchases"
+    },
+    "carouselConfig": {
+      "numberOfTiles": 7
+    }
+  },
+  "metadata": {
+    "title": "Recently purchased articles section",
+    "type": "BLOCK",
+    "description": "Display list of recently purchased articles",
+    "preview_image": {
+      "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/b07058987ce679fa32c2ca4df41c0b43fc03b7f5f0a16e3a846eb05c6519deca/large.png"
+    },
+    "properties_schema": "{\"properties\":{}}"
+  }
+}

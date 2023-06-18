@@ -5,12 +5,16 @@ import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.RecognitionException
 import org.example.jsonantlr.JSONLexer
 import org.example.jsonantlr.JSONParser
+import java.io.File
 import java.lang.RuntimeException
 import kotlin.io.path.Path
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 object Main {
+    private const val red = "\u001b[31m"
+    private const val green = "\u001b[32m"
+    private const val reset = "\u001b[0m"
     @JvmStatic
     fun main(args: Array<String>) {
         val filePaths = listOf(
@@ -42,27 +46,40 @@ object Main {
             "testing/src/main/templates/template-25.tmpl",
             "testing/src/main/templates/template-26.tmpl",
         )
-        val red = "\u001b[31m"
-        val green = "\u001b[32m"
-        val reset = "\u001b[0m"
 
         for (path in filePaths) {
-            val lexer = JSONLexer(CharStreams.fromPath(Path(path)))
-            val tokens  = CommonTokenStream(lexer)
-            val parser = JSONParser(tokens)
-            try {
-                parser.json()
+            parseFile(path)
+        }
 
-                if (parser.numberOfSyntaxErrors == 0) {
-                    println("$path has $green succeeded $reset")
-                } else {
-                    println("$path has $red failed $reset")
-                }
-            } catch (e: RecognitionException) {
-                println("$path has failed")
-            } catch (e: RuntimeException) {
-                println("$path has failed")
+//        val templateFolder = File("testing/src/main/templates/")
+//        iterateDirectory(templateFolder)
+    }
+
+    private fun parseFile(path: String) {
+
+        val lexer = JSONLexer(CharStreams.fromPath(Path(path)))
+        val tokens  = CommonTokenStream(lexer)
+        val parser = JSONParser(tokens)
+        try {
+            parser.json()
+
+            if (parser.numberOfSyntaxErrors == 0) {
+                println("$path has $green succeeded $reset")
+            } else {
+                println("$path has $red failed $reset")
             }
+        } catch (e: RecognitionException) {
+            println("$path has failed")
+        } catch (e: RuntimeException) {
+            println("$path has failed")
+        }
+    }
+
+    private fun iterateDirectory(file: File) {
+        if (file.isDirectory) {
+            file.listFiles()?.forEach { iterateDirectory(it) }
+        } else {
+            parseFile(file.path)
         }
     }
 }

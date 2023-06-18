@@ -1,0 +1,169 @@
+{
+    "template_id": "search-page-no-results-block",
+    "layout": {
+        "type": "BLOCK",
+        "id": "search-page-no-results-body",
+        "analytics": {},
+        "size": {
+            "crossAxis": "SCREEN_WIDTH"
+        },
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL"
+        },
+        "children": [
+            {
+                "type": "PML",
+                "id": "search-page-no-results-top",
+                "analytics": {},
+                "size": {
+                    "main_axis": "CONTAINER_HEIGHT - 200",
+                    "cross_axis": "12g"
+                },
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "distribution": "START",
+                        "alignment": "CENTER",
+                        "height": "100%",
+                        "children": [
+                            {
+                                "type": "STACK",
+                                "alignment": "CENTER",
+                                "distribution": "CENTER",
+                                "height": "75%",
+                                "children": [
+                                    {
+                                        "type": "RICH_TEXT",
+                                        "markdown": "#(GREY4){{localize COPY.no_results_for}}#(GREY4)"
+                                    },
+                                    { "type": "CONTAINER", "height": 24 },
+                                    {
+                                        "type": "RICH_TEXT",
+                                        "markdown": "“{{search_term}}“",
+                                        "text_attributes": {
+                                            "weight": "REGULAR",
+                                            "size": 25
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "CONTAINER",
+                                "absolute_position": {
+                                    "bottom": 5,
+                                    "left": 0,
+                                    "right": 0,
+                                    "top": 0
+                                },
+                                "child": {
+                                    "type": "STACK",
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "alignment": "CENTER",
+                                    "distribution": "END",
+                                    "children": [
+                                        {
+                                            "type": "IMAGE",
+                                            "placeholder": "NONE",
+                                            "resize_mode": "CONTAIN",
+                                            "source": {
+                                                "url": "https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/9c669031f917e72ae7134634680b08c8626b8a4022bec455a633c2d8ade4500c/<DERIVATIVE>.png"
+                                            },
+                                            "height": "35%",
+                                            "aspectRatio": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "PML",
+                "id": "search-page-no-results-bottom-block",
+                "analytics": {},
+                "size": {
+                    "main_axis": 200,
+                    "cross_axis": "12g"
+                },
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "distribution": "CENTER",
+                        "alignment": "CENTER",
+                        "background_color": "WHITE",
+                        "height": "100%",
+                        "padding": {
+                            "top": 36,
+                            "bottom": 36
+                        },
+                        "spacing": 40,
+                        "children": [
+                            {
+                                "type": "RICH_TEXT",
+                                "markdown": "#(RED1){{localize COPY.missing_something}}#(RED1)"
+                            },
+                            {
+                                "type": "TOUCHABLE",
+                                "on_press": {
+                                    "action_type": "OPEN",
+                                    "target": "nl.picnic-supermarkt://store/product-suggestion"
+                                },
+                                "child": {
+                                    "type": "CONTAINER",
+                                    "background_color": "GREEN1",
+                                    "width": 250,
+                                    "height": 50,
+                                    "border_radius": 6,
+                                    "child": {
+                                        "type": "STACK",
+                                        "height": "100%",
+                                        "width": "100%",
+                                        "distribution": "CENTER",
+                                        "alignment": "CENTER",
+                                        "children": [
+                                            {
+                                                "type": "RICH_TEXT",
+                                                "markdown": "#(WHITE){{localize COPY.request_button}}#(WHITE)",
+                                                "text_attributes": {
+                                                    "size": 17,
+                                                    "weight": "MEDIUM"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    "context": {
+        "COPY": {
+            "no_results_for": {
+                "nl": "We kunnen niks vinden voor",
+                "de": "Wir konnten leider nichts finden zu",
+                "fr": "Nous n'avons rien trouvé pour"
+            },
+            "missing_something": {
+                "nl": "Mis je iets?",
+                "de": "Fehlt etwas?",
+                "fr": "Envie d'autre chose ?"
+            },
+            "request_button": {
+                "nl": "Vraag het aan!",
+                "de": "Frag es an!",
+                "fr": "Demandez-nous !"
+            }
+        }
+    },
+    "metadata": {}
+}

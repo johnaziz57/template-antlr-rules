@@ -1,0 +1,79 @@
+{
+  "template_id": "self-service-deliveries-list-root",
+  "layout": {
+    "id": "self-service-deliveries-list-root",
+    "header": {
+      "title": "{{localize(COPY.header)}}"
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "background_color": "WHITE"
+      },
+      "size": {
+        "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+        {   
+          "type": "BLOCK",
+          "id": "list",
+          "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            }
+          },
+          "size": {
+            "cross_axis": "12g"
+          },
+          "children": [
+            {{#each deliveries as | delivery |}}
+            {{{template 'self-service-deliveries-list-item' delivery=delivery issue=issue actionType="OPEN"}}},
+            {
+              "type": "PML",
+              "id": "separator-list-item-id-{{deliveryId}}",
+              "size": {
+                "main_axis": 1,
+                "cross_axis": "12g"
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component":  {
+                  "type": "CONTAINER",
+                  "height": 1,
+                  "background_color": "GREY1",
+                  "width": "100%"
+                }
+              }
+            }
+            {{#unless @last}},{{/unless}}
+            {{/each}}
+          ]
+        }
+      ]
+    }
+  },
+  "context": {
+    "COPY": {
+      "header": {
+        "nl": "Jouw bezorgingen",
+        "de": "Deine Bestellungen",
+        "fr": "Vos livraisons"
+      }
+    },
+    "issue": {
+      "$param": "issue"
+    },
+    "deliveries": {
+      "$query": "SELECT * FROM recent_deliveries_by_order_status WHERE id IN ('COMPLETED')"
+    }
+  },
+  "metadata": {}
+}

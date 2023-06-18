@@ -1,0 +1,81 @@
+{
+  "template_id": "missing-selling-unit-suggest-tile",
+  "layout": {
+    "type": "PML",
+    "id": "missing-selling-unit-suggest-tile",
+    "size": {
+      "cross_axis": "6g",
+      "main_axis": "118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+    },
+    "pml": {
+      "pml_version": "0.1.0",
+      "component": {
+        "type": "CONTAINER",
+        "border_radius": 8,
+        "width": "100%",
+        "height": "100%",
+        "background_color": "WHITE",
+        "child": {
+          "type": "STACK",
+          "width": "100%",
+          "height": "100%",
+          "distribution": "CENTER",
+          "alignment": "CENTER",
+          "children": [
+            {
+              "type": "IMAGE",
+              "placeholder": "NONE",
+              "resize_mode": "CONTAIN",
+              "source": {
+                "url": "https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/9c669031f917e72ae7134634680b08c8626b8a4022bec455a633c2d8ade4500c/<DERIVATIVE>.png"
+              },
+              "width": 96,
+              "height": 120
+            },
+            {
+              "type": "CONTAINER",
+              "padding": {"top": 6, "bottom": 6},
+              "child": {
+                "type": "RICH_TEXT",
+                "markdown": "{{localize COPY.missing_something}}"
+              },
+            },
+            {
+              "type": "TOUCHABLE",
+              "on_press": {
+                "action_type": "OPEN",
+                "target": "nl.picnic-supermarkt://store/product-suggestion"
+              },
+              "child": {
+                "type": "CONTAINER",
+                "background_color": "GREEN1",
+                "padding": { "top": 8, "bottom": 8, "left": 14, "right": 14 },
+                "border_radius": 8,
+                "child": {
+                  "type": "RICH_TEXT",
+                  "markdown": "#(WHITE){{localize COPY.request_button}}#(WHITE)"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "context": {
+    "COPY": {
+      "missing_something": {
+        "nl": "Mis je iets?",
+        "de": "Fehlt etwas?",
+        "fr": "Envie d'autre chose ?"
+      },
+      "request_button": {
+        "nl": "Vraag het aan!",
+        "de": "Frag es an!",
+        "fr": "Demandez-nous !"
+      }
+    }
+  },
+  "metadata": {}
+}
+

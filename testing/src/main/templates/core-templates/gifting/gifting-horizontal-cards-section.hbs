@@ -1,0 +1,146 @@
+  {
+    "template_id": "gifting-horizontal-cards-section",
+    "layout": {
+                "type": "BLOCK",
+                "id": "gifting-horizontal-cards-section",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL"
+                },
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children": [
+                {{#and (COPY.subHeader) (gt horizontalCardItems.length 0)}}
+                {
+                    "id": "horizontal-cards-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL",
+                        "spacing": {
+                            "mainAxis": 4
+                        }
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                        "type": "PML",
+                        "id": "1",
+                        "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{{template 'core-sub-header-template-localized' subHeader=COPY.subHeader}}}
+                        }
+                    ]
+                },
+                {{/and}}
+                {{#if horizontalCardItems.[0]}}
+                {   
+                    "type":"BLOCK",
+                    "id":"gifting-horizontal-cards-section-content",
+                    "layout":
+                        {
+                            "type": "FLOW",
+                            "axis": "HORIZONTAL",
+                            "spacing": {
+                                "mainAxis": 4,
+                                "crossAxis":4
+                            },
+                            "padding": {
+                                "top": 4,
+                                "right": 8,
+                                "bottom": 4,
+                                "left": 8
+                            }
+                        },
+                        "size": {
+                            "crossAxis": "16g",
+                            "mainAxis": "(SCREEN_WIDTH - 12) * 0.6"
+                        },
+                        "children":[
+                            {{#each horizontalCardItems as | item |}}
+                            {
+                                "type": "PML",
+                                "id": "1",
+                                "analytics": {
+                                    "contexts":[
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "type":"pml",
+                                                "position": {
+                                                    "x": {{math @index "+" 1}},
+                                                    "y": 1
+                                                }
+                                            }
+                                        }, 
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                            "data": {
+                                                "template_id":"gifting-horizontal-card-template",
+                                                "type": "horizontal_card",
+                                                "deeplink": "nl.picnic-supermarkt://store/gift-selection;user-campaign-id={{item.userCampaignId}}"
+                                            } 
+                                        }
+                                        {{#if COPY.subHeader}}
+                                        ,
+                                        {
+                                            "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                            "data": {
+                                                "name":"{{localize COPY.subHeader.title}}",
+                                                "type": "horizontal_card"
+                                            } 
+                                        }
+                                        {{/if}}
+                                    ]
+                                },
+                                "size": {
+                                    "mainAxis": "(SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 2",
+                                    "crossAxis": "(SCREEN_WIDTH - 12) * 0.6"
+                                    },
+                                "pml":
+                                {{{template 'gifting-horizontal-card-template' item=item index=@index giftImages=giftImages}}}
+                            }
+                            {{#unless @last}},{{/unless}}
+                            {{/each}}
+                        ]
+                }
+                {{/if}}
+            ]
+        },
+    "context": {
+         "COPY": {
+          "subHeader": {
+            "title": {
+                "nl": "Verrassing: 5 kadootjes voor jou",
+                "de": "",
+                "fr": ""
+            }
+          }
+        },
+        "horizontalCardItems": {
+          "$query": "select * from user_gifts where id in ('waitsofteners') LIMIT 5"
+        },
+        "giftImages": {
+          "giftimageId0": "539c7e1086df66fa2f58c32c7f1b5c203db4c9aaffc760f23c71bd374f1cbf9d",
+          "giftimageId1": "1fd72f2aba606362f07212a06dc11d75456746c1c438148849fec4d3f3506631",
+          "giftimageId2": "9f53f92092e6d13e35e9b5526219674e7825964f641e0a2b086fdf902f647b47",
+          "giftimageId3": "c839b5ea63db718024a243fd800b3553322cd82abf9f593c48ebc43967604289",
+          "giftimageId4": "fc83f082f3989dcd19ebd8d2249ef38ff89acaeb6142b806450c815e5cb9fb6b"
+        }
+    },
+    "metadata": {
+      "title": "Gifting Cards",
+      "type": "BLOCK",
+      "description": "Display gifting cards",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/d5ce9591e856e3fff4ae0ec7a646d708bbdabb3530531fd65f7db471f1de6f0b/large.png"
+      },
+      "properties_schema": "{\"properties\":{}}"
+    }
+  }

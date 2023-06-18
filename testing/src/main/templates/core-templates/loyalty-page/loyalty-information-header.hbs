@@ -1,0 +1,43 @@
+{
+    "template_id": "loyalty-information-header",
+    "layout": {
+        "id": "loyalty-information-header",
+        "type": "PML",
+        "size": {"crossAxis": "12g", "mainAxis": 60},
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "STACK",
+                "axis": "VERTICAL",
+                "spacing": 4,
+                "padding": {"left": 16, "right": 16},
+                "children": [
+                    {
+                        "type": "RICH_TEXT",
+                        "text_type": "SEMIBOLD_TEXT",
+                        "markdown": "{{localize COPY.title}}"
+                    },
+                    {
+                        "type": "RICH_TEXT",
+                        "markdown": "{{localize COPY.subtitle}}"
+                    }
+                ]
+            }
+        }
+    },
+    "context": {
+        "COPY": {
+            "title": {
+                "nl": "Picnic #(RED1)Piekpunten#(RED1)",
+                "de": "Picnic #(RED1)Pluspunkte#(RED1)",
+                "fr": ""
+            },
+            "subtitle": {
+                "nl": "#(GREY4)Elke maand een kadootje!#(GREY4)",
+                "de": "#(GREY4)Jeden Monat ein Geschenk!#(GREY4)",
+                "fr": ""
+            }
+        }
+    },
+    "metadata": {}
+}

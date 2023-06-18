@@ -1,0 +1,139 @@
+{
+    "template_id": "self-service-add-orders-button-item",
+    "layout": {
+      "type": "PML",
+        "id": "self-service-add-orders-button-item",
+        "analytics": {
+          "contexts":[
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                "data": {"type": "pml"}
+              }, 
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                "data": {
+                  "template_id": "self-service-add-orders-button-item",
+                  "endpoint": "/cart/add_orders"
+                } 
+              }
+          ]
+        },
+        "size": {
+          "cross_axis": "12g",
+          "mainAxis": "((SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 6) * (13/9)"
+        },
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "TOUCHABLE",
+                "accessibility_label": "{{#stripMarkdown (join ', ' labelTitle title)}}{{/stripMarkdown}}",
+                "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+                "on_press": {
+                  "action_type": "ENDPOINT",
+                  "method": "post",
+                  "url": "cart/add_orders",
+                  "body": ["{{#replaceRegex orderIds ',' '","'}}{{/replaceRegex}}"],
+                  "on_success": {
+                      "action_type": "EVENT",
+                      "action": {
+                          "type": "REFRESH",
+                          "source": "CART",
+                          "on_next": {
+                              "action_type": "EVENT",
+                              "action": {
+                                "type": "TOAST",
+                                "message": "{{localize COPY.addOrdersConfirmation}}"
+                              }
+                          }
+                      }
+                  },
+                  "on_error": {
+                    "action_type": "EVENT",
+                    "action": {
+                      "type": "TOAST",
+                      "message": "{{localize COPY.badRequestError}}"
+                    }
+                  }
+                },
+                "active_opacity": 0.5,
+                "child": {
+                      "type": "STACK",
+                      "axis": "VERTICAL",
+                      "height": "100%",
+                      "background_color": "WHITE",
+                      "alignment": "CENTER",
+                      "distribution": "START",
+                      "padding": {
+                          "top": 20,
+                          "bottom": 20
+                      },
+                      "spacing": 8,
+                      "children": [
+                          {
+                            "type": "CONTAINER",
+                            "height": 56,
+                            "width": 56,
+                            "border_radius": 100,
+                          {{#if isActive}}
+                            "background_color": "rgba(136, 169, 30, 0.15)", 
+                          {{else}}
+                            "background_color": "GREY1", 
+                          {{/if}} 
+                            "padding": {
+                              "top": 12, 
+                              "bottom": 12,
+                              "left": 12,
+                              "right": 12
+                            },
+                            "child": 
+                                {
+                                    "type": "ICON",
+                                    "icon_key": "{{icon}}",
+                                    "width": 32,
+                                    "height": 32,
+                                  {{#if isActive}}
+                                    "color": "GREEN1"
+                                  {{else}}
+                                    "color": "GREY4"
+                                  {{/if}}
+                                }
+                          },
+                          {
+                            "type": "RICH_TEXT",
+                            "text_alignment": "CENTER",
+                            "text_attributes": {
+                              "size": 12,
+                              "weight": "MEDIUM"
+                            },
+                            "number_of_lines": 2,
+                            "markdown": "#(GREY5){{{title}}}#(GREY5)"
+                          }
+                      ]
+                }
+                    
+              }
+        }
+  },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal um mehr anzuzeigen.",
+            "fr": "Double-cliquer pour ouvrir"
+          },
+          "addOrdersConfirmation": {
+            "nl": "Gelukt, al deze boodschappen zitten opnieuw in je mandje!",
+            "de": "Schon erledigt! Wir haben alle Produkte erneut zum Warenkorb hinzugefügt",
+            "fr": "Les mêmes produits sont de retourdans votre panier. Pratique!",
+            "en": "Done! We’ve added all these products to your basket again"
+          },
+          "badRequestError": {
+            "nl": "Hé, daar ging iets mis",
+            "de": "Oh, hier ist was schiefgegangen",
+            "en": "Oops, something went wrong",
+            "fr": "Oups, quelque chose a mal tourné par ici"
+          }
+        }
+    },
+    "metadata": {}
+}

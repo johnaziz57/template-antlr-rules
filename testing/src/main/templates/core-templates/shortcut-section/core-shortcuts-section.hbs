@@ -1,0 +1,141 @@
+{
+    "template_id": "core-shortcuts-section",
+    "layout": {
+            "type": "BLOCK",
+            "id": "shortcut-section",
+            "layout": {
+                "type": "FLOW",
+                "axis": "VERTICAL"
+            },
+            "size": {
+                "crossAxis": "12g"
+            },
+            "children": [
+                {{#if subHeader}}
+                {
+                    "id": "shortcut-section-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL"
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                        "type": "PML",
+                        "id": "core-sub-header",
+                        "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{#if subHeader.subHeaderButton}}
+                                {{#template 'core-sub-header-template' subHeader=subHeader subHeaderButton=subHeader.subHeaderButton}}
+                                {{/template}}
+                            {{else}}
+                                {{#template 'core-sub-header-template' subHeader=subHeader}}
+                                {{/template}}
+                            {{/if}}
+                        }
+                    ]
+                },
+                {{/if}}
+                {
+                "type": "BLOCK",
+                "id": "shortcut-section",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL",
+                    "spacing": {
+                        "mainAxis": 4,
+                        "crossAxis": 4
+                    },
+                    "padding": {
+                        "right": 8,
+                        "left": 8
+                    }
+                }, 
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children":[
+                    {{#each shortcutItems as | item |}}
+                    { 
+                        "type":"PML",
+                        "id":"{{item.imageId}}",
+                        "analytics": {
+                            "contexts":[
+                                {   "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                    "data": {
+                                        "type":"pml",
+                                        "position": {
+                                            "x": {{math (math @index  "%" 2) "+" 1}},
+                                            "y": {{math (math (math (math @index "+" 1) "%" 2) "+" (math @index "+" 1)) "/" 2}}
+                                        }
+                                    }
+                                }, 
+                                {
+                                    "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                    "data": {
+                                        "template_id":"core-shortcut-template",
+                                        "type": "shortcut_item",
+                                        "deeplink": {{#and (eq @index 1) (gt shortcut_messages.length 0) (not loyalty_feature_flags.isEmpty)}} 
+                                            "{{loyalty_page.page}}"
+                                        {{else}}
+                                            {{{template 'core-deeplink-resolver' deeplink=item.deeplink}}}
+                                        {{/and}}
+                                    } 
+                                }
+                                {{#if subHeader}}
+                                ,
+                                {
+                                    "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                    "data": {
+                                        "name":"{{subHeader.title}}",
+                                        "type": "shortcut_item"
+                                    } 
+                                }
+                                {{/if}}
+                            ]
+                        },
+                        "size":{"mainAxis":64,"crossAxis":"6g"},
+                        "pml": 
+                        {{#and (eq @index 1) (and (gt shortcut_messages.length 0) (not loyalty_feature_flags.isEmpty))}}
+                            {{#with (slice shortcut_messages 0) as |messages| }}
+                                {{{messages.[0].content}}}
+                            {{/with}}
+                        {{else}}
+                            {{{template 'core-shortcut-template' item=item}}}
+                        {{/and}}
+                    }
+                    {{#unless @last}},{{/unless}}
+                    {{/each}}  
+                ] 
+            }    
+        ]
+        
+    
+    },
+    "context": {
+        "shortcut_messages": { 
+            "$query": "SELECT * FROM messages WHERE id IN ('HOMEPAGE_SHORTCUT')" 
+        },
+        "loyalty_feature_flags": {
+            "$query": "SELECT * FROM feature_flags WHERE id IN ('LOYALTY_CAMPAIGN_POINTS')"
+        },
+        "loyalty_page": {
+            "page": "nl.picnic-supermarkt://store/page;id=loyalty-page-root"
+        }
+    },
+    "metadata": {
+      "title": "Shortcuts section",
+      "type": "BLOCK",
+      "description": "List of shortcuts with DeepLinks",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/da468fdf5d424225ddd17c2f667c7150be01f6f8fd4559e633377d6d04ca8227/large.png"
+      },
+      "properties_schema": "{\"required\":[\"shortcutItems\"],\"properties\":{\"subHeader\":{\"name\":\"subHeader\",\"$id\":\"subHeader\",\"title\":\"Sub Header\",\"type\":\"object\",\"required\":[\"title\"],\"properties\":{\"title\":{\"name\":\"title\",\"$id\":\"subHeader.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"Subheader title should not be empty\"}},\"subHeaderButton\":{\"name\":\"subHeaderButton\",\"$id\":\"subHeader.subHeaderButton\",\"title\":\"Sub Header Button\",\"type\":\"object\",\"required\":[\"deeplink\",\"title\",\"textColor\"],\"properties\":{\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"subHeader.subHeaderButton.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"title\":{\"name\":\"title\",\"$id\":\"subHeader.subHeaderButton.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"textColor\":{\"name\":\"textColor\",\"$id\":\"subHeader.subHeaderButton.textColor\",\"title\":\"text Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"backgroundColor\":{\"name\":\"backgroundColor\",\"$id\":\"subHeader.subHeaderButton.backgroundColor\",\"title\":\"Background Color\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"icon\":{\"name\":\"icon\",\"$id\":\"subHeader.subHeaderButton.icon\",\"title\":\"Icon\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}}},\"errorMessage\":{\"required\":{\"deeplink\":\"Subheader Button deeplink is required\",\"title\":\"Subheader Button title is required\",\"textColor\":\"Subheader Button textColor is required\"}}}},\"errorMessage\":{\"required\":{\"title\":\"Subheader title is required\"}}},\"shortcutItems\":{\"name\":\"shortcutItems\",\"$id\":\"shortcutItems\",\"title\":\"Shortcuts\",\"type\":\"array\",\"items\":{\"name\":\"shortCutItem\",\"$id\":\"shortCutItem\",\"type\":\"object\",\"title\":\"Shortcut Item\",\"required\":[\"deeplink\",\"imageId\",\"title\"],\"dependentRequired\":{\"labelText\":[\"labelTextColor\",\"labelBackgroundColor\"]},\"properties\":{\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"shortCutItem.deeplink\",\"title\":\"Deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"}},\"imageId\":{\"name\":\"imageId\",\"$id\":\"shortCutItem.imageId\",\"title\":\"Image ID\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"title\":{\"name\":\"title\",\"$id\":\"shortCutItem.title\",\"title\":\"Title\",\"type\":\"string\",\"minLength\":1,\"errorMessage\":{\"minLength\":\"should not be empty\"}},\"labelText\":{\"name\":\"labelText\",\"$id\":\"shortCutItem.labelText\",\"title\":\"Label Text\",\"type\":\"string\"},\"labelTextColor\":{\"name\":\"labelTextColor\",\"$id\":\"shortCutItem.labelTextColor\",\"title\":\"Label TextColor\",\"type\":\"string\"},\"labelBackgroundColor\":{\"name\":\"labelBackgroundColor\",\"$id\":\"shortCutItem.labelBackgroundColor\",\"title\":\"Label BackgroundColor\",\"type\":\"string\"}}},\"errorMessage\":{\"required\":{\"deeplink\":\"Please provide Deeplink\",\"imageId\":\"Please provide Image ID \",\"title\":\"Please provide title\"}}}},\"errorMessage\":{\"required\":{\"shortcutItems\":\"Please provide Shortcut Items\"}}}"
+    } 
+}

@@ -1,0 +1,133 @@
+  {
+    "template_id": "core-horizontal-selling-unit-section-localized",
+    "layout": {
+    "id": "core-horizontal-selling-unit-section-localized",
+    "type": "BLOCK",
+    "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+    },
+    "size": {
+        "crossAxis": "12g"
+    },
+    "children": [
+                {{#and subHeader (gt sellingUnits.length 0)}}
+                {
+                    "id": "horizontal-selling-unit-tiles-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL"
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                          "type": "PML",
+                          "id": "1",
+                          "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{{template 'core-sub-header-template-localized' subHeader=subHeader  }}}
+                        }
+                    ]
+                },
+                {{/and}}
+                {
+                  "id": "horizontal-selling-unit-tiles",
+                  "type": "BLOCK",
+                  "layout": {
+                      "type": "FLOW",
+                      "axis": "HORIZONTAL",
+                      "spacing": {
+                          "mainAxis": 4
+                      },
+                      "padding": {
+                          "left": 8,
+                          "right": 8,
+                          "top": 4,
+                          "bottom": 4
+                      }
+                  },
+                  "size": {
+                    "mainAxis": "118 + (((SCREEN_WIDTH - 16 - 16) / 2) * (9/13))",
+                    "crossAxis": "12g"
+                  },
+                  "children": [
+                   
+                    {{#each sellingUnits as | sellingUnit |}}
+                    {{#lt @index numberOfTiles}}
+                    {{#if articleFeatures}}
+                      {{{template 'core-selling-unit-tile-template' sellingUnit=sellingUnit features=articleFeatures position=@index}}}
+                    {{else}}
+                      {{{template 'core-selling-unit-tile-template' sellingUnit=sellingUnit features=defaultArticleFeatures position=@index}}}
+                    {{/if}}
+                    {{#unless @last}},{{/unless}}
+                    {{/lt}}
+                    {{#eq @index numberOfTiles}}
+                    {{#with (concatLists (slice sellingUnits numberOfTiles (math numberOfTiles "+" 4)) (slice sellingUnits 0 numberOfTiles)) as | moreButtonItems |}}
+                      {
+                        "type":"PML",
+                        "id":"1",
+                        "analytics": {
+                          "contexts":[
+                            {
+                              "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                              "data": {
+                                "type":"pml",
+                                "position": {
+                                  "x": {{math @index "+" 1}},
+                                  "y": 1
+                                }
+                              }
+                            }, 
+                            {
+                              "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                              "data": {
+                                "template_id":"core-more-button-template",
+                                "type": "more_button",
+                                "deeplink": {{{template 'core-deeplink-resolver' deeplink=moreButtonDeeplink}}} 
+                              } 
+                            }
+                            {{#if subHeader}}
+                            ,
+                            {
+                              "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                              "data": {
+                                  "name":"{{subHeader.title}}",
+                                  "type": "more_button"
+                              } 
+                            }
+                            {{/if}}
+                          ]
+                        },
+                        "size":{
+                            "mainAxis":"(SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 2",
+                            "crossAxis":"118 + (((SCREEN_WIDTH - 16 - 16 ) / 2) * (9/13))"
+                          },
+                        "pml":
+                        {{{template 'core-more-button-template' moreButtonItems=moreButtonItems moreButtonDeeplink=moreButtonDeeplink}}}
+                      }
+                      {{/with}}
+                    {{/eq}}
+                    {{/each}}
+                  ]
+              }
+          
+    ]
+},
+    "context": {
+      "defaultArticleFeatures": [ "SHOW_CATEGORY_ACTION" ]
+    },
+    "metadata": {
+      "title": "Localized Horizontal SU Tiles",
+      "description": "Display selling units tiles horizontally",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/63689ce035eb98922c020daeac18a6b60695263e1ba9ba9375df898c4d12f751/large.png"
+      },
+      "properties_schema": "{\n    \"required\": [\n        \"sellingUnits\",\n        \"moreButtonDeeplink\",\n        \"numberOfTiles\"\n    ],\n    \"properties\": {\n        \"subHeader\": {\n            \"name\": \"subHeader\",\n            \"$id\": \"subHeader\",\n            \"title\": \"Sub Header\",\n            \"type\": \"object\",\n            \"required\": [\n                \"title\"\n            ],\n            \"properties\": {\n                \"title\": {\n                    \"name\": \"title\",\n                    \"$id\": \"subHeader.title\",\n                    \"title\": \"Title\",\n                    \"type\": \"string\",\n                    \"minLength\": 1,\n                    \"errorMessage\": {\n                        \"minLength\": \"Subheader title should not be empty\"\n                    }\n                },\n                \"subHeaderButton\": {\n                    \"name\": \"subHeaderButton\",\n                    \"$id\": \"subHeader.subHeaderButton\",\n                    \"title\": \"Sub Header Button\",\n                    \"type\": \"object\",\n                    \"required\": [\n                        \"deeplink\",\n                        \"title\",\n                        \"textColor\"\n                    ],\n                    \"properties\": {\n                        \"deeplink\": {\n                            \"name\": \"deeplink\",\n                            \"$id\": \"subHeader.subHeaderButton.deeplink\",\n                            \"title\": \"Deeplink\",\n                            \"type\": \"string\",\n                            \"pattern\": \"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\n                            \"errorMessage\": {\n                                \"pattern\": \"should be like: nl.picnic-supermarkt://...\"\n                            }\n                        },\n                        \"title\": {\n                            \"name\": \"title\",\n                            \"$id\": \"subHeader.subHeaderButton.title\",\n                            \"title\": \"Title\",\n                            \"type\": \"string\",\n                            \"minLength\": 1,\n                            \"errorMessage\": {\n                                \"minLength\": \"should not be empty\"\n                            }\n                        },\n                        \"textColor\": {\n                            \"name\": \"textColor\",\n                            \"$id\": \"subHeader.subHeaderButton.textColor\",\n                            \"title\": \"text Color\",\n                            \"type\": \"string\",\n                            \"minLength\": 1,\n                            \"errorMessage\": {\n                                \"minLength\": \"should not be empty\"\n                            }\n                        },\n                        \"backgroundColor\": {\n                            \"name\": \"backgroundColor\",\n                            \"$id\": \"subHeader.subHeaderButton.backgroundColor\",\n                            \"title\": \"Background Color\",\n                            \"type\": \"string\",\n                            \"minLength\": 1,\n                            \"errorMessage\": {\n                                \"minLength\": \"should not be empty\"\n                            }\n                        },\n                        \"icon\": {\n                            \"name\": \"icon\",\n                            \"$id\": \"subHeader.subHeaderButton.icon\",\n                            \"title\": \"Icon\",\n                            \"type\": \"string\",\n                            \"minLength\": 1,\n                            \"errorMessage\": {\n                                \"minLength\": \"should not be empty\"\n                            }\n                        }\n                    },\n                    \"errorMessage\": {\n                        \"required\": {\n                            \"deeplink\": \"Subheader Button deeplink is required\",\n                            \"title\": \"Subheader Button title is required\",\n                            \"textColor\": \"Subheader Button textColor is required\"\n                        }\n                    }\n                }\n            },\n            \"errorMessage\": {\n                \"required\": {\n                    \"title\": \"Subheader title is required\"\n                }\n            }\n        },\n        \"sellingUnits\": {\n            \"name\": \"sellingUnits\",\n            \"$id\": \"sellingUnits\",\n            \"title\": \"Selling Units Query\",\n            \"type\": \"object\",\n            \"required\": [\n                \"$query\"\n            ],\n            \"properties\": {\n                \"$query\": {\n                    \"name\": \"$query\",\n                    \"$id\": \"sellingUnits.$query\",\n                    \"title\": \"SQL Query\",\n                    \"type\": \"string\",\n                    \"pattern\": \"^SELECT \\\\* FROM selling_units WHERE ID IN ([\\\\S]+)\",\n                    \"errorMessage\": {\n                        \"pattern\": \"Should start with: SELECT * FROM selling_units WHERE ID IN ('id1, id2,...')\"\n                    }\n                }\n            },\n            \"errorMessage\": {\n                \"required\": {\n                    \"$query\": \"Please provide SQL Query for selling units\"\n                }\n            }\n        },\n        \"moreButtonDeeplink\": {\n            \"name\": \"moreButtonDeeplink\",\n            \"$id\": \"moreButtonDeeplink\",\n            \"title\": \"More Button DeepLink\",\n            \"type\": \"object\",\n            \"required\": [\n                \"target\"\n            ],\n            \"properties\": {\n                \"target\": {\n                    \"name\": \"target\",\n                    \"$id\": \"moreButtonDeeplink.target\",\n                    \"title\": \"Deeplink Target\",\n                    \"type\": \"string\",\n                    \"pattern\": \"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\n                    \"errorMessage\": {\n                        \"pattern\": \"should be like: nl.picnic-supermarkt://...\"\n                    }\n                }\n            },\n            \"errorMessage\": {\n                \"required\": {\n                    \"target\": \"Target for deeplink is required\"\n                }\n            }\n        },\n        \"numberOfTiles\": {\n            \"name\": \"numberOfTiles\",\n            \"$id\": \"numberOfTiles\",\n            \"title\": \"Number of Tiles\",\n            \"type\": \"number\",\n            \"minimum\": 1\n        }\n    },\n    \"errorMessage\": {\n        \"required\": {\n            \"sellingUnits\": \"Please provide SQL Query for selling units\",\n            \"moreButtonDeeplink\": \"Please enter Deeplink for More Button\",\n            \"numberOfTiles\": \"Please enter Number of Tiles\"\n        }\n    }\n}"
+    }
+  }

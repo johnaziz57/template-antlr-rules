@@ -1,0 +1,118 @@
+  {
+    "template_id": "core-horizontal-full-screen-image-section",
+    "layout": {
+                "type": "BLOCK",
+                "id": "horizontal-full-screen-image-section",
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL"
+                },
+                "size": {
+                    "crossAxis": "12g"
+                },
+                "children": [
+                {{#if subHeader}}
+                {
+                    "id": "horizontal-full-screen-image-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL",
+                        "spacing": {
+                            "mainAxis": 4
+                        }
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                        "type": "PML",
+                        "id": "1",
+                        "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                        "pml": {{{template 'core-sub-header-template' subHeader=subHeader}}}
+                        }
+                    ]
+                    },
+                    {{/if}}
+                    {   
+                        "type":"BLOCK",
+                        "id": "horizontal-full-screen-image-section",
+                        "layout":
+                            {
+                                "type": "FLOW",
+                                "axis": "VERTICAL",
+                                "padding": {
+                                    "top": 4,
+                                    "bottom": 4,
+                                }
+                            },
+                            "size": {
+                                "crossAxis": "12g"
+                            },
+                            "children":[
+                                {{#with horizontalFullScreenImageData as | fullScreenImage |}}
+                                {
+                                    "type": "PML",
+                                    "id": "1",
+                                    "analytics": {
+                                        "contexts":[
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "type":"pml",
+                                                "position": {
+                                                    "x": 1,
+                                                    "y": 1
+                                                    }
+                                                }
+                                            }, 
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                                "data": {
+                                                    "template_id": "core-horizontal-full-screen-image-template",
+                                                    "type": "horizontal_full_screen_image"
+                                                    {{#if fullScreenImage.deeplink}}
+                                                        ,
+                                                        "deeplink": {{{template 'core-deeplink-resolver' deeplink=fullScreenImage.deeplink}}}
+                                                    {{/if}}
+                                                } 
+                                            }
+                                            {{#if subHeader}}
+                                            ,
+                                            {
+                                                "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                                "data": {
+                                                    "name":"{{subHeader.title}}",
+                                                    "type": "horizontal_full_screen_image"
+                                                } 
+                                            }
+                                            {{/if}}
+                                        ]
+                                    },
+                                    "size": {
+                                        "mainAxis": "((SCREEN_WIDTH)*{{fullScreenImage.aspectRatio}})",
+                                        "crossAxis": "(SCREEN_WIDTH)"
+                                        },
+                                    "pml":
+                                    {{{template 'core-horizontal-full-screen-image-template' fullScreenImage=fullScreenImage}}}
+                                }
+                                {{/with}}
+                            ]
+                    }
+                ]
+            },
+    "context": {},
+    "metadata": {
+        "title": "Horizontal Full Screen Image",
+        "type": "BLOCK",
+        "description": "Display one Full Screen image",
+        "preview_image": {
+            "url": "https://picnic-nl-dev-images.s3.amazonaws.com/store-page-configurator/16210c57f24e042886b74c07acea923b69de915d89a64528d1717cbfa1804035/large.png"
+        },
+        "properties_schema": "{\n  \"required\": [\"horizontalFullScreenImageData\"],\n  \"properties\": {\n    \"subHeader\": {\n      \"name\": \"subHeader\",\n      \"$id\": \"subHeader\",\n      \"title\": \"Sub Header\",\n      \"type\": \"object\",\n      \"required\": [\"title\"],\n      \"properties\": {\n        \"title\": {\n          \"name\": \"title\",\n          \"$id\": \"subHeader.title\",\n          \"title\": \"Title\",\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"errorMessage\": { \"minLength\": \"Subheader title should not be empty\" }\n        },\n        \"subHeaderButton\": {\n          \"name\": \"subHeaderButton\",\n          \"$id\": \"subHeader.subHeaderButton\",\n          \"title\": \"Sub Header Button\",\n          \"type\": \"object\",\n          \"required\": [\"deeplink\", \"title\", \"textColor\"],\n          \"properties\": {\n            \"deeplink\": {\n              \"name\": \"deeplink\",\n              \"$id\": \"subHeader.subHeaderButton.deeplink\",\n              \"title\": \"Deeplink\",\n              \"type\": \"string\",\n              \"pattern\": \"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\n              \"errorMessage\": {\n                \"pattern\": \"should be like: nl.picnic-supermarkt://...\"\n              }\n            },\n            \"title\": {\n              \"name\": \"title\",\n              \"$id\": \"subHeader.subHeaderButton.title\",\n              \"title\": \"Title\",\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"errorMessage\": { \"minLength\": \"should not be empty\" }\n            },\n            \"textColor\": {\n              \"name\": \"textColor\",\n              \"$id\": \"subHeader.subHeaderButton.textColor\",\n              \"title\": \"text Color\",\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"errorMessage\": { \"minLength\": \"should not be empty\" }\n            },\n            \"backgroundColor\": {\n              \"name\": \"backgroundColor\",\n              \"$id\": \"subHeader.subHeaderButton.backgroundColor\",\n              \"title\": \"Background Color\",\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"errorMessage\": { \"minLength\": \"should not be empty\" }\n            },\n            \"icon\": {\n              \"name\": \"icon\",\n              \"$id\": \"subHeader.subHeaderButton.icon\",\n              \"title\": \"Icon\",\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"errorMessage\": { \"minLength\": \"should not be empty\" }\n            }\n          },\n          \"errorMessage\": {\n            \"required\": {\n              \"deeplink\": \"Subheader Button deeplink is required\",\n              \"title\": \"Subheader Button title is required\",\n              \"textColor\": \"Subheader Button textColor is required\"\n            }\n          }\n        }\n      },\n      \"errorMessage\": { \"required\": { \"title\": \"Subheader title is required\" } }\n    },\n    \"horizontalFullScreenImageData\": {\n        \"name\": \"horizontalFullScreenImageData\",\n        \"$id\": \"horizontalFullScreenImageData\",\n        \"type\": \"object\",\n        \"title\": \"Full Screen Image Data\",\n        \"required\": [\"aspectRatio\", \"backgroundImage\"],\n        \"dependentRequired\": {\n          \"labelText\": [\"labelTextColor\", \"labelBackgroundColor\"]\n        },\n        \"properties\": {\n            \"aspectRatio\": {\n                \"name\": \"aspectRatio\",\n                \"$id\": \"aspectRatio\",\n                \"title\": \"Aspect Ratio\",\n                \"type\": \"string\",\n                \"minLength\": 1,\n                \"pattern\": \"\\\\([0-9]+( ?)/( ?)[0-9]+\\\\)\",\n                \"errorMessage\": {\n                    \"minLength\": \"Aspect ratio is required\",\n                    \"pattern\": \"Aspect Ratio must match pattern of (number / number)\"\n                }\n            },\n          \"deeplink\": {\n            \"name\": \"deeplink\",\n            \"$id\": \"horizontalFullScreenImageData.deeplink\",\n            \"title\": \"Deeplink\",\n            \"type\": \"string\",\n            \"pattern\": \"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\n            \"errorMessage\": {\n              \"pattern\": \"should be like: nl.picnic-supermarkt://...\"\n            }\n          },\n          \"backgroundImage\": {\n            \"name\": \"backgroundImage\",\n            \"$id\": \"horizontalFullScreenImageData.backgroundImage\",\n            \"title\": \"Background Image\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": { \"minLength\": \"should not be empty\" }\n          },\n          \"title\": {\n            \"name\": \"title\",\n            \"$id\": \"horizontalFullScreenImageData.title\",\n            \"title\": \"Title\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Title should not be an empty string\"\n            }\n          },\n          \"subtitle\": {\n            \"name\": \"subtitle\",\n            \"$id\": \"horizontalFullScreenImageData.subtitle\",\n            \"title\": \"Subtitle\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Subtitle should not be an empty string\"\n            }\n          },\n          \"labelText\": {\n            \"name\": \"labelText\",\n            \"$id\": \"horizontalFullScreenImageData.labelText\",\n            \"title\": \"Label Text\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Label should not be an empty string\"\n            }\n          },\n          \"labelTextColor\": {\n            \"name\": \"labelTextColor\",\n            \"$id\": \"horizontalFullScreenImageData.labelTextColor\",\n            \"title\": \"Label TextColor\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Label color should be a color from our design system\"\n            }\n          },\n          \"labelBackgroundColor\": {\n            \"name\": \"labelBackgroundColor\",\n            \"$id\": \"horizontalFullScreenImageData.labelBackgroundColor\",\n            \"title\": \"Label BackgroundColor\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Label background color should be a color from our design system\"\n            }\n          },\n          \"accessibilityLabel\": {\n            \"name\": \"accessibilityLabel\",\n            \"$id\": \"horizontalFullScreenImageData.accessibilityLabel\",\n            \"title\": \"Accessibility Label\",\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"errorMessage\": {\n              \"minLength\": \"Accessibility label should not be an empty string\"\n            }\n          }\n        }\n      }\n  },\n  \"errorMessage\": {\n    \"required\": {\n      \"horizontalFullScreenImageData\": \"Please enter full screen image data\"\n    }\n  }\n}"
+    }
+  }

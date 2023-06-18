@@ -1,0 +1,50 @@
+{
+    "template_id": "horizontal-previously-bought-recipe-section-wrapper",
+    "layout": {{#gt recipes.length 0}} 
+        {{#not isFirstItem}},{{/not}}
+        {{#template 'core-horizontal-recipe-tiles-section-localized' recipes=recipes numberOfTiles=7 subHeader=subHeader seeAllButton=seeAllButton}}{{/template}} 
+        {{#not isLastItem}},{{/not}}
+        {{/gt}},
+    "context": {
+        "recipes": {
+            "$query": "SELECT * FROM purchased_recipes WHERE id IN ('unused') LIMIT 8"
+        },
+        "subHeader": {
+            "$literal": {
+                "title": {
+                    "nl": "Recepten",
+                    "de": "Rezepte",
+                    "fr": "Recettes"
+                },
+                "subHeaderButton": {
+                    "title": {
+                        "nl": "Bekijk alles",
+                        "de": "Alle ansehen",
+                        "fr": "Voir tout"
+                    },
+                    "textColor": "GREEN1",
+                    "backgroundColor": "TRANSPARENT",
+                    "icon": "rightChevron",
+                    "deeplink": "nl.picnic-supermarkt://store/page;id=previously-bought-recipes-page-root"
+                }
+            }
+        },
+        "seeAllButton": {
+            "$literal": {
+                "title": "Bekijk alles",
+                "deeplink": "nl.picnic-supermarkt://store/page;id=previously-bought-recipes-page-root"
+            }
+        },
+        "seeMoreRecipesButton": {
+            "$literal": {
+               "title": {
+                    "nl": "Bekijk meer \\nrecepten",
+                    "de": "Alles ansehen \\nrezepte",
+                    "fr": "Voir tout \\nrecettes"
+                },
+                "deeplink": "nl.picnic-supermarkt://store/page;id=meals-page-root"
+            }
+        }
+    },
+    "metadata": {}
+}

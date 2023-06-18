@@ -1,0 +1,32 @@
+{
+  "template_id": "self-service-add-to-calendar-confirmation-root",
+  "layout": {{{template 'core-dialog-template' title=(localize COPY.title) body=(localize COPY.body) }}},
+  "context": {
+    "COPY": {
+      "title": {
+        "nl": "Gelukt!",
+        "de": "Super!",
+        "fr": "C'est fait !"
+      },
+      "body": {
+        "nl": "We hebben de bezorging toegevoegd aan je agenda.",
+        "de": "Wir haben die Lieferzeit deinem Kalender hinzugefügt.",
+        "fr": "Nous avons ajouté la livraison à votre agenda."
+      }
+    },
+    "buttons": {
+      "var0": {
+        "title": {
+          "nl": "Ja",
+          "de": "Ja",
+          "fr": "Oui"
+        },
+        "textColor": "RED1",
+        "action": {
+          "type": "CLOSE"
+        }
+      }
+    }
+  },
+  "metadata": {}
+}

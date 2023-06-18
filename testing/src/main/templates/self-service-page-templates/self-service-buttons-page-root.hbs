@@ -1,0 +1,292 @@
+{
+  "template_id": "self-service-buttons-page-root",
+  "layout": {
+    "id": "self-service-buttons-page-root",
+    "presentation": {
+      "type": "FULL_SCREEN",
+      "style": {
+        "background_color": "WHITE"
+      }
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "HORIZONTAL",
+        "padding": {
+          "left": 16,
+          "right": 16
+        },
+        "spacing": {
+          "main_axis": 16
+        }
+      },
+      "size": {
+          "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+              {{#with (slice orders 0) as | slicedOrders |}}
+              {{#with slicedOrders.[0] as | order |}}
+              {{#with order.slot as | slot |}}
+              {{#with (dateFormat order.cutoffTs "YYYY-MM-dd'T'HH:mm:ss.SSS" tz=order.deliveryTimezone) as | formattedcutoffTs |}}
+                  {{#if (not tippingStatus.isEmpty)}}
+                      {{#with tippingStatuses.[0] as | tippingStatus |}}
+                          {{#if (tippingStatus.tippingConfig.tippingAllowed)}}
+                              {{#and tippingStatus.tippingConfig.runner includeZero=false}}
+                                  {{{template 'self-service-runner-tipping-button-item'
+                                              id=runnerTipping.id
+                                              title=(localize runnerTipping.title)
+                                              deliveryId=delivery_id
+                                              runnerImageUrl=tippingStatus.tippingConfig.runner.get.runnerImageUrl
+                                  }}}
+                                  ,
+                              {{/and}}
+                          {{/if}}
+                      {{/with}}
+                  {{/if}}
+              {{#eq order.orderStatus.toString "IN_TRANSIT"}}
+              {{#if (not order.deliveryScenarioState.isPresent)}}
+                {{{template 'self-service-add-to-calendar-button-item' order=order id=addToCalendar.id title=(localize addToCalendar.title) icon=addToCalendar.icon}}}
+              ,
+              {{/if}}
+              {{/eq}}
+
+              {{#if (deliveryMapDisabledFeatureFlag.isEmpty)}}
+              {{#eq order.orderStatus.toString "IN_TRANSIT"}}
+              {{#if order.deliveryScenarioState.isPresent}}
+              {{#with order.deliveryScenarioState.orElseThrow.toString as | deliveryScenarioStateValue |}}
+                {{#or (eq deliveryScenarioStateValue "IN_PROGRESS") (eq order.deliveryScenarioStateValue "STOP_BEGIN") (eq deliveryScenarioStateValue "STOP_END")}}
+                    {{{template 'self-service-track-delivery-button-item' order=order id=trackDelivery.id title=(localize trackDelivery.title) icon=trackDelivery.icon}}},
+                {{/or}}
+              {{/with}}
+              {{/if}}
+              {{/eq}}
+              {{/if}}
+
+              {{#isBefore (formattedcutoffTs)}}
+              {{#eq order.orderStatus.toString "CONFIRMED"}}
+              {{#if slot.isAvailable.isPresent}} {{#and slot.isAvailable.orElseThrow}}
+                {{{template 'self-service-add-to-order-button-item'
+                    id=addToOrder.id
+                    title=(localize addToOrder.title)
+                    icon=addToOrder.icon
+                    deliveryId=delivery_id
+                    orderIds=order_ids
+                }}},
+              {{/and}}
+              {{/if}}
+              {{/eq}}
+              {{/isBefore}}
+
+              {{#or (eq order.orderStatus.toString "DELIVERED") 
+                    (eq order.orderStatus.toString "COMPLETED")}}
+                {{{template 'self-service-add-orders-button-item' 
+                  id=addToBasket.id 
+                  title=(localize addToBasket.title) 
+                  icon=addToBasket.icon 
+                  orderIds=order_ids
+                  isActive=false
+                  }}},
+              {{/or}}
+
+              {{#or (eq order.orderStatus.toString "CANCELLED")}}
+                {{{template 'self-service-add-orders-button-item' 
+                  id=addToBasket.id 
+                  title=(localize addToBasket.title) 
+                  icon=addToBasket.icon 
+                  orderIds=order_ids
+                  isActive=true
+                  }}},
+              {{/or}}
+
+              {{#eq order.orderStatus.toString "CONFIRMED"}}
+                {{{template 'self-service-add-to-calendar-button-item' order=order id=addToCalendar.id title=(localize addToCalendar.title) icon=addToCalendar.icon}}}
+              ,
+              {{/eq}}
+
+              {{#if (not parcels_by_delivery_list.isEmpty)}}
+              {{#with (slice parcels_by_delivery_list 0) as | parcels_by_delivery |}}
+              {{#if (not parcelFeatureFlag.isEmpty)}}
+              {{#or (eq order.orderStatus.toString "DELIVERED") (eq order.orderStatus.toString "COMPLETED")}}
+                 {{{template 'self-service-track-parcel-button-item' parcels=parcels_by_delivery.[0].parcels id=trackParcel.id title=(localize trackParcel.title) icon=trackParcel.icon}}}
+              ,
+              {{/or}}
+              {{/if}}
+              {{/with}}
+              {{/if}}
+
+              {{#or (eq order.orderStatus.toString "DELIVERED") (eq order.orderStatus.toString "COMPLETED")}}
+                {{{template 'self-service-report-problem-item' id=reportIssue.id title=(localize reportIssue.title) icon=reportIssue.icon deliveryId=delivery_id}}}
+              ,
+              {{/or}}
+              
+              {{#if (not parcelFeatureFlag.isEmpty)}}
+              {{#or (eq order.orderStatus.toString "CONFIRMED") (eq order.orderStatus.toString "IN_TRANSIT")}}
+                {{{template 'self-service-button-item' id=registerParcel.id title=(localize registerParcel.title) icon=registerParcel.icon onPressAction=registerParcel.onPressAction}}}
+              ,
+              {{/or}}
+              {{/if}}
+
+              {{#isBefore (formattedcutoffTs)}}
+              {{#eq order.orderStatus.toString "CONFIRMED"}}
+                {{{template 'self-service-cancel-button-item' id=cancelOrder.id title=(localize cancelOrder.title) icon=cancelOrder.icon deliveryId=delivery_id}}}
+              ,
+              {{/eq}}
+              {{/isBefore}}
+              
+              {{#eq order.orderStatus.toString "COMPLETED"}}
+                {{{template 'self-service-send-receipt-button-item' 
+                  id=sendReceipt.id 
+                  title=(localize sendReceipt.title)
+                  icon=sendReceipt.icon
+                }}}
+              ,
+              {{/eq}}
+
+              {{#with (slice csContactInfo 0) as | info |}}
+                 {{{template 'self-service-button-item' id=contact.id hasNotificationBadge=info.[0].openNow title=(localize contact.title) icon=contact.icon onPressAction=contact.onPressAction}}}
+              {{/with}}
+              ,
+            {{/with}}
+            {{/with}}
+            {{/with}}
+            {{/with}}
+      ]
+    }
+  },
+  "context": {
+    "delivery_id": {
+      "$param": "delivery_id"
+    },
+    "order_ids": {
+      "$param": "order_ids"
+    },
+    "orders": {
+      "$query": "SELECT * FROM orders WHERE id IN (${order_ids;FORMAT_FOR_PIQL})"
+    },
+    "csContactInfo": {
+      "$query": "SELECT * FROM cs_contact_info WHERE id IN ('')"
+    },
+    "parcelFeatureFlag": {
+      "$query": "SELECT * FROM feature_flags WHERE id IN ('PARCELS')"
+    },
+    "deliveryMapDisabledFeatureFlag": {
+      "$query": "SELECT * FROM feature_flags WHERE id IN ('DELIVERY_MAP_DISABLED')"
+    },
+    "parcels_by_delivery_list": {
+      "$query": "SELECT * FROM parcels WHERE id IN ('${delivery_id}')"
+    },
+    "tippingStatuses": {
+      "$query": "SELECT * FROM delivery_tips WHERE id IN ('${delivery_id}')"
+    },
+    "runnerTipping": {
+      "id": "button-id-runner-tipping",
+      "title": {
+        "nl": "Extraatje geven",
+        "de": "Trinkgeld geben",
+        "fr": "Donner un pourboire"
+      }
+    },
+    "addToBasket": {
+      "id": "button-id-add-to-basket",
+      "icon": "addToBasket",
+      "title": {
+        "nl": "Alles opnieuw toevoegen",
+        "de": "Alles erneut hinzufügen",
+        "fr": "Commander à nouveau"
+      }
+    },
+    "addToCalendar": {
+      "id": "button-id-add-to-calendar",
+      "icon": "addToCalendar",
+      "title": {
+        "nl": "Toevoegen aan agenda",
+        "de": "Zum Kalender hinzufügen",
+        "fr": "Ajouter au calendrier"
+      }
+    },
+    "addToOrder": {
+      "id": "button-id-add-to-order",
+      "icon": "addToOrder",
+      "title": {
+        "nl": "Product toevoegen",
+        "de": "Produkt hinzufügen",
+        "fr": "Ajouter un produit"
+      }
+    },
+    "cancelOrder": {
+      "id": "button-id-cancel-order",
+      "icon": "cancel2",
+      "title": {
+        "nl": "Bestelling annuleren",
+        "de": "Bestellung stornieren",
+        "fr": "Annuler la commande"
+      }
+    },
+    "contact": {
+      "id": "button-id-contact",
+      "icon": "dialogueBubble",
+      "title": {
+        "nl": "Contact opnemen",
+        "de": "Kontakt aufnehmen",
+        "fr": "Nous contacter"
+      },
+      "onPressAction": {
+          "action_type": "OPEN",
+          "target": "app.picnic://store/page;id=self-service-customer-service-root,presentation-mode=MODAL_OVER_CONTEXT"
+      }
+    },
+    "registerParcel": {
+      "id": "button-id-register-parcel",
+      "icon": "box",
+      "title": {
+        "nl": "Pakketje aanmelden",
+        "de": "Paket anmelden",
+        "fr": "Soumettre un colis"
+      },
+      "onPressAction": {
+        "action_type": "OPEN",
+        "target":  "app.picnic://store/parcels"
+      }
+    },
+    "reportIssue": {
+      "id": "button-id-report-issue",
+      "icon": "warning",
+      "title": {
+        "nl": "Probleem melden",
+        "de": "Ein Problem melden",
+        "fr": "Signaler un problème"
+      }
+    },
+    "sendReceipt": {
+      "id": "button-id-send-receipt",
+      "icon": "mail",
+      "title": {
+        "nl": "Bonnetje\\ne-mailen",
+        "de": "Bon per Mail erhalten",
+        "fr": "Reçu par email"
+      }
+    },
+    "trackParcel": {
+      "id": "button-id-track-parcel",
+      "icon": "box",
+      "title": {
+        "nl": "Pakketje volgen",
+        "de": "Paket verfolgen",
+        "fr": "Suivre mon colis"
+      }
+    },
+    "trackDelivery": {
+      "id": "button-id-track-delivery",
+      "icon": "truck",
+      "title": {
+        "nl": "Bezorging live volgen",
+        "de": "Bestellung live verfolgen",
+        "fr": "Suivre en direct"
+      },
+      "onPressAction": {}
+    }
+  },
+  "metadata": {}
+}

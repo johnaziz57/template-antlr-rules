@@ -1,0 +1,23 @@
+{
+  "template_id": "core-deeplink-resolver",
+  "layout":
+    {{#and (not promo_page.feature_flag.isEmpty) (eq deeplink promo_page.lister)}}
+      "{{promo_page.page}}"
+    {{else}}
+      "{{deeplink}}"
+    {{/and}}
+  ,
+  "context": {
+    "promo_page": {
+      "lister": "nl.picnic-supermarkt://categories/promotions",
+      "page": "nl.picnic-supermarkt://store/page;id=promo-page-root",
+      "feature_flag": {
+        "$query": "SELECT * FROM feature_flags WHERE id IN ('PPP_PROMO_PAGE')"
+      }
+    }
+  },
+  "metadata": {
+    "usage": "This component should be used for each deeplink configurable by operators.",
+    "implementation_note": "This component is used in many places. Please only used heavily cached data sources."
+  }
+}

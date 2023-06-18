@@ -1,0 +1,57 @@
+{
+    "template_id": "loyalty-rewards-section",
+    "layout": {
+        "id": "loyalty-rewards-section",
+        "type": "BLOCK",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "spacing": {"mainAxis": 8},
+            "padding": {"left": 8, "right": 8}
+        },
+        "size": {"crossAxis": "12g"},
+        "children": [
+            {{#if (gt data.length 0)}}
+            {
+                "id": "loyalty-rewards-section-title",
+                "type": "PML",
+                "size": {"mainAxis": 26, "crossAxis": "12g"},
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "CONTAINER",
+                        "padding": {"left": 8},
+                        "child": {
+                            "type": "RICH_TEXT",
+                            "text_type": "SEMIBOLD_TEXT",
+                            "markdown": "{{localize COPY.title}}"
+                        }
+                    }
+                }
+            },
+            {{#each (slice data 0) as |item| }}
+            {
+                "id": "loyalty-reward-section-item-{{@index}}",
+                "type": "PML",
+                "size": {"mainAxis": 80, "crossAxis": "12g"},
+                "pml": {{{item.content}}}
+            }
+            {{#unless @last}},{{/unless}}
+            {{/each}}
+            {{/if}}
+        ]
+    },
+    "context": {
+        "COPY": {
+            "title": {
+                "nl": "Jouw beloningen",
+                "de": "Deine Prämien",
+                "fr": ""
+            }
+        },
+        "data": {
+            "$query": "SELECT * FROM messages WHERE id IN ('LOYALTY_PAGE')"
+        }
+    },
+    "metadata": {}
+}

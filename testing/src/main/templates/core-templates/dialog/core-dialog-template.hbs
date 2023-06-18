@@ -1,0 +1,137 @@
+{
+  "template_id": "core-dialog-template",
+  "layout": {
+    "id": "core-dialog-template",
+    "presentation": {
+      "type": "FULL_SCREEN",
+      "style": {
+        "background_color": "GREY5",
+        "opacity": 0.7
+      }
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "dialog-root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+      },
+      "size": {
+        "cross_axis": "SCREEN_WIDTH",
+        "main_axis": "SCREEN_HEIGHT"
+      },
+      "children": [
+        {
+          "type": "PML",
+          "id": "core-dialog",
+          "size": {
+            "cross_axis": "12g",
+            "main_axis": "SCREEN_HEIGHT"
+          },
+          "pml":{
+            "pml_version": "0.1.0",
+            "component": {
+              "type": "TOUCHABLE",
+              "on_press": { 
+                "action_type": "CLOSE"
+              },
+              "child": {
+                "type": "STACK",
+                "axis": "VERTICAL",
+                "width": "100%",
+                "height": "100%",
+                "distribution": "CENTER",
+                "padding": {
+                  "top": 16,
+                  "bottom": 16,
+                  "right": 16,
+                  "left": 16
+                },
+                "children": [
+                  {
+                    "type": "CONTAINER",
+                    "overflow": "hidden",
+                    "width": "100%",
+                    "background_color": "WHITE",
+                    "border_radius": 12,
+                    "child": {
+                      "type": "STACK",
+                      "axis": "VERTICAL",
+                      "width": "100%",
+                      "spacing": 8,
+                      "padding": {
+                        "top": 16,
+                        "bottom": 16,
+                        "right": 16,
+                        "left": 16
+                      },
+                      "children": [
+                        {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "LEFT",
+                          "number_of_lines": 2,
+                          "text_attributes": {
+                            "size": 25,
+                            "weight": "REGULAR"
+                          },
+                          "markdown": "{{title}}"
+                        },
+                        {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "LEFT",
+                          "number_of_lines": 2,
+                          "text_attributes": {
+                            "size": 16,
+                            "weight": "REGULAR"
+                          },
+                          "markdown": "{{body}}"
+                        },
+                        {
+                          "type": "STACK",
+                          "axis": "HORIZONTAL",
+                          "width": "100%",
+                          "spacing": 24,
+                          "distribution": "END",
+                          "padding": {
+                            "top": 8
+                          },
+                          "children": [
+                          {{#each buttons as | button |}}
+                            {
+                              "type": "TOUCHABLE",
+                              "on_press": {{json button.onPressAction}},
+                              "active_opacity": 0.8,
+                              "active_scale": 0.98,
+                              "hit_slop": {
+                                "horizontal": 8,
+                                "vertical": 8
+                              },
+                              "child": {
+                                "type": "RICH_TEXT",
+                                "text_alignment": "CENTER",
+                                "text_attributes": {
+                                  "size": 17,
+                                  "weight": "MEDIUM"
+                                },
+                                "markdown": "#({{button.textColor}}){{localize button.title}}#({{button.textColor}})"
+                              }
+                            }
+                            {{#unless @last}},{{/unless}}
+                          {{/each}}
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "context": {
+  },
+  "metadata": {}
+}

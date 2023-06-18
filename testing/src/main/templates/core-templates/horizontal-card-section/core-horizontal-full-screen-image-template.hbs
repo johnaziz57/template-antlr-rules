@@ -1,0 +1,147 @@
+  {
+    "template_id": "core-horizontal-full-screen-image-template",
+    "layout": {
+        {{#with fullScreenImage}}
+        "pml_version": "0.1.0",
+        "component": {
+                "type": "TOUCHABLE",
+                {{#if accessibilityLabel}}
+                    "accessibilityLabel": "{{accessibilityLabel}}",
+                {{/if}}
+                {{#if deeplink}}
+                    "accessibilityHint": "{{localize COPY.accessibilityHint}}",
+                    "onPress": {
+                        "actionType": "OPEN",
+                        "target": {{{template 'core-deeplink-resolver' deeplink=deeplink}}}
+                    },
+                {{else}}
+                    "disabled": true,
+                    "onPress": {
+                        "actionType": "OPEN",
+                        "target": ""
+                    },
+                {{/if}}
+                "activeOpacity": 0.8,
+                "activeScale": 0.98,
+                "child": {
+                    "type":"CONTAINER",
+                    "overflow": "hidden",
+                    "width": "100%",
+                    "height": "100%",
+                    "child": {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "distribution": "END",
+                        "children": [
+                            {
+                                "type": "CONTAINER",
+                                "child": {
+                                    "type": "IMAGE",
+                                    "source": {
+                                        "id": "{{backgroundImage}}"
+                                    },
+                                    "resize_mode": "COVER",
+                                    "placeholder": "NONE",
+                                    "width": "100%",
+                                    "height": "100%"
+                                },
+                                "absolutePosition": {
+                                    "top": 0,
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "right": 0
+                                }
+                            },
+                            {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "distribution": "FILL",
+                                "alignment": "FILL",
+                                "padding": {
+                                    "left": 12,
+                                    "right": 12,
+                                    "top": 12,
+                                    "bottom": 12
+                                },
+                                "children": [
+                                    {
+                                        "type": "STACK",
+                                        "axis": "VERTICAL",
+                                        "distribution": "END",
+                                        "spacing": 4,
+                                        "children": [
+                                            {{#if labelText}}
+                                            {
+                                                "type": "CONTAINER",
+                                                "background_color": "{{labelBackgroundColor}}",
+                                                "height": 28,
+                                                "border_radius": 4,
+                                                "padding": {
+                                                    "top": 5,
+                                                    "bottom": 5,
+                                                    "left": 8,
+                                                    "right": 8
+                                                },
+                                                "child": {
+                                                    "type": "RICH_TEXT",
+                                                    "text_alignment": "START",
+                                                    "number_of_lines": 1,
+                                                    "text_attributes": {
+                                                        "size": 16,
+                                                        "weight": "MEDIUM"
+                                                    },
+                                                    "markdown": "#({{labelTextColor}}){{{labelText}}}#({{labelTextColor}})"
+                                                }
+                                            }  
+                                                {{#or title subtitle}}
+                                                ,
+                                                {{/or}}
+                                            {{/if}}
+                                            {{#if title}}
+                                            {
+                                                "type": "RICH_TEXT",
+                                                "text_alignment": "START",
+                                                "numberOfLines": 2,
+                                                "text_attributes": {
+                                                    "size": 20,
+                                                    "weight": "SEMIBOLD"
+                                                },
+                                                "markdown": "{{{title}}}"
+                                            }
+                                            {{/if}}
+                                            {{#and title subtitle}}
+                                            ,
+                                            {{/and}}
+                                            {{#if subtitle}}
+                                            {
+                                                "type": "RICH_TEXT",
+                                                "text_alignment": "START",
+                                                "numberOfLines": 2,
+                                                "text_attributes": {
+                                                    "size": 15,
+                                                    "weight": "REGULAR"
+                                                },
+                                                "markdown": "{{{subtitle}}}"
+                                            }
+                                            {{/if}}
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        {{/with}}
+    },
+    "context": {
+        "COPY": {
+            "accessibilityHint" : {
+                "nl": "tik dubbel om te openen.",
+                "de": "Tippe zwei Mal zum Öffnen.",
+                "fr": "Double-cliquer pour ouvrir"
+            }
+        }
+    },
+    "metadata": {}
+  },

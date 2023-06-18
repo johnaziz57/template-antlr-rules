@@ -1,0 +1,41 @@
+{
+  "template_id": "automatic-promo-groups",
+  "layout": {
+    "id": "automatic-promo-groups",
+    "type": "BLOCK",
+    "layout": {
+      "type": "FLOW",
+      "axis": "VERTICAL",
+      "spacing": { "mainAxis": 4 },
+      "padding": { "top": 4, "right": 0, "bottom": 4, "left": 0 },
+      "backgroundColor": "GREY1"
+    },
+    "size": { "crossAxis": "SCREEN_WIDTH" },
+    "children": [
+        {{#gt promoGroups.length 0}}
+          {{#each promoGroups as | promoGroup |}}
+            {{#unless @first}},{{/unless}}
+            {{#if banners}}
+              {{#template 'single-promo-group' promoGroup=promoGroup promoGroupId=promoGroup.id banners=banners}}{{/template}}
+            {{else}}
+              {{#template 'single-promo-group' promoGroup=promoGroup promoGroupId=promoGroup.id}}{{/template}}
+            {{/if}}
+          {{/each}}
+        {{/gt}}
+    ]
+  },
+  "context": {
+    "promoGroups": {
+      "$query": "SELECT * FROM promo_groups WHERE id IN ('')"
+    }
+  },
+  "metadata": {
+    "title": "Automatic Promo Groups",
+    "type": "BLOCK",
+    "description": "Listing all promo groups as configured in Salesforce. Should only be used on the Promo Page.",
+    "preview_image": {
+      "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/d2024fcfd9e6317ce2003e8b5289651bcd54633f7dee9c552976135ab98437df/large.png"
+    },
+    "properties_schema":"{\"properties\":{\"banners\":{\"name\":\"banners\",\"$id\":\"banners\",\"title\":\"Banners Properties\",\"type\":\"array\",\"asObject\":true,\"required\":[\"promoGroupId\",\"imageId\",\"accessibilityLabel\",\"position\"],\"items\":{\"name\":\"banner\",\"$id\":\"banner\",\"type\":\"object\",\"title\":\"Item\",\"properties\":{\"promoGroupId\":{\"name\":\"promoGroupId\",\"$id\":\"banner.promoGroupId\",\"title\":\"Promo Group ID\",\"type\":\"string\"},\"imageId\":{\"name\":\"imageId\",\"$id\":\"banner.imageId\",\"title\":\"Image ID\",\"type\":\"string\"},\"accessibilityLabel\":{\"name\":\"accessibilityLabel\",\"$id\":\"banner.accessibilityLabel\",\"title\":\"Accessibility Label\",\"type\":\"string\"},\"position\":{\"name\":\"position\",\"$id\":\"banner.position\",\"type\":\"string\",\"title\":\"Banner Position\",\"pattern\":\"(top|bottom)\",\"errorMessage\":{\"pattern\":\"Acceptable position values are: 'top' or 'bottom', relative to title\"}},\"deeplink\":{\"name\":\"deeplink\",\"$id\":\"banner.deeplink\",\"type\":\"string\",\"pattern\":\"^[a-z]+.picnic-supermarkt://([\\\\S]+)$\",\"errorMessage\":{\"pattern\":\"should be like: nl.picnic-supermarkt://...\"},\"title\":\"Banner Deeplink\"},\"aspectRatio\":{\"name\":\"aspectRatio\",\"$id\":\"banner.aspectRatio\",\"title\":\"Aspect Ratio\",\"type\":\"string\",\"minLength\":1,\"pattern\":\"[0-9]+\",\"errorMessage\":{\"minLength\":\"Aspect ratio is required\",\"pattern\":\"Aspect Ratio must be present\"}},\"extraPadding\":{\"name\":\"extraPadding\",\"$id\":\"banner.extraPadding\",\"title\":\"Extra Padding\",\"type\":\"string\",\"pattern\":\"[0-9]+\",\"errorMessage\":{\"pattern\":\"Extra Padding can only consist of numbers.\"}}}},\"errorMessage\":{\"required\":{\"imageId\":\"Please enter image ID\",\"promoGroupId\":\"Please enter promo group ID\",\"accessibilityLabel\":\"Please enter accessibility label\",\"aspectRatio\":\"Please provide an aspect ratio value.\"}}}}}"
+  }
+}

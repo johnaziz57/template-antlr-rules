@@ -1,0 +1,164 @@
+{
+  "template_id": "promo-group-list-element",
+  "layout": {
+    "pml_version": "0.1.0",
+    "component": {
+      "type": "TOUCHABLE",
+      "accessibility_label": "{{promoListElement.accessibilityLabel}}",
+      "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+      "on_press": {
+        "action_type": "OPEN",
+        {{#if promoListElement.deeplink}}
+        "target": {{{template 'core-deeplink-resolver' deeplink=promoListElement.deeplink}}}
+        {{else}}
+        "target": "nl.picnic-supermarkt://store/page;id=promo-group-deep-dive,promo_group_id={{promoGroup.id}}"
+        {{/if}}
+      },
+      "active_opacity": 0.8,
+      "active_scale": 0.98,
+      "child": {
+        "type": "CONTAINER",
+        "overflow": "hidden",
+        "border_radius": 8,
+        "width": "100%",
+        "height": "100%",
+        "background_color": "WHITE",
+        "child": {
+          "type": "STACK",
+          "axis": "HORIZONTAL",
+          "height": "100%",
+          "distribution":"END",
+          "children": [
+            {
+              "type": "CONTAINER",
+              "width":"45%",
+              "child": {
+                "type": "IMAGE",
+                "source": {
+                  "url": "https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/{{promoListElement.imageId}}/<DERIVATIVE>.png"
+                },
+                "height": "100%",
+                "width": "100%",
+                "resize_mode": "CONTAIN",
+                "placeholder": "NONE"
+              }
+            },
+            {
+              "type": "CONTAINER",
+              "overflow": "hidden",
+              "height": "100%",
+              "width": "55%",
+              "background_color": "WHITE",
+              "child": {
+                "type": "STACK",
+                "axis": "VERTICAL",
+                "height": "100%",
+                "distribution": "SPACE_BETWEEN",
+                "padding": {
+                  "left": 8,
+                  "right": 8,
+                  "top": 8,
+                  "bottom": 4
+                },
+                "children": [
+                  {
+                    "type": "STACK",
+                    "axis": "VERTICAL",
+                    "width": "100%",
+                    "height": "100%",
+                    "children": [
+                      {
+                        "type": "CONTAINER",
+                        "child": {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "START",
+                          "text_attributes": {
+                            "size": 16,
+                            "weight": "REGULAR"
+                          },
+                          "number_of_lines": 2,
+                          {{#if promoListElement.promoGroupName}}
+                          "markdown": "#(GREY5){{{promoListElement.promoGroupName}}}#(GREY5)"
+                          {{else}}
+                          "markdown": "#(GREY5){{promoGroup.title}}#(GREY5)"
+                          {{/if}}
+                        }
+                      },
+                      {{#if promoListElement.subtitle}}
+                      {
+                        "type": "CONTAINER",
+                        "child": {
+                          "type": "RICH_TEXT",
+                          "text_alignment": "START",
+                          "text_attributes": {
+                            "size": 15,
+                            "weight": "REGULAR"
+                          },
+                          "number_of_lines": 2,
+                          "markdown": "#(GREY3){{{promoListElement.subtitle}}}#(GREY3)"
+                        }
+                      },
+                      {{/if}}
+                      {{#if promoListElement.labelMarkdown}}
+                      {
+                        "type": "CONTAINER",
+                        "child": {
+                          "type": "STACK",
+                          "axis": "VERTICAL",
+                          "padding": {"top": 4},
+                          "children": [
+                            {
+                              "type": "CONTAINER",
+                              "border_radius": 4,
+                              "background_color": "{{promoListElement.labelBackgroundColor}}",
+                              "padding": {"top": 2,"bottom": 3,"left": 4,"right": 4},
+                              "child": {
+                                "type": "RICH_TEXT",
+                                "text_alignment": "START",
+                                "text_attributes": {
+                                  "size": 13,
+                                  "weight": "MEDIUM"
+                                },
+                                "markdown": "{{{promoListElement.labelMarkdown}}}"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    {{/if}}
+                    ]
+                  },
+                  {
+                    "type": "STACK",
+                    "axis": "HORIZONTAL",
+                    "width": "100%",
+                    "distribution": "END",
+                    "children": [
+                      {
+                        "type": "CONTAINER",
+                        "child": {
+                          "type": "PLACEHOLDER",
+                          "instruction_id": "calculate_promo_group_price_{{promoGroup.id}}"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "context": {
+    "COPY": {
+      "accessibilityHint": {
+        "nl": "tik dubbel om te openen",
+        "de": "Tippe zwei Mal zum Öffnen.",
+        "fr": "Double-cliquer pour ouvrir"
+      }
+    }
+  },
+  "metadata": {}
+}

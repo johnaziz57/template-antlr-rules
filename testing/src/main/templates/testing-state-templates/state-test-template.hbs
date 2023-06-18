@@ -1,0 +1,232 @@
+{
+  "template_id": "state-test-template",
+  "state": {},
+  "layout": {
+    "id": "state-test-template",
+    "header": {
+      "type": "PML",
+      "component": {
+        "type": "BLOCK",
+        "id": "search-page-header",
+        "size": {
+          "cross_axis": "SCREEN_WIDTH",
+          "main_axis": 100
+        },
+        "layout": {
+          "type": "FLOW",
+          "axis": "HORIZONTAL",
+          "padding": {
+            "top": 40,
+            "bottom": 12,
+            "left": 12,
+            "right": 12
+          },
+          "spacing": {
+            "main_axis": 8
+          }
+        },
+        "children": [
+          {
+            "type": "PML",
+            "id": "kaas-button",
+            "size": {
+              "cross_axis": 50,
+              "main_axis": 64,
+            },
+            "pml": {
+              "pml_version": "0.1.0",
+              "component": {
+                "type": "TOUCHABLE",
+                "on_press": {
+                  "type": "CALLBACK",
+                  "body": [
+                    {
+                      "type": "ASSIGN",
+                      "target": "state.selected_category",
+                      "value": "Kaas"
+                    }
+                  ]
+                },
+                "child": {
+                  "type": "CONTAINER",
+                  "border_radius": 8,
+                  "height": 40,
+                  "backgroundColor": "GREY1",
+                  "child": {
+                    "type": "STACK",
+                    "axis": "HORIZONTAL",
+                    "height": "100%",
+                    "alignment": "CENTER",
+                    "distribution": "CENTER",
+                    "spacing": 4,
+                    "children": [
+                      {
+                        "type": "RICH_TEXT",
+                        "text_attributes": {
+                          "weight": "MEDIUM",
+                          "size": 15
+                        },
+                        "markdown": "#(RED1)Kaas#(RED1)"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "PML",
+            "id": "pasta-button",
+            "size": {
+              "cross_axis": 50,
+              "main_axis": 64,
+            },
+            "pml": {
+              "pml_version": "0.1.0",
+              "component": {
+                "type": "TOUCHABLE",
+                "on_press": {
+                  "type": "CALLBACK",
+                  "body": [
+                    {
+                      "type": "ASSIGN",
+                      "target": "state.selected_category",
+                      "value": "Pasta"
+                    }
+                  ]
+                },
+                "child": {
+                  "type": "CONTAINER",
+                  "border_radius": 8,
+                  "height": 40,
+                  "backgroundColor": "GREY1",
+                  "child": {
+                    "type": "STACK",
+                    "axis": "HORIZONTAL",
+                    "height": "100%",
+                    "alignment": "CENTER",
+                    "distribution": "CENTER",
+                    "spacing": 4,
+                    "children": [
+                      {
+                        "type": "RICH_TEXT",
+                        "text_attributes": {
+                          "weight": "MEDIUM",
+                          "size": 15
+                        },
+                        "markdown": "#(RED1)Pasta#(RED1)"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "PML",
+            "id": "ham-button",
+            "size": {
+              "cross_axis": 50,
+              "main_axis": 64,
+            },
+            "pml": {
+              "pml_version": "0.1.0",
+              "component": {
+                "type": "TOUCHABLE",
+                "on_press": {
+                  "type": "CALLBACK",
+                  "body": [
+                    {
+                      "type": "ASSIGN",
+                      "target": "state.selected_category",
+                      "value": "Ham"
+                    }
+                  ]
+                },
+                "child": {
+                  "type": "CONTAINER",
+                  "border_radius": 8,
+                  "height": 40,
+                  "backgroundColor": "GREY1",
+                  "child": {
+                    "type": "STACK",
+                    "axis": "HORIZONTAL",
+                    "height": "100%",
+                    "alignment": "CENTER",
+                    "distribution": "CENTER",
+                    "spacing": 4,
+                    "children": [
+                      {
+                        "type": "RICH_TEXT",
+                        "text_attributes": {
+                          "weight": "MEDIUM",
+                          "size": 15
+                        },
+                        "markdown": "#(RED1)Ham#(RED1)"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "body": {
+      "id": "some-id",
+      "type": "BLOCK",
+      "size": {
+        "cross_axis": "12g"
+      },
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+      },
+      "children": [
+        {
+          "type": "PML",
+          "id":"selected-state-output",
+          "size": {
+            "cross_axis": "SCREEN_WIDTH",
+            "main_axis": 112
+          },
+          "pml": {
+            "pml_version":"0.1.0",
+            "component":{
+              "type": "STACK",
+              "axis": "VERTICAL",
+              "height": "100%",
+              "alignment": "CENTER",
+              "distribution": "CENTER",
+              "spacing": 4,
+              "children": [
+                {
+                  "type": "RICH_TEXT",
+                  "text_attributes": {
+                    "weight": "MEDIUM",
+                    "size": 15
+                  },
+                  "markdown": "The selected text is"
+                },
+                {
+                  "type": "RICH_TEXT",
+                  "text_attributes": {
+                    "weight": "MEDIUM",
+                    "size": 15
+                  },
+                  "markdown": {
+                    "type": "EXPRESSION",
+                    "expression": "state.selected_category"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "context": {},
+  "metadata": {}
+}

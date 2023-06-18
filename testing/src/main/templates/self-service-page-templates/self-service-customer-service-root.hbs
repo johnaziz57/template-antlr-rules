@@ -1,0 +1,135 @@
+{
+  "template_id": "self-service-customer-service-root",
+  "layout": {
+    "id": "self-service-customer-service-root",
+    "presentation": {
+      "type": "BOTTOM_SHEET",
+      "on_dismiss": {
+        "action_type": "CLOSE"
+      }
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "background_color": "WHITE"
+      },
+      "size": {
+        "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+        {   
+          "type": "BLOCK",
+          "id": "list",
+          "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            }
+          },
+          "size": {
+            "cross_axis": "12g"
+          },
+          "children": [
+            {
+              "id": "self-service-customer-service-root-header",
+              "type": "PML",
+              "size": {
+                "crossAxis": "12g", 
+                "mainAxis": 56
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component": {
+                  "type": "STACK",
+                  "axis": "VERTICAL",
+                  "distribution": "CENTER",
+                  "height": "100%",
+                  "width": "100%",
+                  "children": [
+                    {
+                      "type": "RICH_TEXT",
+                      "text_attributes": {
+                        "size": 20,
+                        "weight": "SEMIBOLD"
+                      },
+                      "markdown": "{{localize COPY.header}}"
+                    }
+                  ]
+                }
+              }
+            },
+            {{{template 'self-service-customer-service-section'}}},
+            {
+              "type": "PML",
+              "id": "list-item-separator-faq",
+              "size": {
+                "main_axis": 1,
+                "cross_axis": "12g"
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component":  {
+                    "type": "CONTAINER",
+                    "height": 1,
+                    "background_color": "GREY1",
+                    "width": "100%"
+                }
+              }
+            },
+            {
+              "type": "PML",
+              "id": "list-item-id-faq",
+              "analytics": {
+                "contexts":[
+                    {
+                      "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                      "data": {"type": "pml"}
+                    }, 
+                    {
+                      "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                      "data": {
+                        "template_id": "core-list-item-template",
+                        "type": "list_item",
+                        "deeplink": "{{faqItem.deeplink}}"
+                      } 
+                    }
+                ]
+              },
+              "size": {
+                "main_axis": 56,
+                "cross_axis": "12g"
+              },
+              "pml": {{{template 'core-list-item-template' title=(localize faqItem.title) icon=faqItem.icon deeplink=faqItem.deeplink actionType="CLOSE"}}}
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "context": {
+    "COPY": {
+      "header": {
+        "nl": "Hulp nodig?",
+        "de": "Direkter Kontakt",
+        "fr": "Besoin d’aide ?"
+      }
+    },
+    "faqItem": {
+      "icon": "dialogueBubble",
+      "title": {
+        "nl": "Veelgestelde vragen",
+        "de": "Häufig gestellte Fragen",
+        "fr": "Foire aux questions"
+      },
+      "deeplink": "app.picnic://store/faq"
+    }
+  },
+  "metadata": {}
+}

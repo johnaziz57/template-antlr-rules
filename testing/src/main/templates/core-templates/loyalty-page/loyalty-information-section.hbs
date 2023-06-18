@@ -1,0 +1,109 @@
+{
+    "template_id": "loyalty-information-section",
+    "layout": {
+        "type": "BLOCK",
+        "id": "loyalty-info",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "spacing": {"mainAxis": 16},
+            "padding": {"left": 16, "right": 16}
+        },
+        "size": {"crossAxis": "12g"},
+        "children": [
+            {
+                "id": "loyalty-info-header-title",
+                "type": "PML",
+                "size": {"crossAxis": "12g", "mainAxis": 20},
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "RICH_TEXT",
+                        "text_type": "SEMIBOLD_TEXT",
+                        "markdown": "{{localize COPY.subheader}}"
+                    }
+                }
+            },
+            {{#template 'loyalty-info-item' 
+                id="loyalty-info-item-one"
+                title=(localize COPY.info_item_one.title)
+                subtitle=(localize COPY.info_item_one.subtitle)
+                imageURL="https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/699597b9d4f0c2cb7f450c30c57912c473faf85da4118f680dabf95a4d43e3b5/<DERIVATIVE>.png"
+            }}{{/template}},
+            {{#template 'loyalty-info-item' 
+                id="loyalty-info-item-two"
+                title=(localize COPY.info_item_two.title)
+                subtitle=(localize COPY.info_item_two.subtitle)
+                imageURL="https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/99da45e992a797b67120aa1b29e5cdfcd15a722c11ea0b04ab30d52b4d54f608/<DERIVATIVE>.png"
+            }}{{/template}},
+            {{#template 'loyalty-info-item' 
+                id="loyalty-info-item-three"
+                title=(localize COPY.info_item_three.title)
+                subtitle=(localize COPY.info_item_three.subtitle)
+                imageURL="https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/384c1b8ac1fef0d2da562d1cbca86cae5d0c997279a84303ca65b5af7071d310/<DERIVATIVE>.png"
+            }}{{/template}},
+            {{#template 'loyalty-info-deeplink' 
+             title=(localize COPY.info_deeplink.title)
+             deeplink=(localize COPY.info_deeplink.deeplink)
+            }}{{/template}}
+        ]
+    },
+    "context": {
+        "COPY": {
+            "subheader": {
+                "nl": "Zo werkt ‘t",
+                "de": "So funktioniert’s",
+                "fr": ""
+            },
+            "info_item_one": {
+                "title": {
+                    "nl": "Een punt voor elke piek",
+                    "de": "Ein Punkt für jedes Plus",
+                    "fr": ""
+                },
+                "subtitle": {
+                    "nl": "Voor elke euro die je uitgeeft krijg je automatisch 1 punt. Mooi meegenomen :)",
+                    "de": "Für jeden Euro Einkaufswert bekommst du automatisch einen Punkt. Einen echten Pluspunkt :)",
+                    "fr": ""
+                }
+            },
+            "info_item_two": {
+                "title": {
+                    "nl": "Spaar voor kadootjes",
+                    "de": "Spare für Geschenke",
+                    "fr": ""
+                },
+                "subtitle": {
+                    "nl": "Bij 200 punten én 400 punten staat er een verrassing voor je klaar. Piekobello!",
+                    "de": "Bei 200 und 400 Punkten wartet eine Überraschung auf dich. Gut gepunktet!",
+                    "fr": ""
+                }
+            },
+            "info_item_three": {
+                "title": {
+                    "nl": "Elke maand opnieuw",
+                    "de": "Jeden Monat neu",
+                    "fr": ""
+                },
+                "subtitle": {
+                    "nl": "Je punten blijven staan tot het eind van de maand. Nieuwe maand? Nieuwe kadootjes.",
+                    "de": "Deine Punkte bleiben dir bis zum Ende des Monats erhalten. Neuer Monat? Neue Geschenke.",
+                    "fr": ""
+                }
+            },
+            "info_deeplink": {
+                "title": {
+                    "nl": "Veelgestelde vragen",
+                    "de": "Häufig gestellte Fragen",
+                    "fr": ""
+                },
+                 "deeplink": {
+                    "nl": "https://picnic.app/nl/piekpunten/",
+                    "de": "https://picnic.app/de/pluspunkte/",
+                    "fr": ""
+                }
+            }
+        }
+    },
+    "metadata": {}
+}

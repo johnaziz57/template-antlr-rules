@@ -1,0 +1,37 @@
+{
+  "template_id": "previously-bought-recipes-page-root",
+  "layout": {
+    "id": "previously-bought-recipes-page-root",
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "background_color": "GREY1"
+      },
+      "size": {
+          "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+        {{#template 'core-vertical-recipe-tiles-section' recipes=recipes}}{{/template}}
+      ]
+    },
+    "header": {
+      "title": "{{{localize COPY.header}}}"
+    }
+  },
+  "context": {
+      "recipes": {
+        "$query": "SELECT * FROM purchased_recipes WHERE id IN ('unused')"
+      },
+      "COPY": {
+        "header": {
+          "nl": "Jouw favoriete recepten",
+          "de": "Meine Rezepte",
+          "fr": "Vos recettes préférées"
+        }
+      }
+  },
+  "metadata": {}
+}

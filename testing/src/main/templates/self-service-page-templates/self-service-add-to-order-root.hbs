@@ -1,0 +1,283 @@
+{
+  "template_id": "self-service-add-to-order-root",
+  "layout": {
+    "id": "self-service-add-to-order-root",
+    "presentation": {
+      "type": "BOTTOM_SHEET",
+      "on_dismiss": {
+        "action_type": "CLOSE"
+      }
+    },
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "background_color": "WHITE"
+      },
+      "size": {
+        "cross_axis": "SCREEN_WIDTH"
+      },
+      "children": [
+        {   
+          "type": "BLOCK",
+          "id": "list",
+          "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL"
+          },
+          "size": {
+            "cross_axis": "12g"
+          },
+          "children": [
+            {
+              "id": "self-service-add-to-order-bottom-sheet-header",
+              "type": "PML",
+              "size": {
+                "crossAxis": "12g", 
+                "mainAxis": 210
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component": {
+                  "type": "STACK",
+                  "axis": "VERTICAL",
+                  "distribution": "CENTER",
+                  "alignment": "CENTER",
+                  "width": "100%",
+                  "background_color": "GREY1",
+                  "style": {
+                  },
+                  "children": [
+                    {
+                      "type": "IMAGE",
+                      "height": 210,
+                      "width": 261,
+                      "source": {
+                        "url": "https://picnic-nl-prod-images.s3.amazonaws.com/picnic-page/04d715db181c478db2a29ac5310727980a35ab67fe34f111934a9b4efb3a0ebd/<DERIVATIVE>.png"
+                      },
+                      "resize_mode": "COVER",
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "self-service-add-to-order-bottom-sheet-header",
+              "type": "PML",
+              "size": {
+                "crossAxis": "12g",
+                "mainAxis": 46
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component": {
+                  "type": "STACK",
+                  "axis": "VERTICAL",
+                  "width": "100%",
+                  "padding": {
+                    "right": 16,
+                    "left": 16,
+                    "top": 16,
+                    "bottom": 0
+                  },
+                  "style": {
+                  },
+                  "children": [
+                    {
+                        "type": "RICH_TEXT",
+                        "id": "self-service-add-to-order-header",
+                        "text_attributes": {
+                            "size": 25
+                        },
+                        "markdown": "{{localize COPY.header}}"
+                    }
+                  ]
+                }
+              }
+            },
+            {{#with (slice orders 0) as | slicedOrders |}}
+                {{#with slicedOrders.[0] as | order |}}
+            {
+              "id": "self-service-add-to-order-bottom-sheet-content",
+              "type": "PML",
+              "size": {
+                "crossAxis": "12g",
+                "mainAxis": 87
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component": {
+                  "type": "STACK",
+                  "axis": "VERTICAL",
+                  "width": "100%",
+                  "padding": {
+                    "right": 16,
+                    "left": 16,
+                    "top": 8,
+                    "bottom": 16
+                  },
+                  "style": {
+                  },
+                  "children": [
+                    {
+                        "type": "RICH_TEXT",
+                        "id": "self-service-add-to-order-description",
+                        "text_attributes": {
+                            "size": 16
+                        },
+                        {{#with (dateFormat order.cutoffTs "YYYY-MM-dd" tz=order.deliveryTimezone) as | cutOffDate |}}
+                        {{#with (dateFormat order.cutoffTs "HH:mm" tz=order.deliveryTimezone) as | cutOffTime |}}
+                            {{#with (join '' (join 'T' cutOffDate cutOffTime) ':00.000Z') as | cutOffTs |}}
+                                {{#with (deltaCalendarDays cutOffTs) as | remainingDays |}}
+                                    {{#if (lt remainingDays 0)}}
+                                        "markdown": "{{localize COPY.finished}}"
+                                    {{/if}}
+                                    {{#if (eq remainingDays 1)}}
+                                        "markdown": "{{#replaceRegex (localize COPY.content) 'CUT_OFF_TIME' (join ' ' (localize COPY.today) cutOffTime)}}{{/replaceRegex}}"
+                                    {{/if}}
+                                    {{#if (eq remainingDays 2)}}
+                                        "markdown": "{{#replaceRegex (localize COPY.content) 'CUT_OFF_TIME' (join ' ' (localize COPY.tomorrow) cutOffTime)}}{{/replaceRegex}}"
+                                    {{/if}}
+                                    {{#if (gt remainingDays 2)}}
+                                        {{#with (dateFormat order.cutoffTs "EEEE d MMMM" (localize COPY.locale) tz=order.deliveryTimezone) as | formattedDate |}}
+                                            "markdown": "{{#replaceRegex (localize COPY.content) 'CUT_OFF_TIME' (join ' ' formattedDate cutOffTime)}}{{/replaceRegex}}"
+                                        {{/with}}
+                                    {{/if}}
+                                {{else}}
+                                    "markdown": "{{#replaceRegex (localize COPY.content) 'CUT_OFF_TIME' (join ' ' (localize COPY.today) cutOffTime)}}{{/replaceRegex}}"
+                                {{/with}}
+                            {{/with}}
+                        {{/with}}
+                        {{/with}}
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "self-service-add-to-order-bottom-sheet-actions",
+              "type": "PML",
+              "size": {
+                "crossAxis": "12g",
+                "mainAxis": 48
+              },
+              "pml": {
+                "pml_version": "0.1.0",
+                "component": {
+                  "type": "STACK",
+                  "axis": "HORIZONTAL",
+                  "distribution": "END",
+                  "width": "100%",
+                  "padding": {
+                    "right": 16,
+                    "left": 16,
+                    "top": 16,
+                    "bottom": 0
+                  },
+                  "children": [
+                    {
+                        "id": "self-service-add-to-order-action-container",
+                        "type": "CONTAINER",
+                        "width": 78,
+                        "height": 24,
+                        "padding": {
+                            "right": 16,
+                            "left": 0,
+                            "bottom": 0,
+                            "top": 0
+                        },
+                        "child": {
+                            "id": "self-service-add-to-order-action-cancel",
+                            "type": "TEXT_BUTTON",
+                            "style": "SECONDARY",
+                            "title": "{{localize COPY.cancel}}",
+                            "on_press": {
+                                "action_type": "CLOSE"
+                            }
+                        }
+                    },
+                    {
+                        "type": "TEXT_BUTTON",
+                        "id": "self-service-add-to-order-action-submit",
+                        "style": "PRIMARY",
+                        "title": "{{localize COPY.submit}}",
+                        "on_press": {
+                            "action_type": "EVENT",
+                            "action": {
+                              "type": "SET_TIME_SLOT",
+                              "slot_id": "{{order.slot.slotId}}",
+                              "on_next": {
+                                "action_type": "CLOSE",
+                                "on_next": {
+                                    "action_type": "OPEN",
+                                    "target": "app.picnic://store/storefront"
+                                }
+                              }
+                            }
+                        }
+                    }
+                  ]
+                }
+              }
+            }
+                {{/with}}
+            {{/with}}
+          ]
+        }
+      ]
+    }
+  },
+  "context": {
+    "order_ids": {
+      "$param": "order_ids"
+    },
+    "orders": {
+      "$query": "SELECT * FROM orders WHERE id IN (${order_ids;FORMAT_FOR_PIQL})"
+    },
+    "COPY": {
+      "locale": {
+        "nl": "nl",
+        "de": "de",
+        "fr": "fr"
+      },
+      "header": {
+        "nl": "Nog iets nodig?",
+        "de": "Brauchst du noch etwas?",
+        "fr": "Besoin d’autre chose ?"
+      },
+      "content": {
+        "nl": "Geen probleem! Zolang er plek is in ons wagentje kun je **tot CUT_OFF_TIME uur** nog producten bijbestellen.",
+        "de": "Kein Problem! Solange wir noch Platz in unserem Flitzer haben, kannst du **bis CUT_OFF_TIME Uhr** noch Produkte zu deiner Bestellung hinzufügen.",
+        "fr": "Pas de problème, vous avez **jusqu'à CUT_OFF_TIME heures** pour ajouter des produits à votre commande. Pratique !"
+      },
+      "finished": {
+        "nl": "je kunt geen product meer aan deze bestelling toevoegen.",
+        "de": "Sie können dieser Bestellung kein Produkt mehr hinzufügen.",
+        "fr": "vous ne pouvez plus ajouter de produit à cette commande."
+      },
+      "tomorrow": {
+        "nl": "morgen",
+        "de": "morgen",
+        "fr": "demain"
+      },
+      "today": {
+        "nl": "vandaag",
+        "de": "heute",
+        "fr": "aujourd'hui"
+      },
+      "cancel": {
+        "nl": "Terug",
+        "de": "Zurück",
+        "fr": "Annuler"
+      },
+      "submit": {
+        "nl": "Verder winkelen",
+        "de": "Weiter einkaufen",
+        "fr": "Continuer"
+      }
+    }
+  },
+  "metadata": {}
+}

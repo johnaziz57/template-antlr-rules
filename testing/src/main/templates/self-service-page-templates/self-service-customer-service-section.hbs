@@ -1,0 +1,294 @@
+{
+  "template_id": "self-service-customer-service-section",
+  "layout": {
+    "type": "BLOCK",
+    "id": "list",
+    "layout": {
+      "type": "FLOW",
+      "axis": "VERTICAL"
+    },
+    "size": {
+        "cross_axis": "12g"
+    },
+    "children": [
+      {{#with (slice csContactInfo 0) as | info |}}
+      {{#not info.[0].openNow}}
+      {{#if info.[0].nextOpeningTime.isPresent}}
+      {
+        "type": "PML",
+        "id": "list-item-id",
+        "size": {
+          "main_axis": 70,
+          "cross_axis": "12g"
+        },
+        "pml": {
+          "pml_version": "0.1.0",
+          "component":  {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "height": "100%",
+            "alignment": "CENTER",
+            "children": [
+            {
+              "type": "RICH_TEXT",
+              "text_alignment": "LEFT",
+              "text_attributes": {
+                "size": 15,
+                "weight": "REGULAR"
+              },
+              {{#with info.[0].nextOpeningTime.orElseThrow as | openingTime |}}
+              {{#with (dateFormat openingTime (localize(COPY.timeFormat)) (localize(COPY.locale)) tz="Europe/Amsterdam") as | formattedTime |}}
+              {{#eq (deltaCalendarDays openingTime) 0}}
+                "markdown": "{{replaceRegex (localize(csOpenTimeMessage.title)) 'day' (localize(COPY.today)) 'time' formattedTime }}"
+                {{else}}
+                {{#eq (deltaCalendarDays openingTime) 1}}
+                  "markdown": "{{replaceRegex (localize(csOpenTimeMessage.title)) 'day' (localize(COPY.tomorrow)) 'time' formattedTime }}"
+                {{else}}
+                  "markdown": "{{replaceRegex (localize(csOpenTimeMessage.title)) 'day' (dateFormat openingTime "EEEE" (localize(COPY.locale))) 'time' formattedTime }}"
+                {{/eq}}
+              {{/eq}}
+              {{/with}}
+              {{/with}}
+            }
+            ]
+          }
+        }
+      },
+      {
+        "type": "PML",
+        "id": "list-item-id-opening-times",
+        "size": {
+          "main_axis": 1,
+          "cross_axis": "12g"
+        },
+        "pml": {
+          "pml_version": "0.1.0",
+          "component":  {
+              "type": "CONTAINER",
+              "height": 1,
+              "background_color": "GREY1",
+              "width": "100%"
+          }
+        }
+      },
+      {{/if}}
+      {{/not}}
+      {{#with (join '' whatsapp.baseDeeplink info.[0].contactDetails.whatsapp) as | deeplink |}}
+      {
+        "type": "PML",
+        "id": "list-item-id",
+        "analytics": {
+          "contexts": [
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                "data": {"type": "pml"}
+              }, 
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                "data": {
+                  "template_id": "core-list-item-template",
+                  "type": "list_item",
+                  "deeplink": "{{deeplink}}"
+                }
+              }
+          ]
+        },
+        "size": {
+          "main_axis": 56,
+          "cross_axis": "12g"
+        },
+        {{#if info.[0].openNow}}
+        "pml": {{{template 'core-list-item-template' 
+          title=(localize whatsapp.title)
+          icon=whatsapp.icon 
+          deeplink=deeplink 
+          labelTextColor=csOpenLabel.textColor
+          labelBackgroundColor=csOpenLabel.backgroundColor
+          labelTitle=(localize csOpenLabel.title)
+          showRightLabel=true}}}
+        {{else}}
+        "pml": {{#template 'core-list-item-template' title=(localize whatsapp.title) icon=whatsapp.icon deeplink=deeplink}}{{/template}}
+        {{/if}}
+      },
+      {{/with}}
+      {
+        "type": "PML",
+        "id": "list-item-id-whatsapp",
+        "size": {
+          "main_axis": 1,
+          "cross_axis": "12g"
+        },
+        "pml": {
+          "pml_version": "0.1.0",
+          "component":  {
+              "type": "CONTAINER",
+              "height": 1,
+              "background_color": "GREY1",
+              "width": "100%"
+          }
+        }
+      },
+      {{#with (join '' email.baseDeeplink info.[0].contactDetails.email) as | emailDeeplink |}}
+      {
+        "type": "PML",
+        "id": "list-item-id",
+        "analytics": {
+          "contexts":[
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                "data": {"type": "pml"}
+              }, 
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                "data": {
+                  "template_id": "core-list-item-template",
+                  "type": "list_item",
+                  "deeplink": "{{emailDeeplink}}"
+                }
+              }
+          ]
+        },
+        "size": {
+          "main_axis": 56,
+          "cross_axis": "12g"
+        },
+        {{#if userData.isEmpty}}
+        "pml": {{{template 'core-list-item-template' title=(localize email.title) icon=email.icon deeplink=emailDeeplink}}}
+        {{else}}
+        {{#with (slice userData 0) as | user |}}
+          {{#and user.[0].clientVersion.isPresent user.[0].clientType.isPresent }}
+            {{#with (replaceRegex email.body 'user_email' user.[0].email 'user_app_version' user.[0].clientVersion.orElseThrow 'user_client_type' user.[0].clientType.orElseThrow) as | emailBody |}}
+            "pml": {{{template 'core-list-item-template' title=(localize email.title) icon=email.icon deeplink=(join '' emailDeeplink emailBody)}}}
+            {{/with}}
+          {{else}}
+            {{#with (replaceRegex email.body 'user_email' user.[0].email 'user_app_version' '' 'user_client_type' '') as | emailBody |}}
+              "pml": {{{template 'core-list-item-template' title=(localize email.title) icon=email.icon deeplink=(join '' emailDeeplink emailBody)}}}
+            {{/with}}
+          {{/and}}
+        {{/with}}
+        {{/if}}
+      },
+      {{/with}}
+      {
+        "type": "PML",
+        "id": "list-item-id-email",
+        "size": {
+          "main_axis": 1,
+          "cross_axis": "12g"
+        },
+        "pml": {
+          "pml_version": "0.1.0",
+          "component":  {
+              "type": "CONTAINER",
+              "height": 1,
+              "background_color": "GREY1",
+              "width": "100%"
+          }
+        }
+      },
+      {{#with (join '' phone.baseDeeplink info.[0].contactDetails.phone) as | deeplink |}}
+      {
+        "type": "PML",
+        "id": "list-item-id",
+        "analytics": {
+          "contexts":[
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                "data": {"type": "pml"}
+              }, 
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                "data": {
+                  "template_id": "core-list-item-template",
+                  "type": "list_item",
+                  "deeplink": "{{deeplink}}"
+                } 
+              }
+          ]
+        },
+        "size": {
+          "main_axis": 56,
+          "cross_axis": "12g"
+        },
+        "pml": {{#template 'core-list-item-template' title=(localize phone.title) icon=phone.icon deeplink=deeplink}}{{/template}}
+      }
+      {{/with}}
+      {{/with}}
+    ]
+  },
+  "context": {
+    "COPY": {
+      "locale": {
+        "nl": "nl",
+        "de": "de",
+        "fr": "fr"
+      },
+      "tomorrow": {
+        "nl": "morgen",
+        "de": "morgen",
+        "fr": "demain"
+      },
+      "today": {
+        "nl": "vandaag",
+        "de": "heute",
+        "fr": "aujourd'hui"
+      },
+      "timeFormat": {
+        "nl": "HH:mm",
+        "de": "HH:mm",
+        "fr": "H'h'mm"
+      }
+    },
+    "csContactInfo": {
+      "$query": "SELECT * FROM cs_contact_info WHERE id IN ('')"
+    },
+    "userData": {
+      "$query": "SELECT * FROM user_data WHERE id IN ('')"
+    },
+    "csOpenLabel": {
+      "backgroundColor": "GREEN5",
+      "textColor": "GREEN1",
+      "title": {
+        "nl": "Nu online",
+        "de": "Jetzt online",
+        "fr": "Maintenant en ligne"
+      }
+    },
+    "csOpenTimeMessage": {
+      "title": {
+        "nl": "Stuur ons gerust een berichtje, we zijn #(GREEN1)**day om time uur**#(GREEN1) weer online!",
+        "de": "Etwas auf dem Herzen? Schreib uns eine E-Mail oder WhatsApp – wir sind #(GREEN1)**day um time Uhr**#(GREEN1) wieder online!",
+        "fr": "N’hésitez pas à nous contacter, nous serons en ligne #(GREEN1)**day dès time !**#(GREEN1)"
+      }
+    },
+    "whatsapp": {
+      "baseDeeplink": "https://wa.me/",
+      "icon": "whatsapp",
+      "title": {
+        "nl": "WhatsApp",
+        "de": "WhatsApp",
+        "fr": "WhatsApp"
+      }
+    },
+    "email": {
+      "baseDeeplink": "mailto:",
+      "body": "?body=%0A%0A________________________________________%0AUser%3Aemail%3A%20user_email%0AApp%20Version%3A%20user_app_version%0Auser_client_type",
+      "icon": "mail",
+      "title": {
+        "nl": "Mailen",
+        "de": "E-Mail",
+        "fr": "Email"
+      }
+    },
+    "phone": {
+      "baseDeeplink": "tel:",
+      "icon": "phone",
+      "title": {
+        "nl": "Bellen",
+        "de": "Anruf",
+        "fr": "Téléphone"
+      }
+    }
+  },
+  "metadata": {}
+}

@@ -1,0 +1,31 @@
+{
+    "template_id": "loyalty-info-deeplink",
+    "layout": {
+        "id": "loyalty-info-deeplink",
+        "type": "PML",
+        "size": {"crossAxis": "12g", "mainAxis": 25},
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "TOUCHABLE",
+                 "onPress": {
+                    "actionType": "OPEN",
+                    "target": "{{deeplink}}"
+                },
+                "activeOpacity": 0.8,
+                "activeScale": 0.98,
+                "child": {
+                        "type": "CONTAINER",
+                        "width": "100%",
+                        "child": {
+                            "type": "RICH_TEXT",
+                            "text_alignment": "CENTER",
+                            "markdown": "#(GREY3){{{title}}}#(GREY3)"
+                        }
+                 }
+            }
+        }
+    },
+    "context": {},
+    "metadata": {}
+}

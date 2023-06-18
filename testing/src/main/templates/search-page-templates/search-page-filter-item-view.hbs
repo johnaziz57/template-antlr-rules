@@ -1,0 +1,77 @@
+{
+  "template_id": "search-page-filter-item-view",
+  "layout": {
+        "id": "search-page-filter-item-view",
+        "type": "CONTAINER",
+        "border_radius": 8,
+        "height": 32,
+        "backgroundColor": "{{#if selected}}{{selectedBackgroundColor}}{{else}}{{unselectedBackgroundColor}}{{/if}}",
+        "child": {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "height": "100%",
+            "alignment": "CENTER",
+            "padding": { "left": {{#if prefix }}8{{else}}12{{/if}}, "right": {{#if selected}}8{{else}}12{{/if}} },
+            "spacing": 4,
+            "children": [
+                {{#if prefix}}
+                    {{#if selected}}
+                        {
+                            "type": "RICH_TEXT",
+                            "text_attributes": { "weight": "MEDIUM", "size": 15 },
+                            "markdown": "#({{selectedPrefixColor}}){{prefix}}#({{selectedPrefixColor}})",
+                        },
+                    {{else}}
+                        {
+                            "type": "CONTAINER",
+                            "height": 20,
+                            "border_radius": 5,
+                            "background_color": "{{unselectedPrefixBackgroundColor}}",
+                            "padding": {
+                                "left": 4,
+                                "right": 4,
+                            },
+                            "child": {
+                            "type": "STACK",
+                            "axis": "HORIZONTAL",
+                            "height": "100%",
+                            "alignment": "CENTER",
+                            "distribution": "CENTER",
+                            "children": [
+                                {
+                                    "type": "RICH_TEXT",
+                                    "text_attributes": { "weight": "MEDIUM", "size": 15 },
+                                    "markdown": "#({{unselectedPrefixColor}}){{prefix}}#({{unselectedPrefixColor}})",
+                                }]
+                            },
+                        },
+                    {{/if}}
+                {{/if}}
+                {
+                    "type": "RICH_TEXT",
+                    "text_attributes": { "weight": "MEDIUM", "size": 15 },
+                    "markdown": "{{#if selected}}#({{selectedNameColor}}){{name}}#({{selectedNameColor}}){{else}}#({{unselectedNameColor}}){{name}}#({{unselectedNameColor}}){{/if}}",
+                },
+                {{#if selected}}
+                    {
+                        "type": "CONTAINER",
+                        "width": 16,
+                        "height": 16,
+                        "border_radius": 8,
+                        "background_color": "{{cancelIconBackgroundColor}}",
+                        "padding": {"top": 2, "left": 2, "bottom": 2, "right": 2},
+                        "child": {
+                            "type": "ICON",
+                            "width": 12,
+                            "height": 12,
+                            "icon_key": "close",
+                            "color": "WHITE",
+                        }
+                    }
+                {{/if}}
+            ]
+        }
+    },
+  "context": {},
+  "metadata": {}
+}

@@ -1,0 +1,151 @@
+{
+    "template_id": "self-service-track-parcel-button-item",
+    "layout": {
+        "type": "PML",
+          "id": "{{id}}",
+          "analytics": {
+            "contexts":[
+                {
+                  "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                  "data": {"type": "pml"}
+                }, 
+                {
+                  "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                  "data": {
+                    "template_id": "self-service-track-parcel-button-item",
+                    {{#lt parcels.length 2}}
+                    {{#with (slice parcels 0) as | slicedParcels |}}
+                    {{#with (join '' baseOfDeeplink slicedParcels.[0].id) as | deeplink |}}
+                    "deeplink": "{{deeplink}}"
+                    {{/with}}
+                    {{/with}}
+                    {{else}}
+                    "deeplink": "{{baseOfDeeplink}}"
+                    {{/lt}}
+                  } 
+                }
+            ]
+          },
+          "size": {
+            "cross_axis": "12g",
+            "mainAxis": "((SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 6) * (13/9)"
+          },
+          "pml": {
+              "pml_version": "0.1.0",
+              "component": {
+                  "type": "TOUCHABLE",
+                  "accessibility_label": "{{#stripMarkdown (join ', ' labelTitle title)}}{{/stripMarkdown}}",
+                  "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+                    {{#lt parcels.length 2}}
+                    {{#with (slice parcels 0) as | slicedParcels |}}
+                    {{#with (join '' baseOfDeeplink slicedParcels.[0].id) as | deeplink |}}
+                    "on_press": {
+                      "action_type": "OPEN",
+                      "target":  "{{deeplink}}"
+                    },
+                    {{/with}}
+                    {{/with}}
+                    {{else}}
+                    "on_press": {
+                      "action_type": "OPEN",
+                      "target":  "{{baseOfDeeplink}}"
+                    },
+
+                    "deeplink": "{{baseOfDeeplink}}",
+                    {{/lt}}
+
+                  "active_opacity": 0.5,
+                  "child": {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "height": "100%",
+                        "background_color": "WHITE",
+                        "alignment": "CENTER",
+                        "distribution": "START",
+                        "padding": {
+                            "top": 20,
+                            "bottom": 10
+                        },
+                        "spacing": 8,
+                        "children": [
+                            {
+                              "type": "CONTAINER",
+                              "height": 56,
+                              "width": 56,
+                              "border_radius": 100,
+                              "background_color": "GREY1", 
+                              "padding": {
+                                "top": 12, 
+                                "bottom": 12,
+                                "left": 12,
+                                "right": 12
+                              },
+                              "child": 
+                                  {
+                                      "type": "ICON",
+                                      "icon_key": "{{icon}}",
+                                      "width": 32,
+                                      "height": 32,
+                                      "color": "GREY4"
+                                  }
+                            },
+                            {
+                              "type": "RICH_TEXT",
+                              "text_alignment": "CENTER",
+                              "text_attributes": {
+                                "size": 12,
+                                "weight": "MEDIUM"
+                              },
+                              "number_of_lines": 2,
+                              "markdown": "#(GREY5){{{title}}}#(GREY5)"
+                            },
+                            {
+                              "type": "CONTAINER",
+                              "height": 14,
+                              "width": 14,
+                              "border_radius": 14,
+                              "border_color": "WHITE",
+                              "border_width": 1,
+                              "background_color": "GREEN1", 
+                              "absolute_position": {
+                                "top": 32,
+                                "right": 26
+                              },
+                              "child": {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "alignment": "FILL",
+                                "distribution": "CENTER",
+                                "height": "100%",
+                                "spacing": 8,
+                                "children": [
+                                  {
+                                    "type": "RICH_TEXT",
+                                    "text_alignment": "CENTER",
+                                    "text_attributes": {
+                                      "size": 10,
+                                      "weight": "MEDIUM"
+                                    },
+                                    "number_of_lines": 2,
+                                    "markdown": "#(WHITE){{parcels.length}}#(WHITE)"
+                                  }
+                                ]
+                              }
+                            }
+                        ]
+                  }
+                }
+          }
+    },
+    "context": {
+        "baseOfDeeplink": "app.picnic://store/parcels/",
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal um mehr anzuzeigen.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+        }
+    },
+    "metadata": {}
+}

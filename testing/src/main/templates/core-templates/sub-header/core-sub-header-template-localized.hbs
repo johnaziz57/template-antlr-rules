@@ -1,0 +1,173 @@
+  {
+    "template_id": "core-sub-header-template-localized",
+    "layout": {
+                "pml_version": "0.1.0",
+                "component": {
+                    {{#with subHeader}}
+                    "type": "CONTAINER",
+                    "accessible": true,
+                    {{#if subHeaderButton}}
+                    {{#if subtext}}
+                    "accessibilityLabel": "{{#stripMarkdown (join ', ' (localize title) (localize subtext) (join ' ' (localize COPY.accessibilityHint) (localize subHeaderButton.title)))}}{{/stripMarkdown}}",
+                    {{else}}
+                    "accessibilityLabel": "{{#stripMarkdown (join ', ' (localize title) (join ' ' (localize COPY.accessibilityHint) (localize subHeaderButton.title)))}}{{/stripMarkdown}}",
+                    {{/if}}
+                    "accessibilityActions": [
+                        {
+                            "name": "activate",
+                            "onAction": { "actionType": "OPEN", "target": "{{subHeaderButton.deeplink}}" }
+                        }
+                    ],
+                    {{else}}
+                    {{#if subtext}}
+                    "accessibilityLabel": "{{#stripMarkdown (join ', ' (localize title) (localize subtext))}}{{/stripMarkdown}}",
+                    {{else}}
+                    "accessibilityLabel": "{{#stripMarkdown (join ', ' (localize title))}}{{/stripMarkdown}}",
+                    {{/if}}
+                    {{/if}}
+                    "width": "100%",
+                    "padding": {
+                    {{#if subHeaderButton}}
+                    "top": 16,
+                    {{else}}
+                    "top": 18,
+                    {{/if}}
+                    "bottom": 8,
+                    "left": 16,
+                    "right": 16
+                    },
+                    "child": {
+                    "type": "STACK",
+                    "axis": "VERTICAL",
+                    "alignment": "CENTER",
+                    "spacing": 4,
+                    "height": "100%",
+                    "children": [
+                        {
+                        "type": "STACK",
+                        "axis": "HORIZONTAL",
+                        "alignment": "CENTER",
+                        "distribution": "SPACE_BETWEEN",
+                        "width": "100%",
+                        "children": [
+                            {
+                            "type": "STACK",
+                            "axis": "HORIZONTAL",
+                            "alignment": "CENTER",
+                            "spacing": 12,
+                            "children": [
+                                {{#if icon}}
+                                {
+                                    "type": "RICH_TEXT",
+                                    "textAlignment": "CENTER",
+                                    "textAttributes": {
+                                    "size": 18,
+                                    "weight": "SEMIBOLD"
+                                    },
+                                    "markdown": "#(GREEN1)X#(GREEN1)"
+                                },
+                                {{/if}}
+                                {
+                                "type": "RICH_TEXT",
+                                "textAlignment": "LEFT",
+                                "numberOfLines": 1,
+                                "textAttributes": {
+                                    {{#if textSize}}
+                                    "size": {{textSize}},
+                                    {{else}}
+                                    "size": 18,
+                                    {{/if}}
+                                    "weight": "SEMIBOLD"
+                                },
+                                "markdown": "#(GREY5){{localize title}}#(GREY5)"
+                                }
+                            ]
+                            }
+                            {{#if subHeaderButton}}
+                            {{#with subHeaderButton}}
+                            ,
+                            {
+                            "type": "TOUCHABLE",
+                            "onPress": { "actionType": "OPEN", "target": "{{deeplink}}" },
+                            "activeOpacity": 0.8,
+                            "child": {
+                                "type": "CONTAINER",
+                                "padding": {
+                                "top": 4,
+                                "left": 8,
+                                "right": 8
+                                },
+                                "backgroundColor": "{{backgroundColor}}",
+                                "borderRadius": 4,
+                                "child": {
+                                    "type": "STACK",
+                                    "axis": "HORIZONTAL",
+                                    "alignment": "CENTER",
+                                    "distribution": "CENTER",
+                                    "spacing": 4,
+                                    "children": [
+                                        {
+                                        "type": "RICH_TEXT",
+                                        "textAlignment": "CENTER",
+                                        "textAttributes": {
+                                            "size": 14,
+                                            "weight": "MEDIUM"
+                                        },
+                                        "markdown": "#({{textColor}}){{localize title}}#({{textColor}})"
+                                        }
+                                        {{#if icon}}
+                                        ,
+                                        {
+                                            "type": "ICON",
+                                            "height": 9,
+                                            "aspect_ratio": 1,
+                                            "icon_key": "{{icon}}",
+                                            "color": "{{textColor}}"
+                                        }
+                                        {{/if}}
+                                    ]
+                                }
+                            }
+                            }
+                            {{/with}}
+                            {{/if}}
+                        ]
+                        }
+                        {{#if subtext}}
+                        ,
+                        {
+                        "type": "STACK",
+                        "axis": "HORIZONTAL",
+                        "alignment": "CENTER",
+                        "distribution": "SPACE_BETWEEN",
+                        "width": "100%",
+                        "children": [
+                            {
+                            "type": "RICH_TEXT",
+                            "textAlignment": ":LEFT",
+                            "number_of_lines": 1
+                            "textAttributes": {
+                                "size": 15,
+                                "weight": "REGULAR"
+                            },
+                            "markdown": "{{localize subtext}}"
+                            }
+                        ]
+                        }
+                        {{/if}}
+                    ]
+                    }
+                {{/with}}
+                }
+            },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal zum Öffnen.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+      }
+    },
+    "metadata": {}
+  }

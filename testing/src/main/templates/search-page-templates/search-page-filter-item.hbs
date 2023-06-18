@@ -1,0 +1,105 @@
+  {
+    "template_id": "search-page-filter-item",
+    "layout": {
+      "type": "PML",
+      "id": "search-filter-{{filter_id}}",
+      "size": {
+        "cross_axis": 50,
+        "main_axis": {{~
+            math (
+               math (
+                math 12 "+" (eq selected true yes=30 no=24)
+               ) "+" (math (eq prefix null yes=0 no=3) "*" 8))
+            "+" (math name.length "*" 8)
+  ~}},
+        "is_main_axis_estimated": true
+      },
+      "pml": {
+        "pml_version": "0.1.0",
+        "component": {
+          "type": "TOUCHABLE",
+          "on_press": {
+            "action_type": "OPEN",
+            "method": "REPLACE",
+            "target": "nl.picnic-supermarkt://store/page;id=search-page-results,search_term={{url term}}&is_not_first_search_result=true
+            {{!~ Pass the initial filters: used for analytics and will be forwarded to the next requests ~}}
+            {{!~ Add `recipes` to `initial_filters` just to make future initial_filters calculations consistent ~}}
+              {{~#if has_recipes_initial_filter ~}}
+                &initial_filters=Recipes
+              {{~/if~}}
+              {{~#if initial_filters ~}}
+                {{~#each initial_filters as |f| ~}}
+                  &initial_filters={{url f}}
+                {{~/each~}}
+              {{~else~}}
+                {{~#each filters as |f| ~}}
+                  &initial_filters={{url f.name}}
+                {{~/each~}}
+              {{~/if~}}
+              {{! End of Pass the initial filters}}
+              {{~#if is_recipe_button ~}}
+                &is_recipe={{not selected}}
+              {{~else~}}
+                {{! Pass the selected filters }}
+                {{~#each filters as |f| ~}}
+                  {{~#eq f.id filter_id ~}}
+                  {{! skip this filter and attach rest of the selected filters }}
+                  {{~else~}}
+                    {{~#if f.selected}}&selected_filters={{url f.id}}{{/if~}}
+                  {{/eq}}
+                {{~/each~}}
+                {{! If current filter is not selected yet, add it to the selected filters}}
+                {{~#not selected}}&selected_filters={{url filter_id}}{{~/not~}}
+              {{~/if~}}
+              "
+          },
+          "child": {{#eq name "Actie"}}
+              {{{template 'search-page-filter-item-view'
+                selected=selected
+                prefix='%'
+                name=name
+                selectedBackgroundColor='YELLOW2'
+                unselectedBackgroundColor='GREY1'
+                selectedNameColor='BLACK'
+                unselectedNameColor='BLACK'
+                selectedPrefixColor='BLACK'
+                unselectedPrefixColor='BLACK'
+                unselectedPrefixBackgroundColor='YELLOW2'
+                cancelIconBackgroundColor='#DEBE1C'
+              }}}
+            {{else}}
+              {{#if prefix}}
+                {{{template 'search-page-filter-item-view'
+                  selected=selected
+                  prefix=prefix
+                  name=name
+                  selectedBackgroundColor='GREEN1'
+                  unselectedBackgroundColor='GREY1'
+                  selectedNameColor='WHITE'
+                  unselectedNameColor='BLACK'
+                  selectedPrefixColor='WHITE'
+                  unselectedPrefixColor='WHITE'
+                  unselectedPrefixBackgroundColor='GREEN1'
+                  cancelIconBackgroundColor='GREEN4'
+                }}}
+              {{else}}
+                {{{template 'search-page-filter-item-view'
+                  selected=selected
+                  name=name
+                  selectedBackgroundColor='GREEN1'
+                  unselectedBackgroundColor='GREY1'
+                  selectedNameColor='WHITE'
+                  unselectedNameColor='BLACK'
+                  selectedPrefixColor='WHITE'
+                  unselectedPrefixColor='WHITE'
+                  unselectedPrefixBackgroundColor='GREEN1'
+                  cancelIconBackgroundColor='GREEN4'
+                }}}
+              {{/if}}
+            {{/eq}}
+        }
+      }
+    },
+    "context": {},
+    "metadata": {}
+  }

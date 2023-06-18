@@ -1,0 +1,50 @@
+{
+    "template_id": "search-page-spell-correction-block",
+    "layout": {
+        "type": "PML",
+        "id": "search-page-spell-correction-block",
+        "size": {
+            "cross_axis": "SCREEN_WIDTH",
+            "main_axis": 112
+        },
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "STACK",
+                "axis": "VERTICAL",
+                "distribution": "CENTER",
+                "alignment": "CENTER",
+                "height": "100%",
+                "spacing": 12,
+                "children": [
+                    {
+                        "type": "RICH_TEXT",
+                        "markdown": "#(GREY4){{localize COPY.did_you_mean}}#(GREY4)",
+                        "text_attributes": {
+                            "size": 16,
+                            "weight": "REGULAR"
+                        }
+                    },
+                    {
+                        "type": "RICH_TEXT",
+                        "markdown": "“{{searchTerm}}“",
+                        "text_attributes": {
+                            "size": 25,
+                            "weight": "REGULAR"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "context": {
+        "COPY": {
+            "did_you_mean": {
+                "nl": "Bedoel je dit misschien?",
+                "de": "Meintest du vielleicht das?",
+                "fr": "C'est ce que vous vouliez dire ?"
+            }
+        }
+    },
+    "metadata": {}
+}

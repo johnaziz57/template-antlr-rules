@@ -1,0 +1,135 @@
+{
+    "template_id": "core-shortcut-template",
+    "layout": {
+		"pml_version": "0.1.0",
+		"component": {
+			"type": "TOUCHABLE",
+			"accessibilityLabel": "{{#stripMarkdown (join ', ' item.label.text item.labelText item.title)}}{{/stripMarkdown}}",
+			"accessibilityHint": "{{localize COPY.accessibilityHint}}",
+			"on_press": {
+				"action_type": "OPEN",
+				"target": {{{template 'core-deeplink-resolver' deeplink=item.deeplink}}}
+			},
+			"active_opacity": 0.5,
+			"child": {
+				"type": "CONTAINER",
+				"padding": {
+					"left": 12
+				},
+				"height": "100%",
+				"border_radius": 8,
+				"background_color": "WHITE",
+				"child": {
+					"type": "STACK",
+					"axis": "HORIZONTAL",
+					"height": "100%",
+					"alignment": "CENTER",
+					"padding": {
+						"left": 0,
+						"top": 0,
+						"bottom": 0,
+						"right": 8
+					},
+					"spacing": 12,
+					"children": [
+						{
+							"type": "CONTAINER",
+							"padding": {
+								"bottom": 12,
+								"top": 12
+							},
+							"child": {
+								"type": "IMAGE",
+								"source": {
+									"id": "{{item.imageId}}",
+									"width": 40,
+									"height": 40,
+									"aspect_ratio": 1
+								},
+								"resize_mode": "CONTAIN",
+								"aspect_ratio": 1,
+								"width": 40,
+								"height": 40
+							}
+						},
+						{
+							"type": "STACK",
+							"axis": "VERTICAL",
+							"distribution": "CENTER",
+							"width": "100%",
+							"height": "100%",
+							"children": [
+              {{#if item.labelText}}
+								{
+									"type": "CONTAINER",
+									"background_color": "{{item.labelBackgroundColor}}",
+									"border_radius": 4,
+									"padding": {
+										"top": 2,
+										"bottom": 3,
+										"left": 4,
+										"right": 4
+									},
+									"child": {
+										"type": "RICH_TEXT",
+										"text_alignment": "START",
+										"number_of_lines": 1,
+										"text_attributes": {
+											"size": 13,
+											"weight": "MEDIUM"
+										},
+										"markdown": "#({{item.labelTextColor}}){{{item.labelText}}}#({{item.labelTextColor}})"
+									}
+								},  
+								{{/if}} 
+								{{#if item.label}}{{#with item.label}}
+								{
+									"type": "CONTAINER",
+									"background_color": "{{backgroundColor}}",
+									"border_radius": 4,
+									"padding": {
+										"top": 2,
+										"bottom": 3,
+										"left": 4,
+										"right": 4
+									},
+									"child": {
+										"type": "RICH_TEXT",
+										"text_alignment": "START",
+										"number_of_lines": 1,
+										"text_attributes": {
+											"size": 13,
+											"weight": "MEDIUM"
+										},
+										"markdown": "#({{textColor}}){{{text}}}#({{textColor}})"
+									}
+								},  
+								{{/with}}{{/if}} 
+								{
+									"type": "RICH_TEXT",
+									{{#or item.label item.labelText}}
+									"number_of_lines": 2,
+									{{else}}
+									"number_of_lines": 3,
+									{{/or}}
+									"text_alignment": "START",
+									"markdown": "{{{item.title}}}"
+								}  
+							]
+						}
+					]
+				}
+			}
+		}
+	},
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal für diese Kategorie.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+      }
+    },
+    "metadata": {}
+  }

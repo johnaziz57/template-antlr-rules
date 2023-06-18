@@ -1,0 +1,71 @@
+{
+  "template_id": "horizontal-large-tiles-section-wrapper",
+  "layout": "  {{#template 'core-horizontal-large-tiles-section' subHeader=horizontalLargeTilesSection.subHeader largeTilesProducts=horizontalLargeTilesSection.largeTilesProducts moreTileItems=horizontalLargeTilesSection.moreTileItems}}\n  {{/template}}",
+  "context": {
+    "horizontalLargeTilesSection": {
+      "$literal": {
+        "subHeader": {
+          "title": "string"
+        },
+        "largeTilesProducts": {
+          "var0": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "productImage": "imageId",
+            "title": "string",
+            "subtitle": "string",
+            "price": "number"
+          },
+          "var1": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "productImage": "imageId",
+            "title": "string",
+            "subtitle": "string",
+            "price": "number"
+          },
+          "var2": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "productImage": "imageId",
+            "title": "string",
+            "subtitle": "string",
+            "price": "number"
+          }
+        },
+        "moreTileItems": {
+          "deeplink": "string",
+          "images": [
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            },
+            {
+              "id": "imageId"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

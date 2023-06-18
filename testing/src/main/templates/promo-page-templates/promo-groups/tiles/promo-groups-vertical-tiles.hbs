@@ -1,0 +1,47 @@
+{
+  "template_id": "promo-groups-vertical-tiles",
+  "layout":
+  {{#not promoGroups.isEmpty}}
+    {
+      "id": "promo-groups-vertical-tiles",
+      "type": "BLOCK",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "spacing": { "mainAxis": 4 },
+        "padding": { "top": 4, "right": 0, "bottom": 4, "left": 0 },
+        "backgroundColor": "GREY1"
+      },
+      "size": { "crossAxis": "SCREEN_WIDTH" },
+      "children": [
+        {{#each promoGroups as | promoGroup |}}
+          {{#if promoGroupData}}
+            {{#with (lookup promoGroupData promoGroup.id) as | data | }}
+              {{#if data.numberOfTopArticles}}
+                {{{template 'single-promo-group' numberOfTopArticles=data.numberOfTopArticles promoGroup=promoGroup promoGroupId=promoGroup.id}}}
+              {{else}}
+                {{{template 'single-promo-group' promoGroup=promoGroup promoGroupId=promoGroup.id}}}
+              {{/if}}
+            {{/with}}
+          {{else}}
+            {{{template 'single-promo-group' promoGroup=promoGroup promoGroupId=promoGroup.id}}}
+          {{/if}}
+          ,
+        {{/each}}
+      ]
+    }
+  {{else}}
+    {{{template 'core-empty-pml-section'}}}
+  {{/not}}
+  ,
+  "context": {},
+  "metadata": {
+    "title": "Promo Group Vertical Tiles",
+    "type": "BLOCK",
+    "description": "Show the requested promo groups as configured in Salesforce.",
+    "preview_image": {
+      "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/dc2e593356511ec8d376e8c257466bb1557b0107d134d8cc91efa8e8c405ff98/large.png"
+    },
+    "properties_schema":"{\"required\":[\"promoGroups\"],\"properties\":{\"promoGroups\":{\"name\":\"promoGroups\",\"$id\":\"promoGroups\",\"title\":\"Promo Groups Query\",\"type\":\"object\",\"required\":[\"$query\"],\"properties\":{\"$query\":{\"name\":\"$query\",\"$id\":\"promoGroups.$query\",\"title\":\"SQL Query\",\"type\":\"string\",\"pattern\":\"^SELECT \\\\* FROM promo_groups WHERE ID IN ([\\\\S]+)\",\"errorMessage\":{\"pattern\":\"Should start with: SELECT * FROM promo_groups WHERE ID IN ('id1, id2,...')\"}}},\"errorMessage\":{\"required\":{\"$query\":\"Please provide a valid SQL Query for promo_groups\"}}},\"promoGroupData\":{\"name\":\"promoGroupData\",\"$id\":\"promoGroupData\",\"title\":\"Items\",\"type\":\"array\",\"asObject\":true,\"primaryKey\":\"promoGroupId\",\"items\":{\"name\":\"context\",\"$id\":\"context\",\"type\":\"object\",\"title\":\"item\",\"properties\":{\"promoGroupId\":{\"name\":\"promoGroupId\",\"$id\":\"context.promoGroupId\",\"title\":\"Promo Group ID\",\"type\":\"string\"},\"numberOfTopArticles\":{\"name\":\"numberOfTopArticles\",\"$id\":\"context.numberOfTopArticles\",\"title\":\"Number of Top Articles\",\"type\":\"number\",\"minimum\":1}}}}},\"errorMessage\":{\"required\":{\"promoGroups\":\"Please provide SQL Query for promo_groups\"}}}"
+  }
+}

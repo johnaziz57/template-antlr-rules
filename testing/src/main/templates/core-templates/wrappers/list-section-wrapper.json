@@ -1,0 +1,34 @@
+{
+  "template_id": "list-section-wrapper",
+  "layout": "  {{#template 'core-list-section' subHeader=listSection.subHeader listItems=listSection.listItems seeAllButton=listSection.seeAllButton}}\n  {{/template}}",
+  "context": {
+    "listSection": {
+      "$literal": {
+        "subHeader": {
+          "title": "string"
+        },
+        "listItems": {
+          "var0": {
+            "deeplink": "string",
+            "image": "imageId",
+            "title": "string"
+          },
+          "var1": {
+            "deeplink": "string",
+            "image": "imageId",
+            "title": "string"
+          },
+          "var2": {
+            "deeplink": "string",
+            "image": "imageId",
+            "title": "string"
+          }
+        },
+        "seeAllButton": {
+          "title": "string",
+          "deeplink": "string"
+        }
+      }
+    }
+  }
+}

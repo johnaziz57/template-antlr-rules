@@ -1,0 +1,107 @@
+{
+    "template_id": "self-service-add-to-order-button-item",
+    "layout": {
+      "type": "PML",
+        "id": "{{id}}",
+        "analytics": {
+          "contexts":[
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                "data": {"type": "pml"}
+              }, 
+              {
+                "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                "data": {
+                    "template_id": "self-service-add-to-order-button-item",
+                    {{#if (not addToOrderFeatureFlag.isEmpty)}}
+                    "deeplink": "app.picnic://store/page;id=self-service-add-to-order-root,presentation-mode=MODAL_OVER_CONTEXT,order_ids={{orderIds}}"
+                    {{else}}
+                    "deeplink": "app.picnic://store/delivery-detail;id={{#replaceRegex deliveryId '\'' '"'}}{{/replaceRegex}},section=add-to-order"
+                    {{/if}}
+                  }
+              }
+          ]
+        },
+        "size": {
+          "cross_axis": "12g",
+          "mainAxis": "((SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 6) * (13/9)"
+        },
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "TOUCHABLE",
+                "accessibility_label": "{{#stripMarkdown (join ', ' labelTitle title)}}{{/stripMarkdown}}",
+                "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+                "on_press": {
+                    "action_type": "OPEN",
+                    {{#if (not addToOrderFeatureFlag.isEmpty)}}
+                    "target": "app.picnic://store/page;id=self-service-add-to-order-root,presentation-mode=MODAL_OVER_CONTEXT,order_ids={{orderIds}}"
+                    {{else}}
+                     "target": "app.picnic://store/delivery-detail;id={{#replaceRegex deliveryId '\'' '"'}}{{/replaceRegex}},section=add-to-order"
+                    {{/if}}
+                },
+                "active_opacity": 0.5,
+                "child": {
+                      "type": "STACK",
+                      "axis": "VERTICAL",
+                      "height": "100%",
+                      "background_color": "WHITE",
+                      "alignment": "CENTER",
+                      "distribution": "START",
+                      "padding": {
+                          "top": 20,
+                          "bottom": 20
+                      },
+                      "spacing": 8,
+                      "children": [
+                          {
+                            "type": "CONTAINER",
+                            "height": 56,
+                            "width": 56,
+                            "border_radius": 100,
+                            "background_color": "rgba(136, 169, 30, 0.15)", 
+                            "padding": {
+                              "top": 12, 
+                              "bottom": 12,
+                              "left": 12,
+                              "right": 12
+                            },
+                            "child": 
+                                {
+                                    "type": "ICON",
+                                    "icon_key": "{{icon}}",
+                                    "width": 32,
+                                    "height": 32,
+                                    "color": "GREEN1"
+                                }
+                          },
+                          {
+                            "type": "RICH_TEXT",
+                            "text_alignment": "CENTER",
+                            "text_attributes": {
+                              "size": 12,
+                              "weight": "MEDIUM"
+                            },
+                            "number_of_lines": 2,
+                            "markdown": "#(GREY5){{{title}}}#(GREY5)"
+                          }
+                      ]
+                }
+                    
+              }
+        }
+  },
+    "context": {
+        "addToOrderFeatureFlag": {
+          "$query": "SELECT * FROM feature_flags WHERE id IN ('SELF_SERVICE_ADD_TO_ORDER_EXPLANATION')"
+        },
+        "COPY": {
+          "accessibilityHint": {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal um mehr anzuzeigen.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+        }
+    },
+    "metadata": {}
+}

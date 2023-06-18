@@ -1,0 +1,81 @@
+{
+  "template_id": "category-tree-vertical-list-item",
+  "layout":{
+        "pml_version": "0.1.0",
+        "component": {
+            "type": "TOUCHABLE",
+            "accessibility_label": "{{#stripMarkdown title}}{{/stripMarkdown}}",
+            "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+            "on_press": { 
+                "action_type": "OPEN",  
+                 "target": "nl.picnic-supermarkt://store/page;id=L1-category-page-root,category_id={{url deeplinkCategory}}"
+            },
+            "active_opacity": 0.5,
+            "child": {
+                "type": "STACK",
+                "axis": "HORIZONTAL",
+                "height": "100%",
+                "spacing": 8,
+                "padding": {
+                    "right": 8
+                },
+                "alignment": "CENTER",
+                "distribution": "SPACE_BETWEEN",
+                "children": [
+                    {
+                        "type": "STACK",
+                        "axis": "HORIZONTAL",
+                        "spacing": 16,
+                        "distribution": "CENTER",
+                        "alignment": "CENTER",
+                        "children": [
+                            {
+                                "type": "IMAGE",
+                                "source": {
+                                    "id": "{{image}}"
+                                },
+                                "resize_mode": "CONTAIN",
+                                "width": 64,
+                                "height": 64
+                            },
+                            {
+                                "type": "STACK",
+                                "axis": "VERTICAL",
+                                "spacing": 2,
+                                "children": [
+                                    {
+                                        "type": "RICH_TEXT",
+                                        "text_alignment": "LEFT",
+                                        "number_of_lines": 2,
+                                        "text_attributes": {
+                                            "size": 16,
+                                            "weight": "REGULAR"
+                                        },
+                                        "markdown": "{{{title}}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ICON",
+                        "icon_key": "rightChevron",
+                        "width": 8,
+                        "height": 13,
+                        "color": "GREY3"
+                    }
+                ]
+            }
+        }
+    },
+  "context": {
+    "COPY": {
+      "accessibilityHint": {
+        "nl": "tik dubbel om te openen.",
+        "de": "Tippe zwei Mal um mehr anzuzeigen.",
+        "fr": "Double-cliquer pour ouvrir"
+      }
+    }
+  },
+  "metadata": {}
+}

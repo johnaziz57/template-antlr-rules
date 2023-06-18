@@ -1,0 +1,90 @@
+{
+    "template_id": "self-service-runner-tipping-button-item",
+    "layout": {
+        "type": "PML",
+          "id": "{{id}}",
+          "analytics": {
+            "contexts":[
+                {
+                  "schema": "iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                  "data": {"type": "pml"}
+                },
+                {
+                  "schema": "iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                  "data": {
+                    "template_id": "self-service-runner-tipping-button-item",
+                    "deeplink": "app.picnic://store/runner-tipping;id={{deliveryId}}"
+                  }
+                }
+            ]
+          },
+          "size": {
+            "cross_axis": "12g",
+            "mainAxis": "((SCREEN_WIDTH - 16 - (2 * 4) - 8 ) / 6) * (13/9)"
+          },
+          "pml": {
+              "pml_version": "0.1.0",
+              "component": {
+                  "type": "TOUCHABLE",
+                    "accessibility_label": "{{#stripMarkdown (join ', ' labelTitle title)}}{{/stripMarkdown}}",
+                    "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+                    "on_press": {
+                      "action_type": "OPEN",
+                      "target":  "app.picnic://store/runner-tipping;id={{deliveryId}}"
+                    },
+                  "active_opacity": 0.5,
+                  "child": {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "height": "100%",
+                        "background_color": "WHITE",
+                        "alignment": "CENTER",
+                        "distribution": "START",
+                        "padding": {
+                            "top": 20,
+                            "bottom": 10
+                        },
+                        "spacing": 8,
+                        "children": [
+                            {
+                                "type": "CONTAINER",
+                                "height": 56,
+                                "width": 56,
+                                "border_radius": 100,
+                                "overflow": "hidden",
+                                "child": {
+                                  "type": "IMAGE",
+                                  "height": 56,
+                                  "width": 56,
+                                  "resize_mode": "COVER",
+                                  "source": {
+                                    "url": "{{runnerImageUrl}}"
+                                  }
+                                }
+                            },
+                            {
+                              "type": "RICH_TEXT",
+                              "text_alignment": "CENTER",
+                              "text_attributes": {
+                                "size": 12,
+                                "weight": "MEDIUM"
+                              },
+                              "number_of_lines": 2,
+                              "markdown": "#(GREY5){{{title}}}#(GREY5)"
+                            }
+                        ]
+                  }
+                }
+          }
+    },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "Geef de Runner een fooi",
+            "de": "Deinem Runner Trinkgeld geben",
+            "fr": "Verser un pourboire à votre Runner"
+          }
+        }
+    },
+    "metadata": {}
+}

@@ -1,0 +1,93 @@
+{
+    "template_id": "loyalty-home-page-rewards-section",
+    "layout": {
+        "id": "loyalty-home-page-rewards-section",
+        "type": "BLOCK",
+        "layout": {
+            "type": "FLOW",
+            "axis": "VERTICAL",
+            "spacing": {"mainAxis": 8}
+        },
+        "size": {"crossAxis": "12g"},
+        "children": [
+            {{#and (not loyalty_feature_flags.isEmpty) (gt data.length 0)}}
+            {
+                "id": "loyalty-home-page-rewards-section-header",
+                "type": "PML",
+                "size": {
+                    "mainAxis":48, 
+                    "crossAxis": "12g"
+                },
+                "pml": {
+                    "pml_version": "0.1.0",
+                    "component": {
+                        "type": "CONTAINER",
+                        "padding": {
+                            "top": 18,
+                            "bottom": 8,
+                            "left": 16,
+                            "right": 16
+                        },
+                        "child": {
+                            "type": "RICH_TEXT",
+                            "textAlignment": "LEFT",
+                            "numberOfLines": 1,
+                            "textAttributes": {
+                                "size": 18,
+                                "weight": "SEMIBOLD"
+                            },
+                            "markdown": "#(GREY5){{localize COPY.title}}#(GREY5)"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "loyalty-home-page-rewards-section-items",
+                "type": "BLOCK",
+                "size": {"crossAxis": "12g"},
+                "layout": {
+                    "type": "FLOW",
+                    "axis": "VERTICAL",
+                    "padding": {"left": 8, "right": 8},
+                    "spacing": {"mainAxis": 8}
+                },
+                "children": [
+                    {{#each (slice data 0) as |item| }}
+                    {
+                        "id": "loyalty-home-page-rewards-section-item-{{@index}}",
+                        "type": "PML",
+                        "size": {"mainAxis": 80, "crossAxis": "12g"},
+                        "pml": {{{item.content}}}
+                    }
+                    {{#unless @last}},{{/unless}}
+                    {{/each}}
+                ]
+            }
+            {{/and}}
+        ]
+    },
+    "context": {
+        "data": {
+            "$query": "SELECT * FROM messages WHERE id IN ('HOMEPAGE')"
+        },
+        "loyalty_feature_flags": {
+            "$query": "SELECT * FROM feature_flags WHERE id IN ('LOYALTY_CAMPAIGN_POINTS')"
+        },
+        "COPY": {
+            "title": {
+                "nl": "Picnic Piekpunten",
+                "de": "Picnic Pluspunkte",
+                "fr": ""
+            }
+        }
+    },
+    "metadata": {
+      "title": "Home page Loyalty Vouchers",
+      "type": "BLOCK",
+      "description": "Home page vouchers section",
+      "preview_image": {
+        "url": "https://picnic-nl-prod-images.s3.eu-west-1.amazonaws.com/store-page-configurator/8ec092582ec2aded0fe01ab00394238a3e99f0d37e67404d23ab485eadfa5a92/large.png"
+      },
+      "properties_schema": "{\"properties\":{}}"
+    }
+}

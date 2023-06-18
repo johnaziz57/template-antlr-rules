@@ -1,0 +1,55 @@
+{
+  "template_id": "core-horizontal-card-target-template",
+  "layout": 
+    {{#not user_tag.isEmpty}}
+      {
+        "type": "PML",
+        "id": "1",
+        "analytics": {
+            "contexts":[
+                {
+                  "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                  "data": {
+                    "type":"pml"
+                  }
+                }, 
+                {
+                    "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                    "data": {
+                      "template_id":"core-horizontal-card-template",
+                      "type": "horizontal_card",
+                      "deeplink": {{{template 'core-deeplink-resolver' deeplink=item.deeplink}}}
+                    } 
+                }
+                {{#if subHeader}}
+                ,
+                {
+                    "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                    "data": {
+                        "name":"{{subHeader.title}}",
+                        "type": "horizontal_card"
+                    } 
+                }
+                {{/if}}
+            ]
+        },
+        "size": {
+          "mainAxis": "(SCREEN_WIDTH - 16) * 0.75",
+          "crossAxis": "((SCREEN_WIDTH - 16) * 0.75) * {{aspectRatio}}"
+        },
+        "pml":        {{{template 'core-horizontal-card-template' item=item}}}
+      }
+    {{else}}
+      {{{template 'core-empty-pml-section' item=item}}}
+    {{/not}}
+  ,
+  "context": {
+    "user_tag_to_filter": {
+      "$param": "user_tag_input"
+    },
+    "user_tag": {
+      "$query": "SELECT * FROM user_tags WHERE id IN (${user_tag_to_filter})"
+    }
+  },
+  "metadata": {}
+}

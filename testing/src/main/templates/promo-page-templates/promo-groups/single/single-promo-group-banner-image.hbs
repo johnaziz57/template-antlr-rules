@@ -1,0 +1,59 @@
+{
+  "template_id": "single-promo-group-banner-image",
+  "layout": {
+    "id": "single-promo-group-banner-image-{{banner.imageId}}",
+    "type": "PML",
+    "size": {"crossAxis": "SCREEN_WIDTH - 16", "mainAxis": "((SCREEN_WIDTH - 32) * {{banner.aspectRatio}})"},
+    "pml": {
+      "pml_version": "0.1.0",
+      "component": {
+        {{#if banner.deeplink}}
+          "type": "TOUCHABLE",
+          "onPress": {
+           "actionType": "OPEN",
+            "target": {{{template 'core-deeplink-resolver' deeplink=banner.deeplink}}}
+          },
+          "activeOpacity": 0.8,
+          "activeScale": 0.98,
+        {{else}}
+          "type": "CONTAINER",
+        {{/if}}
+        "accessibilityLabel": "{{banner.accessibilityLabel}}",
+        "accessibilityHint": "{{localize COPY.accessibilityHint}}",
+        "child": {
+          "type": "CONTAINER",
+          "border_radius": 8,
+          {{#if banner.extraPadding}}
+            "padding": {"left": {{banner.extraPadding}}, "right": {{banner.extraPadding}} },
+          {{/if}}
+          "overflow": "hidden",
+          "child": {
+            "type": "IMAGE",
+            "source": {
+              "url": "https://picnic-{{localize COPY.market}}-prod-images.s3.amazonaws.com/picnic-page/{{banner.imageId}}/<DERIVATIVE>.png"
+            },
+            "resize_mode": "COVER",
+            "placeholder": "NONE",
+            "width": "100%",
+            "height": "100%"
+          }
+        }
+      }
+    }
+  },
+  "context": {
+    "COPY": {
+      "market": {
+        "nl": "nl",
+        "de": "de",
+        "fr": "fr"
+      },
+      "accessibilityHint" : {
+        "nl": "tik dubbel om te openen.",
+        "de": "Tippe zwei Mal zum Öffnen.",
+        "fr": "Double-cliquer pour ouvrir"
+      }
+    }
+  },
+  "metadata": {}
+}

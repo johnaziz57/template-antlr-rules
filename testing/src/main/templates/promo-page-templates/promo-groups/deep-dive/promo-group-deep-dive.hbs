@@ -1,0 +1,33 @@
+{
+  "template_id": "promo-group-deep-dive",
+  "layout": {
+    {{#with promoGroups.[0] as | promoGroup |}}
+    "id": "promo-group-deep-dive",
+    "header": {"title": "{{promoGroup.title}}"},
+    "body": {
+      "type": "BLOCK",
+      "id": "root",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "spacing": { "mainAxis": 4 },
+        "padding": { "top": 4, "right": 0, "bottom": 4, "left": 0 },
+        "backgroundColor": "GREY1"
+      },
+      "size": { "crossAxis": "SCREEN_WIDTH" },
+      "children": [
+        {{#template 'promo-group-deep-dive-inner' promoGroup=promoGroup}}{{/template}}
+      ]
+    {{/with}}
+    }
+  },
+  "context": {
+    "promoGroupId": {
+      "$param": "promo_group_id"
+    },
+    "promoGroups": {
+      "$query": "SELECT * FROM promo_groups WHERE id IN ('${promoGroupId}')"
+    }
+  },
+  "metadata": {}
+}

@@ -1,0 +1,52 @@
+{
+  "template_id": "core-bundles-sub-header-template",
+  "layout": {
+    "pml_version": "0.1.0",
+    "component": {
+      "type": "CONTAINER",
+      "accessible": true,
+      "width": "100%",
+      "padding": {
+        "top": 18,
+        "bottom": 8,
+        "left": 16,
+        "right": 16
+      },
+      "child": {
+        "type": "CONTAINER",
+        "height": "100%",
+        "child": {
+          "type": "CONTAINER",
+          "width": "100%",
+          "child": {
+            "type": "STACK",
+            "axis": "HORIZONTAL",
+            "alignment": "CENTER",
+            "spacing": 8,
+            "children": [
+              {
+                "type": "ICON",
+                "height": 14,
+                "aspect_ratio": 1,
+                "icon_key": "stack",
+                "color": "ORANGE1"
+              },
+              {
+                "type": "RICH_TEXT",
+                "textAlignment": "LEFT",
+                "numberOfLines": 1,
+                "textAttributes": {
+                  "size": 16,
+                  "weight": "BOLD"
+                },
+                "markdown": "#(ORANGE1){{{title}}}#(ORANGE1)"
+              }
+            ]
+          }
+        }
+      }
+    }
+},
+  "context": {},
+  "metadata": {}
+}

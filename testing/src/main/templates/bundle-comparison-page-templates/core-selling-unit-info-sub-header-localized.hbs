@@ -1,0 +1,112 @@
+  {
+    "template_id": "core-selling-unit-info-sub-header-localized",
+    "layout": {
+      "pml_version": "0.1.0",
+      "component": {
+        "type": "CONTAINER",
+        "accessible": true,
+        "accessibilityLabel": "{{#stripMarkdown (join ', ' (sellingUnit.lister_name) (sellingUnit.unit_quantity_descriptor) (join ' ' (localize COPY.accessibilityHint)))}}{{/stripMarkdown}}",
+        "accessibilityActions": [
+        {
+          "name": "activate",
+          "onAction": { "actionType": "OPEN", "target": "nl.picnic-supermarkt://store/storefront/product-detail;id={{sellingUnit.id}}" }
+        }
+        ],
+        "width": "100%",
+        "padding": {
+          "top": 18,
+          "bottom": 8,
+          "left": 16,
+          "right": 16
+        },
+        "child": {
+          "type": "STACK",
+          "axis": "VERTICAL",
+          "alignment": "START",
+          "spacing": 0,
+          "height": "100%",
+          "children": [
+            {{#if sellingUnit.brand_name.isPresent}}
+            {
+              "type": "RICH_TEXT",
+              "textAlignment": "LEFT",
+                "numberOfLines": 1,
+                "textAttributes": {
+                  "size": 16,
+                  "weight": "BOLD"
+                },
+                "markdown": "{{sellingUnit.brand_name.orElseThrow}}"
+            },
+            {{/if}}
+            {
+              "type": "STACK",
+              "axis": "HORIZONTAL",
+              "alignment": "START",
+              "spacing": 8,
+              "width": "100%",
+              "children": [
+                {
+                  "type": "RICH_TEXT",
+                  "textAlignment": "LEFT",
+                  "numberOfLines": 1,
+                  "textAttributes": {
+                    "size": 25,
+                    "weight": "REGULAR"
+                  },
+                  "markdown": "{{sellingUnit.lister_name}}"
+                },
+                {
+                  "type": "TOUCHABLE",
+                  "onPress": { "actionType": "OPEN", "target": "nl.picnic-supermarkt://store/storefront/product-detail;id={{sellingUnit.id}}"},
+                  "activeOpacity": 0.8,
+                  "child": {
+                    "type": "CONTAINER",
+                    "padding": {
+                      "top": 6
+                    },
+                    "child": {
+                      "type": "STACK",
+                      "axis": "HORIZONTAL",
+                      "alignment": "CENTER",
+                      "distribution": "CENTER",
+                      "children": [
+                        {
+                          "type": "ICON",
+                          "height": 22,
+                          "aspect_ratio": 1,
+                          "icon_key": "information",
+                          "color": "GREY3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {{#if sellingUnit.unit_quantity_descriptor.isPresent}}
+            {
+              "type": "RICH_TEXT",
+              "textAlignment": "LEFT",
+              "numberOfLines": 1,
+              "textAttributes": {
+                "size": 16,
+                "weight": "REGULAR"
+              },
+              "markdown": "{{sellingUnit.unit_quantity_descriptor.orElseThrow}}"
+            }
+            {{/if}}
+          ]
+        }
+      }
+    },
+    "context": {
+      "COPY": {
+        "accessibilityHint" : {
+          "nl": "Tik dubbel voor meer informatie.",
+          "de": "Tippe zwei Mal für mehr Informationen.",
+          "fr": "Double-cliquer pour plus d'informations."
+        }
+      }
+    },
+    "metadata": {}
+}

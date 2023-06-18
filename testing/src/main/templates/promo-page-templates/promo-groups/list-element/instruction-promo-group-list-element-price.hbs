@@ -1,0 +1,59 @@
+{
+  "template_id": "instruction-promo-group-list-element-price",
+  "layout": {
+    "type": "ARTICLE_PRICE",
+    "instruction_id": "calculate_promo_group_price_{{promoGroup.id}}",
+    "selling_unit": {{#json promoGroup.sellingUnits.[0]}}{{/json}},
+    "price_presentations": [
+      {
+        "matching_type": "MULTIBUY",
+        "discount_strategy": "TOTAL_DISCOUNTED"
+      }
+    ],
+    "default_pml": {
+      "type": "STACK",
+      "axis": "HORIZONTAL",
+      "height": "100%",
+      "alignment": "END",
+      "spacing": 4,
+      "children": [
+        {
+          "type": "PRICE",
+          "price": "%PRICE%",
+          "font_size": 24,
+          "color": "BLACK"
+        }
+      ]
+    },
+    "promoted_pml": {
+      "type": "STACK",
+      "axis": "HORIZONTAL",
+      "height": "100%",
+      "alignment": "END",
+      "spacing": 4,
+      "children": [
+        {
+          "type": "CONTAINER",
+          "padding": {
+            "bottom": 2
+          },
+          "child": {
+            "type": "PRICE",
+            "price": "%PRICE%",
+            "font_size": 18,
+            "is_crossed": true,
+            "color": "GREY3"
+          }
+        },
+        {
+          "type": "PRICE",
+          "price": "%PROMO_PRICE%",
+          "font_size": 24,
+          "color": "RED1"
+        }
+      ]
+    }
+  },
+  "context": {},
+  "metadata": {}
+}

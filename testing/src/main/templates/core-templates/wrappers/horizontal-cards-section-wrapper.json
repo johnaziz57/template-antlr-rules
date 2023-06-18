@@ -1,0 +1,56 @@
+{
+  "template_id": "horizontal-cards-section-wrapper",
+  "layout": " {{#template 'core-horizontal-cards-section' subHeader=horizontalCardsSection.subHeader aspectRatio=horizontalCardsSection.aspectRatio horizontalCardItems=horizontalCardsSection.horizontalCardItems}}{{/template}}",
+  "context": {
+    "horizontalCardsSection": {
+      "$literal": {
+        "subHeader": {
+          "title": "string"
+        },
+        "aspectRatio": "string/number",
+        "horizontalCardItems": {
+          "var0": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string",
+            "subtitle": "string",
+            "label": {
+              "backgroundColor": "color",
+              "textColor": "color",
+              "text": "string"
+            }
+          },
+          "var1": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string",
+            "subtitle": "string"
+          },
+          "var2": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string",
+            "subtitle": "string"
+          },
+          "var3": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string",
+            "subtitle": "string"
+          },
+          "var4": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string",
+            "subtitle": "string"
+          },
+          "var5": {
+            "deeplink": "string",
+            "backgroundImage": "imageId",
+            "title": "string"
+          }
+        }
+      }
+    }
+  }
+}

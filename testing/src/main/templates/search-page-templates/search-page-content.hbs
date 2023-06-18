@@ -1,0 +1,71 @@
+  {
+    "template_id": "search-page-content",
+    "layout": {
+      "id": "search-results-selling-units-section",
+      "type": "BLOCK",
+      "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL",
+        "spacing": {
+          "mainAxis": 4,
+          "crossAxis": 4
+        },
+        "padding": {
+          "left": 8,
+          "right": 8,
+          "top": 4,
+          "bottom": 4
+        },
+      },
+      "size": {
+        "crossAxis": "12g"
+      },
+      "children": [
+        {{#each banners as | topBanner |}}
+          {{#eq topBanner.position.toString "TOP"}}
+            {{{template 
+              'search-page-banner-block'
+              banner=topBanner
+            }}},
+          {{/eq}}
+        {{/each}}
+        {{#if spellCorrection}}
+          {{{template 
+            'search-page-spell-correction-block'
+            searchTerm=searchTerm
+          }}},
+        {{/if}}
+        {{#gt sellingUnits.data.length 0}}
+          {{#each sellingUnits.data as | sellingUnit |}}
+            {{{template 
+              'core-vertical-selling-unit-tile-template'
+              sellingUnit=sellingUnit
+              position=@index  
+              features=articleFeatures
+            }}},
+          {{/each}}
+          {{{template 'missing-selling-unit-suggest-tile'}}},
+        {{else}}
+          {{{template 'search-page-recipes-section' recipes=recipes }}}
+        {{/gt}}
+        {{#each banners as | bottomBanner |}}
+          {{#eq bottomBanner.position.toString "BOTTOM"}}
+            {{{template 
+              'search-page-banner-block'
+              banner=bottomBanner
+            }}},
+          {{/eq}}
+        {{/each}}
+      ]
+    },
+    "context": {
+      "articleFeatures": ["SHOW_CATEGORY_ACTION"],
+      "user_search_term": {
+        "$param": "searchTerm"
+      },
+      "banners": {
+        "$query": "SELECT * FROM banners WHERE id = '${user_search_term}'"
+      }
+    },
+    "metadata": {}
+  }

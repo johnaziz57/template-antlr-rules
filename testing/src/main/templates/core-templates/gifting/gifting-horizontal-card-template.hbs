@@ -1,0 +1,96 @@
+  {
+    "template_id": "gifting-horizontal-card-template",
+    "layout": {
+        "pml_version": "0.1.0",
+        "component": {
+            "type": "TOUCHABLE",
+            "accessibility_hint": "{{localize COPY.accessibilityHint}}",
+            "on_press": {
+                "action_type": "OPEN",
+                "target": "nl.picnic-supermarkt://store/gift-selection;user-campaign-id={{item.userCampaignId}}"
+            },
+            "activeOpacity": 0.8,
+            "activeScale": 0.98,
+            "child": {
+                "type":"CONTAINER",
+                "overflow": "hidden",
+                "border_radius": 12,
+                "width": "100%",
+                "height": "100%",
+                "background_color": "WHITE",
+                "child": {
+                    "type": "STACK",
+                    "axis": "VERTICAL",
+                    "distribution": "END",
+                    "children": [
+                        {
+                            "type": "STACK",
+                            "axis": "VERTICAL",
+                            "distribution": "FILL",
+                            "alignment": "FILL",
+                            "padding": {
+                                "left": 12,
+                                "right": 12,
+                                "top": 12,
+                                "bottom": 12
+                            },
+                            "children": [
+                                {
+                                    "type": "STACK",
+                                    "axis": "HORIZONTAL",
+                                    "distribution": "END",
+                                    "width": "100%",
+                                    "children": [
+                                        {
+                                            "type": "RICH_TEXT",
+                                            "text_alignment": "END",
+                                            "text_attributes": {
+                                                "size": 20,
+                                                "weight": "SEMIBOLD"
+                                            },
+                                            "markdown": ""
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "CONTAINER",
+                            "child": {
+                                "type": "IMAGE",
+                                 "source": {
+                                    "id": "picnic-page/{{#if (eq item.indexWithinProgram 0)}}{{giftImages.giftimageId0}}{{/if}}{{#if (eq item.indexWithinProgram 1)}}{{giftImages.giftimageId1}}{{/if}}{{#if (eq item.indexWithinProgram 2)}}{{giftImages.giftimageId2}}{{/if}}{{#if (eq item.indexWithinProgram 3)}}{{giftImages.giftimageId3}}{{/if}}{{#if (eq item.indexWithinProgram 4)}}{{giftImages.giftimageId4}}{{/if}}{{#if (gt item.indexWithinProgram 4)}}{{giftImages.giftimageId0}}{{/if}}"                     
+                                },
+                                "resize_mode": "CONTAIN",
+                                "placeholder": "NONE",
+                                "width": "100%",
+                                "height": "100%"
+                            },
+                            "absolutePosition": {
+                                "top": 0,
+                                "bottom": 0,
+                                "left": 0,
+                                "right": 0
+                            }
+                        }
+                        
+                    ]
+                }
+            }
+        }
+    },
+    "context": {
+        "COPY": {
+          "accessibilityHint" : {
+            "nl": "tik dubbel om te openen.",
+            "de": "Tippe zwei Mal zum Öffnen.",
+            "fr": "Double-cliquer pour ouvrir"
+          }
+      }
+    },
+    "metadata": {}
+  }
+
+
+ 
+

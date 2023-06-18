@@ -1,10 +1,25 @@
 # TODO
 
+- [ ] Handle `else if ()`
 - [ ] Handle commas at the end of a value
-- [ ] Handle math helper without double quotes
 - [ ] Test arrays
-- [ ] Handle `unless`
-- [ ] This case is not working. The problem is with "+"
+- [ ] Handle if condition in the middle of object with no commas after `{{/if}}`
+```
+{
+    "component": {
+            "type": "TOUCHABLE",
+            {{#if accessibilityLabel}}
+                "accessibilityLabel": "{{accessibilityLabel}}",
+            {{/if}}
+            "activeOpacity": 0.8
+        }
+}
+```
+
+# Done
+- [x] Handle math helper without double quotes
+- [x] Handle `unless`
+- [x] This case is not working. The problem is with "+"
 ```
 {
   "layout": {
@@ -13,48 +28,6 @@
         "children": []
         {{/with}}
     }
-}
-```
-
-# Done
-
-1. This case is working
-
-``` 
-{
-    "template_id": "core0",
-    "layout": 
-      {{#and p }}
-        ""
-      {{else}}
-          {{#if p}}
-            {{{template 'core2' }}}
-          {{else}}
-              {{{template 'core3' }}}
-          {{/if}}
-      {{/and}}
-    ,
-    "context": {}
-}
-```
-
-while this case is not working
-
-```
-{
-    "template_id": "core0",
-    "layout": 
-      {{#and p }}
-        {{{template 'core1' }}}
-      {{else}}
-          {{#if p}}
-            {{{template 'core2' }}}
-          {{else}}
-              "3"
-          {{/if}}
-      {{/and}}
-    ,
-    "context": {}
 }
 ```
 

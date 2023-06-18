@@ -1,0 +1,50 @@
+{
+  "template_id": "shortcut-section-top-wrapper",
+  "layout": "  {{#template 'core-shortcuts-section' shortcutItems=shortcutItems}}{{/template}}",
+  "context": {
+    "shortcutItems": {
+      "$literal": {
+        "var-1": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "title": "string"
+        },
+        "var-2": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "label": {
+            "backgroundColor": "color",
+            "textColor": "color",
+            "text": "string"
+          },
+          "title": "string"
+        },
+        "var-3": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "title": "string"
+        },
+        "var-4": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "label": {
+            "backgroundColor": "color",
+            "textColor": "color",
+            "text": "string"
+          },
+          "title": "string"
+        },
+        "var-5": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "title": "string"
+        },
+        "var-6": {
+          "deeplink": "string",
+          "imageId": "imageId",
+          "title": "string"
+        }
+      }
+    }
+  }
+}

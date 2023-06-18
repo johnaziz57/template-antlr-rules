@@ -1,0 +1,45 @@
+{
+    "template_id": "loyalty-info-item",
+    "layout": {
+        "id": "{{id}}",
+        "type": "PML",
+        "size": {"crossAxis": "12g", "mainAxis": 90},
+        "pml": {
+            "pml_version": "0.1.0",
+            "component": {
+                "type": "STACK",
+                "axis": "HORIZONTAL",
+                "spacing": 16,
+                "children": [
+                    {
+                        "type": "IMAGE",
+                        "source": {
+                            "url": "{{imageURL}}"
+                        },
+                        "resize_mode": "CONTAIN",
+                        "width": 70,
+                        "height": 90
+                    },
+                    {
+                        "type": "STACK",
+                        "axis": "VERTICAL",
+                        "spacing": 4,
+                        "children": [
+                            {
+                                "type": "RICH_TEXT",
+                                "text_type": "SEMIBOLD_TEXT",
+                                "markdown": "#(RED1){{{title}}}#(RED1)"
+                            },
+                            {
+                                "type": "RICH_TEXT",
+                                "markdown": "#(GREY4){{{subtitle}}}#(GREY4)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "context": {},
+    "metadata": {}
+}

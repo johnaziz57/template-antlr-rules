@@ -1,0 +1,198 @@
+{
+  "template_id": "core-vertical-tiles-purchases-section",
+  "layout": {
+    "id": "vertical-article-tiles-section",
+    "type": "BLOCK",
+    "layout": {
+        "type": "FLOW",
+        "axis": "VERTICAL"
+    },
+    "size": {
+        "crossAxis": "12g"
+    },
+    {{#with purchasesPageSectionData}}
+    "children": [
+                {{#if groupName}}
+                {
+                    "id": "vertical-article-tiles-sub-header",
+                    "type": "BLOCK",
+                    "layout": {
+                        "type": "FLOW",
+                        "axis": "VERTICAL"
+                    },
+                    "size": {
+                        "crossAxis": "12g"
+                    },
+                    "children": [
+                        {
+                          "type": "PML",
+                          "id": "1",
+                          "size": {
+                            "mainAxis":48, 
+                            "crossAxis": "12g"
+                            },
+                            "pml":
+                            {{{template 'core-purchases-sub-header-template' subHeaderGroupTitle=groupName}}}
+                        }
+                    ]
+                },
+                {{/if}}
+                {
+                  "id": "vertical-article-tiles",
+                  "type": "BLOCK",
+                  "layout": {
+                      "type": "FLOW",
+                      "axis": "VERTICAL",
+                      "spacing": {
+                          "mainAxis": 4,
+                          "crossAxis": 4
+                      },
+                      "padding": {
+                          "left": 8,
+                        "right": 8,
+                      "top": 4,
+                      "bottom": 4
+                      }
+                  },
+                  "size": {
+                      "crossAxis": "12g"
+                  },
+                  "children": [
+                   
+                      {{#each sellingUnits as | sellingUnit |}}
+                        {{#lt @index (math numberOfTopSellingUnits "-" 1)}}
+                            {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=sellingUnit position=@index features=articleFeatures sectionContextTitle=groupName}}}
+                            {{#unless @last}},{{/unless}}
+                        {{/lt}}
+                        {{#eq @index (math numberOfTopSellingUnits "-" 1)}}
+                            {{#gt sellingUnits.length numberOfTopSellingUnits}}
+                                {{#eq (math @index "%" 2) 0}}
+                                    {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=sellingUnit position=@index features=articleFeatures sectionContextTitle=groupName}}},
+                                    {{#with (concatLists (slice sellingUnits numberOfTopSellingUnits) (slice sellingUnits 0 numberOfTopSellingUnits)) as | moreButtonItems |}}
+                                    {
+                                        "type":"PML",
+                                        "id":"1",
+                                        "analytics": {
+                                            "contexts":[
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                                    "data": {
+                                                        "type":"pml",
+                                                        "position": {
+                                                            "x": {{#math (math @index "%" 2) "+" 1}} {{/math}},
+                                                            "y": {{#math (math (math (math @index "+" 1) "%" 2) "+" (math @index "+" 1)) "/" 2}} {{/math}}
+                                                        }
+                                                    }
+                                                }, 
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                                    "data": {
+                                                        "template_id":"core-more-button-purchases-template",
+                                                        "type": "more_button",
+                                                        "deeplink": "{{groupIdentifier}}"
+                                                    } 
+                                                }
+                                                {{#if groupName}}
+                                                ,
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                                    "data": {
+                                                        "name":"{{groupName}}",
+                                                        "type": "more_button"
+                                                    } 
+                                                }
+                                                {{/if}}
+                                            ]
+                                        },
+                                        "size":{
+                                            "crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2",
+                                            "mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+                                        },
+                                        "pml":
+                                        {{{template 'core-more-button-purchases-template' moreButtonItems=moreButtonItems moreButtonDeeplink=groupIdentifier}}}
+                                    }
+                                    {{/with}}
+                                {{else}}
+                                    {{#with (concatLists (slice sellingUnits @index) (slice sellingUnits 0 numberOfTopSellingUnits)) as | moreButtonItems |}}
+                                    {
+                                        "type":"PML",
+                                        "id":"1",
+                                        "analytics": {
+                                            "contexts":[
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/page_component/jsonschema/1-1-0",
+                                                    "data": {
+                                                        "type":"pml",
+                                                        "position": {
+                                                            "x": {{#math (math @index "%" 2) "+" 1}} {{/math}},
+                                                            "y": {{#math (math (math (math @index "+" 1) "%" 2) "+" (math @index "+" 1)) "/" 2}} {{/math}}
+                                                        }
+                                                    }
+                                                }, 
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/pml_component/jsonschema/1-1-0",
+                                                    "data": {
+                                                        "template_id":"core-more-button-purchases-template",
+                                                        "type": "more_button",
+                                                        "deeplink": "{{groupIdentifier}}"
+                                                    } 
+                                                }
+                                                {{#if groupName}}
+                                                ,
+                                                {
+                                                    "schema":"iglu:tech.picnic.snowplow.analytics/page_section/jsonschema/1-0-0",
+                                                    "data": {
+                                                        "name":"{{groupName}}",
+                                                        "type": "more_button"
+                                                    } 
+                                                }
+                                                {{/if}}
+                                            ]
+                                        },
+                                        "size":{
+                                            "crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2",
+                                            "mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+                                        },
+                                        "pml":
+                                        {{{template 'core-more-button-purchases-template' moreButtonItems=moreButtonItems moreButtonDeeplink=groupIdentifier}}}
+                                    }
+                                    {{/with}}
+                                {{/eq}}
+                            {{else}}
+                                    {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=sellingUnit position=@index features=articleFeatures sectionContextTitle=groupName}}}
+                                    {{#eq (math @index "%" 2) 0}}
+                                        ,{"type":"PML","id":"1","size":
+                                        {
+                                            "crossAxis":"(SCREEN_WIDTH - 16 - 4 ) / 2",
+                                            "mainAxis":"118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+                                        },
+                                        "pml":
+                                            {{{template 'core-empty-tile-template'}}}
+                                        }
+                                    {{/eq}}
+                            {{/gt}}
+                        {{/eq}}
+                      {{/each}}
+                      {{#gt numberOfTopSellingUnits sellingUnits.length}}
+                        {{#gt (math sellingUnits.length "%" 2) 0}}
+                                        ,{"type":"PML","id":"1","size":
+                                        {
+                                            "crossAxis": "(SCREEN_WIDTH - 16 - 4 ) / 2",
+                                            "mainAxis": "118 + (((SCREEN_WIDTH - 16 - 4 ) / 2) * (9/13))"
+                                        },
+                                        "pml":
+                                            {{{template 'core-empty-tile-template'}}}
+                                        }
+                        {{/gt}}
+                        {{/gt}}
+                  ]
+              }
+          
+    ]
+    {{/with}}
+},
+  "context": {
+    "articleFeatures": ["SHOW_CATEGORY_ACTION", "SHOW_REMOVE_FROM_PURCHASES_PAGE_ACTION"]
+  },
+  "metadata": {}
+}

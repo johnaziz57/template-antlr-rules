@@ -1,0 +1,25 @@
+{
+    "template_id": "core-list-item-label",
+    "layout": {
+        "type": "CONTAINER",
+        "background_color": "{{labelBackgroundColor}}",
+        "border_radius": 4,
+        "padding": {
+            "top": 2,
+            "bottom": 3,
+            "left": 4,
+            "right": 4
+        },
+        "child": {
+            "type": "RICH_TEXT",
+            "text_alignment": "START",
+            "text_attributes": {
+                "size": 13,
+                "weight": "MEDIUM"
+            },
+            "markdown": "#({{labelTextColor}}){{{labelTitle}}}#({{labelTextColor}})"
+        }
+    },
+    "context": {},
+    "metadata": {}
+}
