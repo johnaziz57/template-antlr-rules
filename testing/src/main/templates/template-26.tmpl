@@ -1,0 +1,12 @@
+{
+  "data": {
+    "type": "tile"
+    {{#or position (eq position 0) }}
+      ,
+      "position": {
+        "x": {{#math (math position "%" 2) "+" 1}} {{/math}},
+        "y": {{#math (math (math (math position "+" 1) "%" 2) "+" (math position "+" 1)) "/" 2}} {{/math}}
+      }
+    {{/or}}
+  }
+}
