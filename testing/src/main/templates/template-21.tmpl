@@ -1,0 +1,10 @@
+{
+  "children": [
+    {{#with (
+            eq pppCategoryTreeL3FeatureFlag.isEmpty true
+            yes=(join '' "nl.picnic-supermarkt://categories/" L1ParentCategory "/l2/" item.id)
+            no=(join '' "nl.picnic-supermarkt://store/page;id=L2-category-page-root,category_id=" item.id))}}
+    {}
+    {{/with}}
+]
+}

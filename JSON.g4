@@ -41,7 +41,6 @@ pairValue
 
 arr
    : '[' helperOrValue (','? helperOrValue)*  ']'
-   | '[' value (',' value)* ']'
    | '[' ']'
    ;
 
@@ -125,7 +124,7 @@ fragment HEX
    ;
 
 fragment SAFE_HELPER_CODE_POINT
-    : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']'
+    : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']' | '-' | '\'' | ':' | '/' | ',' | ';'
     ;
 
 ONE_CLAUSE_HELPER_NAME
