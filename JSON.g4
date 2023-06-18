@@ -68,11 +68,11 @@ value
    ;
 
 TEMPLATE_HELPER
-    : L_CURLY_3 'template' (SAFECODEPOINT)* R_CURLY_3
+    : L_CURLY_3 'template' (SAFE_CODE_POINT)* R_CURLY_3
     ;
 
 START_HELPER_BLOCK_2
-    : L_CURLY_2 '#' (SAFEHELPERCODE)+ (WS)* (SAFEHELPERCODE | WS)* R_CURLY_2
+    : L_CURLY_2 '#' (SAFE_HELPER_CODE_POINT)+ (WS)* (SAFE_HELPER_CODE_POINT | WS)* R_CURLY_2
     ;
 
 ELSE_BLOCK_2
@@ -80,7 +80,7 @@ ELSE_BLOCK_2
     ;
 
 END_HELPER_BLOCK_2
-    : L_CURLY_2 '/' (SAFEHELPERCODE)+ R_CURLY_2
+    : L_CURLY_2 '/' (SAFE_HELPER_CODE_POINT)+ R_CURLY_2
     ;
 
 L_CURLY_2
@@ -100,7 +100,7 @@ R_CURLY_3
     ;
 
 STRING
-   : '"' (ESC | SAFECODEPOINT)* '"'
+   : '"' (ESC | SAFE_CODE_POINT)* '"'
    ;
 
 
@@ -119,11 +119,11 @@ fragment HEX
    : [0-9a-fA-F]
    ;
 
-fragment SAFEHELPERCODE
+fragment SAFE_HELPER_CODE_POINT
     : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']'
     ;
 
-fragment SAFECODEPOINT
+fragment SAFE_CODE_POINT
    : ~ ["\\\u0000-\u001F]
    ;
 

@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] Handle commas at the end of a value
+- [ ] Handle math helper without double quotes
 - [ ] Test arrays
 - [ ] Handle `unless`
 - [ ] This case is not working. The problem is with "+"

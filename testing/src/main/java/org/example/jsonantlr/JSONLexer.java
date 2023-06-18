@@ -34,8 +34,8 @@ public class JSONLexer extends Lexer {
 			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 			"TEMPLATE_HELPER", "START_HELPER_BLOCK_2", "ELSE_BLOCK_2", "END_HELPER_BLOCK_2", 
 			"L_CURLY_2", "R_CURLY_2", "L_CURLY_3", "R_CURLY_3", "STRING", "ESC", 
-			"UNICODE", "HEX", "SAFEHELPERCODE", "SAFECODEPOINT", "NUMBER", "INT", 
-			"EXP", "WS"
+			"UNICODE", "HEX", "SAFE_HELPER_CODE_POINT", "SAFE_CODE_POINT", "NUMBER", 
+			"INT", "EXP", "WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
