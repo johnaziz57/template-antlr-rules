@@ -45,6 +45,7 @@ object Main {
             "testing/src/main/templates/template-24.tmpl",
             "testing/src/main/templates/template-25.tmpl",
             "testing/src/main/templates/template-26.tmpl",
+            "testing/src/main/templates/template-27.tmpl",
         )
 
         for (path in filePaths) {

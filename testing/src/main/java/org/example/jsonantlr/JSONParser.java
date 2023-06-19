@@ -20,7 +20,7 @@ public class JSONParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		TEMPLATE_HELPER=10, ONE_CLAUSE_HELPER=11, START_HELPER_BLOCK_2=12, ELSE_BLOCK_2=13, 
 		END_HELPER_BLOCK_2=14, L_CURLY_2=15, R_CURLY_2=16, L_CURLY_3=17, R_CURLY_3=18, 
-		STRING=19, NUMBER=20, WS=21;
+		STRING=19, HELPER_NAME=20, NUMBER=21, WS=22;
 	public static final int
 		RULE_json = 0, RULE_obj = 1, RULE_helperOrPair = 2, RULE_pair = 3, RULE_helperPair = 4, 
 		RULE_helperIncompleteObj = 5, RULE_pairValue = 6, RULE_arr = 7, RULE_helperOrValue = 8, 
@@ -36,7 +36,8 @@ public class JSONParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'{'", "','", "'}'", "':'", "'['", "']'", "'true'", "'false'", 
-			"'null'", null, null, null, null, null, "'{{'", "'}}'", "'{{{'", "'}}}'"
+			"'null'", null, null, null, null, null, "'{{'", "'}}'", "'{{{'", "'}}}'", 
+			null, "'math'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -44,8 +45,8 @@ public class JSONParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, "TEMPLATE_HELPER", 
 			"ONE_CLAUSE_HELPER", "START_HELPER_BLOCK_2", "ELSE_BLOCK_2", "END_HELPER_BLOCK_2", 
-			"L_CURLY_2", "R_CURLY_2", "L_CURLY_3", "R_CURLY_3", "STRING", "NUMBER", 
-			"WS"
+			"L_CURLY_2", "R_CURLY_2", "L_CURLY_3", "R_CURLY_3", "STRING", "HELPER_NAME", 
+			"NUMBER", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -665,7 +666,7 @@ public class JSONParser extends Parser {
 				setState(111);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1580966L) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2629542L) != 0)) {
 					{
 					{
 					setState(106);
@@ -835,7 +836,7 @@ public class JSONParser extends Parser {
 				setState(132);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1580962L) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2629538L) != 0)) {
 					{
 					setState(130);
 					_errHandler.sync(this);
@@ -893,7 +894,7 @@ public class JSONParser extends Parser {
 				setState(146);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1580962L) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2629538L) != 0)) {
 					{
 					setState(144);
 					_errHandler.sync(this);
@@ -958,7 +959,7 @@ public class JSONParser extends Parser {
 				setState(161);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1580962L) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2629538L) != 0)) {
 					{
 					setState(159);
 					_errHandler.sync(this);
@@ -1130,7 +1131,7 @@ public class JSONParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0015\u00b6\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u0016\u00b6\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
 		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
 		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0001\u0000\u0001\u0000"+
@@ -1236,7 +1237,7 @@ public class JSONParser extends Parser {
 		"\u0000\u0000\u00a6\u00a7\u0001\u0000\u0000\u0000\u00a7\u00a9\u0005\u000e"+
 		"\u0000\u0000\u00a8|\u0001\u0000\u0000\u0000\u00a8\u0099\u0001\u0000\u0000"+
 		"\u0000\u00a9\u0013\u0001\u0000\u0000\u0000\u00aa\u00b4\u0005\u0013\u0000"+
-		"\u0000\u00ab\u00b4\u0005\u0014\u0000\u0000\u00ac\u00b4\u0003\u0002\u0001"+
+		"\u0000\u00ab\u00b4\u0005\u0015\u0000\u0000\u00ac\u00b4\u0003\u0002\u0001"+
 		"\u0000\u00ad\u00b4\u0003\u000e\u0007\u0000\u00ae\u00b4\u0005\u0007\u0000"+
 		"\u0000\u00af\u00b4\u0005\b\u0000\u0000\u00b0\u00b4\u0005\t\u0000\u0000"+
 		"\u00b1\u00b4\u0005\u000b\u0000\u0000\u00b2\u00b4\u0005\n\u0000\u0000\u00b3"+

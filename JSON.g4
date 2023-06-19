@@ -72,7 +72,8 @@ TEMPLATE_HELPER
     ;
 
 ONE_CLAUSE_HELPER
-    : L_CURLY_2 SAFE_HELPER_CODE_POINT+ WS (SAFE_HELPER_CODE_POINT | WS)+ R_CURLY_2
+    : L_CURLY_2 HELPER_NAME WS (SAFE_HELPER_CODE_POINT | WS)+ R_CURLY_2
+    | L_CURLY_3 SAFE_HELPER_CODE_POINT (SAFE_HELPER_CODE_POINT | WS)* R_CURLY_3
     ;
 
 START_HELPER_BLOCK_2
@@ -122,6 +123,10 @@ fragment UNICODE
 fragment HEX
    : [0-9a-fA-F]
    ;
+
+HELPER_NAME
+    : 'math'
+    ;
 
 fragment SAFE_HELPER_CODE_POINT
     : [a-zA-Z0-9]  | '(' | ')' | '.' | '\\' | '|' | '+' | '"' | '=' | '_' | '@' | '[' | ']' | '-' | '\'' | ':' | '/' | ',' | ';' |'%'
