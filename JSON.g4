@@ -9,10 +9,10 @@ json
    ;
 
 obj
-   : '{' helperOrPair (',' pair | ','? helperPair)* '}'
+// TODO enforce if a helper and next is pair, it should handle `,` is
+   : '{' helperOrPair (','? helperOrPair)* '}'
    | '{' pair (',' pair)* '}'
    | '{' '}'
-//   | '{' pair (',' objPair)* '}'
    ;
 
 

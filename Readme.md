@@ -15,7 +15,7 @@
         }
 }
 ```
-- [ ] Handle if the one clause helper is dynamic. We still need a way to exclude `else`
+- [ ] Handle if the one clause helper is dynamic. We may need to find a way to exclude `else`
 ```
 {
     "type": "PML",
