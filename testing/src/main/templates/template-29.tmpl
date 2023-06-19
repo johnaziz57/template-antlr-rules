@@ -1,0 +1,10 @@
+{
+    "template_id": "date",
+    "layout":
+        {{#if (startingDate)}}
+                {{{template dw}}}
+            {{else if (isAfter startingDate)}}
+                {{{template xj}}}
+        {{/if}}
+    "context": {}
+}
