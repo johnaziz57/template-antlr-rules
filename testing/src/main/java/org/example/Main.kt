@@ -17,6 +17,10 @@ object Main {
     private const val reset = "\u001b[0m"
     @JvmStatic
     fun main(args: Array<String>) {
+        testTemplates()
+    }
+
+    private fun testTemplates() {
         val filePaths = listOf(
             "testing/src/main/templates/template.tmpl",
             "testing/src/main/templates/template-1.tmpl",
@@ -48,14 +52,17 @@ object Main {
             "testing/src/main/templates/template-27.tmpl",
             "testing/src/main/templates/template-28.tmpl",
             "testing/src/main/templates/template-29.tmpl",
+            "testing/src/main/templates/template-30.tmpl",
         )
 
         for (path in filePaths) {
             parseFile(path)
         }
+    }
 
-//        val templateFolder = File("testing/src/main/templates/")
-//        iterateDirectory(templateFolder)
+    private fun testDirectory() {
+        val templateFolder = File("testing/src/main/templates/")
+        iterateDirectory(templateFolder)
     }
 
     private fun parseFile(path: String) {
