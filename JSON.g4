@@ -31,7 +31,7 @@ helperPair
     ;
 
 helperIncompleteObj
-    : helperOrPair (',' helperOrPair)*
+    : helperOrPair (','? helperOrPair)*
     ;
 
 pairValue

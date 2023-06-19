@@ -1,0 +1,25 @@
+  {
+    "template_id": "core-sub-header-template",
+    "layout": {
+                "pml_version": "0.1.0",
+                "component": {
+                    {{#with subHeader}}
+                    "type": "CONTAINER",
+                    "accessible": true,
+                    {{#if subHeaderButton}}
+                    "accessibilityLabel": "{{#stripMarkdown (join ', ' title subtext (join ' ' (localize COPY.accessibilityHint) subHeaderButton.title))}}{{/stripMarkdown}}",
+                    "accessibilityActions": [
+                        {
+                            "name": "activate",
+                            "onAction": { "actionType": "OPEN", "target": "{{subHeaderButton.deeplink}}" }
+                        }
+                    ]
+                    {{/if}}
+                    "width": "100%",
+                    "padding": {
+                        "bottom": 8
+                    }
+                {{/with}}
+                }
+            }
+  }

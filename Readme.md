@@ -3,7 +3,7 @@
 - [ ] Handle `else if ()`
 - [ ] Handle commas at the end of a value
 - [ ] Test arrays
-- [ ] Handle if condition in the middle of object with no commas after `{{/if}}`
+- [x] Handle if condition in the middle of object with no commas after `{{/if}}`
 ```
 {
     "component": {
@@ -15,7 +15,7 @@
         }
 }
 ```
-- [ ] Handle if the one clause helper is dynamic. We may need to find a way to exclude `else`
+- [x] ~Handle if the one clause helper is dynamic. We may need to find a way to exclude `else`~ used triple curly brackets
 ```
 {
     "type": "PML",
