@@ -18,6 +18,7 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         testTemplates()
+//        testDirectory()
     }
 
     private fun testTemplates() {
@@ -53,6 +54,7 @@ object Main {
             "testing/src/main/templates/template-28.tmpl",
             "testing/src/main/templates/template-29.tmpl",
             "testing/src/main/templates/template-30.tmpl",
+            "testing/src/main/templates/template-31.tmpl",
         )
 
         for (path in filePaths) {
