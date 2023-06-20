@@ -7,14 +7,14 @@
             {{#each recipe.articles as | article |}}
                 {
                     "id": "{{article.id}}",
-                    "quantity": {{article.quantity}}
+                    "quantity": {{{article.quantity}}}
                 }
                 {{#unless @last}}
                 ,
                 {{/unless}}
             {{/each}}
         ],
-        "servings": {{#if recipe.servings.isPresent}}{{recipe.servings.orElseThrow}}{{else}}1{{/if}},
+        "servings": {{#if recipe.servings.isPresent}}{{{recipe.servings.orElseThrow}}}{{else}}1{{/if}},
         "default_pml": {
             "type": "STACK",
             "axis": "HORIZONTAL",

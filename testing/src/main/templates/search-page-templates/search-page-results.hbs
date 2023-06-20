@@ -1,42 +1,8 @@
 {
   "template_id": "search-page-results",
   "layout": {
-    {{!--
-      The search data source accepts has the following API:
-      ```
-      [
-        {
-          "sellingUnits": {
-            "length": number, <- is_recipe ? 0 : number of selling units
-            "data": Article[], <- is_recipe ? empty list : list of selling units
-            "filters": ArticleFilter[] <- is_recipe ? empty list : list of selling units
-          },
-          "isRecipe": boolean, <- Forwards `is_recipe` parameter
-          "recipes": {
-            "length": number, <- Always reflects number of recipes, regardless of `is_recipe`
-            "data": Recipe[] <- is_recipe ? list of recipes : empty list
-          },
-          "requestedFilters": ArticleFilter[],
-          "searchTerm": string,
-          "spellCorrection": boolean
-        }
-      ]
-      ```
-    --}}
     "id": "search-page-results",
     {{#with search_results.[0] as |results|}}
-    {{!--
-    The header will be visible, if there are filters. The possible cases are:
-        1. There are only selling units in the search results with applicable filters.
-        2. There are both selling units and recipes in the search results. At least one filter `recipes` will be visible.
-
-    The header will be hidden, if there are no filters. The possible cases are:
-        1. There are only selling units in the search results with no applicable filters.
-        2. There are only recipes in the search results. The `Recipes` filter is not going to be shown as it is now redundant.
-      Since the data source doesn't return the `sellingUnits.length` when `is_recipe=true`, to avoid showing
-      the recipe button when there are no selling units, we check if it's the first time that page is rendered,
-      and if there are some articles.
-     --}}
     {{#or
       (gt results.sellingUnits.filters.length 0)
       (and
@@ -48,16 +14,6 @@
         )
       )
     }}
-    {{!--
-      `has_recipes_initial_filter` is true when all of the following is true
-        1. First time to do search
-        2. Recipe results are more than 0
-        3. Recipe FF is true
-
-      `has_recipes_initial_filter` will be passed to the filter template to add `Recipes` as part of the
-      `initial_filters` in the url
-
-    --}}
       "header": {
         "type": "PML",
         "component": {{{template
@@ -122,16 +78,6 @@
                   ],
                 {{else}}
                   "initial_filters": [
-                  {{!-- Add `Recipes` only when all of the following is true
-                      1. Recipe results are more than 0
-                      2. Recipe FF is true
-                      3. First time to do search
-
-                    Why only on the first time to do search? because `Recipes` will be added as part of
-                    the `initial_filter` parameter of in the filters' urls, so subsequent searches
-                    will have `Recipes` as part of the `initial_filters` by default.
-
-                  --}}
                     {{#and
                         (gt results.recipes.length 0)
                         (not recipe_search_feature_flag.isEmpty)

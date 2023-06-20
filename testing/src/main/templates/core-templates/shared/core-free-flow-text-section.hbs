@@ -44,9 +44,9 @@
                     "pml_version": "0.1.0",
                     "component": {
                         "type": "RICH_TEXT",
-                        "text_alignment": {{#if textAlignment.isPresent}}{{textAlignment}}{{else}}"START"{{/if}},
+                        "text_alignment": {{#if textAlignment.isPresent}}{{{textAlignment}}}{{else}}"START"{{/if}},
                         "text_attributes": {
-                            "size": {{fontSize}},
+                            "size": {{{fontSize}}},
                             "weight": "REGULAR",
                         },
                         "markdown": "{{{markdown}}}"

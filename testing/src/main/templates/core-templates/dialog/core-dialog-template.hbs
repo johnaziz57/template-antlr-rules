@@ -99,7 +99,7 @@
                           {{#each buttons as | button |}}
                             {
                               "type": "TOUCHABLE",
-                              "on_press": {{json button.onPressAction}},
+                              "on_press": {{{json button.onPressAction}}},
                               "active_opacity": 0.8,
                               "active_scale": 0.98,
                               "hit_slop": {
