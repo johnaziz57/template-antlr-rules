@@ -10,7 +10,7 @@
 * Helpers with `~` i.e. `{{~else~}}`
 
 # TODO
-- [ ] Handle `else if,  else`
+- [x] Handle `else if,  else`
 - [ ] Handle commas at the end of a value
 - [ ] Test arrays
 - [x] Handle `else if ()`
