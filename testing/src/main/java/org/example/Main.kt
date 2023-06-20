@@ -17,8 +17,8 @@ object Main {
     private const val reset = "\u001b[0m"
     @JvmStatic
     fun main(args: Array<String>) {
-        testTemplates()
-//        testDirectory()
+//        testTemplates()
+        testDirectory()
     }
 
     private fun testTemplates() {

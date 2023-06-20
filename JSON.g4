@@ -10,7 +10,7 @@ json
 
 obj
 // TODO enforce if a helper and next is pair, it should handle `,` is
-   : '{' helperOrPair (','? helperOrPair)* '}'
+   : '{' helperOrPair (','? helperOrPair)* ','? '}'
    | '{' pair (',' pair)* '}'
    | '{' '}'
    ;
