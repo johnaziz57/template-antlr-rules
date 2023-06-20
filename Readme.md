@@ -1,8 +1,19 @@
-# TODO
+# Limitations
+* Helpers that are withing two curly brackets
+* Helpers that don't have a single curly bracket like this
+```
+{{#if item.deeplink}}
+        }
+{{/if}}
+```
+* Writing else like this `{{ else }}`
+* Helpers with `~` i.e. `{{~else~}}`
 
-- [ ] Handle `else if ()`
+# TODO
+- [ ] Handle `else if,  else`
 - [ ] Handle commas at the end of a value
 - [ ] Test arrays
+- [x] Handle `else if ()`
 - [x] Handle if condition in the middle of object with no commas after `{{/if}}`
 ```
 {
