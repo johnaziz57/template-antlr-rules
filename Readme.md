@@ -1,3 +1,7 @@
+# Description
+This repo is for antlr rules of creating an AST for JSON files that has handlebars helpers
+
+
 # Limitations
 * Helpers that are withing two curly brackets
 * Helpers that don't have a single curly bracket like this
